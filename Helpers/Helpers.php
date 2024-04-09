@@ -1,8 +1,14 @@
 <?php
-//Retorna la URL del proyrcto
+//Retorna la URL del proyecto
     function base_url()
     {
         return BASE_URL;
+    }
+
+//Retorna la ruta de Assets y lo que contenga
+    function media(){
+
+            return BASE_URL."/Assets";
     }
 //Muestra la informacion formateada o mas lejible
     function dep($data)
