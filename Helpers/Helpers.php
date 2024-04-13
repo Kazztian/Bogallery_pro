@@ -4,6 +4,9 @@
     {
         return BASE_URL;
     }
+    function media(){
+        return BASE_URL."/Assets";
+    }
 //Muestra la informacion formateada o mas lejible
     function dep($data)
     {

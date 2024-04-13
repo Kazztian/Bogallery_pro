@@ -17,7 +17,7 @@ class Home extends Controllers
         maxime veniam vel sit incidunt nemo fuga corrupti quo similique
          saepe sunt quaerat voluptates provident voluptate, esse praesentium 
          perferendis?";
-        $this->views->getView($this, "home", $data);
+        $this->views->getView($this, "home",$data);
     }
 
     
