@@ -10,6 +10,7 @@
 
             return BASE_URL."/Assets";
     }
+//Funcines para que se muestren las partes completas del templete en cada seccion que hagamos
 function headerAdmin($data="")
 {
     $view_header = "Views/Template/header_admin.php";
@@ -30,8 +31,17 @@ function footerAdmin($data="")
         $format .= print_r('</pre>');
         return $format;
     }
-    //Elimina el exceso de espacios entre palabras
+  
 
+    //Funcion para el formulario de roles 
+   function getModal(string $nameModal,$data){
+
+    $view_modal ="Views/Template/Modals/{$nameModal}.php";
+    require_once $view_modal;
+   }
+
+
+  //Elimina el exceso de espacios entre palabras
     function strClean($strCadena){
         $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);
         $string = trim($string); //Elimina espacios en blanco al inicio y al final

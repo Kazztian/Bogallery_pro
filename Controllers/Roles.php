@@ -12,10 +12,15 @@ class Roles extends Controllers
         $data['page_tag'] = "Roles Usuario";
         $data['page_name'] = "rol_usuario";
         $data['page_title'] = " Roles usuario <small> BoGallery </small>";
-        $this->views->getView($this, "roles", $data);
+        $this->views->getView($this,"roles", $data);
     }
 
+    public function getRoles()
+    {
+         $arrData = $this->model->selectRoles();
+         
+         dep($arrData);
+    }
     
-
 }
 ?>
