@@ -18,8 +18,8 @@ class Roles extends Controllers
     public function getRoles()
     {
          $arrData = $this->model->selectRoles();
-         
-         dep($arrData);
+        echo json_encode($arrData,JSON_UNESCAPED_UNICODE); //Formato json para que pueda ser interpretado por cualquier lenguaje(Se convierta en un objeto)
+        die();  //Finaliza el proceso
     }
     
 }
