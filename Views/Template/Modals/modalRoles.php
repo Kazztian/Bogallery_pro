@@ -14,12 +14,13 @@
                         <form id="formRol" name="formRol">
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" placeholder="Nombre Rol" require>
+                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" placeholder="Nombre Rol" required>
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Descripción</label>
-                                <textarea class="form-control" id="txtDesc" name="txtDesc" rows="2" placeholder="Descripción del Rol" require ></textarea>
+                                <textarea class="form-control" id="txtDesc" name="txtDesc" rows="2" placeholder="Descripción del Rol" required></textarea>
                             </div>
+
                             <div class="mb-3">
                                 <label class="form-label" for="exampleSelect1">Estado</label>
                                 <select class="form-control" id="listStatus" name="listStatus" required>
