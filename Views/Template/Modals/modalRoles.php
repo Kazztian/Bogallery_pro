@@ -2,23 +2,24 @@
 <div class="modal fade" id="modalFormRol" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTittle">Nuevo Rol</h5>
+            <div class="modal-header headerRegister">
+                <h5 class="modal-title" id="titleModal">Nuevo Rol</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-            </div>
+            </div> 
             <div class="modal-body">
                 <div class="tile">
                     <div class="tile-body">
                         <form id="formRol" name="formRol">
+                            <input type="hidden" id="idrol" name="idrol" value="">
                             <div class="mb-3">
                                 <label class="form-label">Nombre</label>
-                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" placeholder="Nombre Rol" >
+                                <input class="form-control" id="txtNombre" name="txtNombre" type="text" placeholder="Nombre Rol" required="">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Descripción</label>
-                                <textarea class="form-control" id="txtDesc" name="txtDesc" rows="2" placeholder="Descripción del Rol" ></textarea>
+                                <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="2" placeholder="Descripción del Rol" required=""></textarea>
                             </div>
 
                             <div class="mb-3">
@@ -29,13 +30,26 @@
                                 </select>
                             </div>
                             <div class="tile-footer">
-                                <button class="btn btn-primary" type="submit"><i class="bi bi-check-circle-fill me-2"></i>Guardar</button>
-                                <button class="btn btn-secondary" type="button" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill me-2"></i>Cancelar</button>
+                                <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="bi bi-check-circle-fill me-2"></i><span id="btnText">Guardar</span> </button>
+                                <a class="btn btn-secondary"  type="button" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill me-2"></i>Cancelar</a>
                             </div>
                         </form>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
+       <div class="modal fade" id="exampleModalXL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+           <div class="modal-dialog modal-xl" role="document">
+         <div class="modal-content">
+                    <!-- Aquí coloca el contenido del modal -->
+           <p>Este es un modal de tamaño extra grande.</p>
+        </div>
+   
+ 
+         </div>
+    </div>
+ 
