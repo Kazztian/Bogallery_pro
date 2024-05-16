@@ -49,39 +49,40 @@ class Permisos extends Controllers
 
    public function setPermisos()
    {
-    $requestPermisos = 0; // Inicializar la variable
-    
-    if($_POST)
-    {
-      $intIdrol = intval($_POST['idrol']);
-      $modulos = $_POST['modulos'];
-      
-      $this->model->deletePermisos($intIdrol);
-      foreach ($modulos as $modulos)
-      {
-        $idModulo = $modulos['id_modulo'];
-        $r = empty($modulos['r']) ? 0 : 1;
-        $w = empty($modulos['w']) ? 0 : 1;
-        $u = empty($modulos['u']) ? 0 : 1;
-        $d = empty($modulos['d']) ? 0 : 1;
-        $arrPermiso = $this->model->insertPermisos($intIdrol,$idModulo,$r,$w,$u ,$d);
-
-      }
-
-      if($requestPermisos > 0)
-      {
-        $arrRespose = array(' status' => true, 'msg' => 'Permisos asignados correctamente');
-
-      }else{
-        $arrRespose = array(' status' => true, 'msg' => 'No es posible asignar los permisos');
-
-      }
-      echo json_encode($arrRespose,JSON_UNESCAPED_UNICODE);
-    }
-    die();  
-    
-
+       $requestPermisos = 0; // Inicializar la variable
+       
+       if($_POST)
+       {
+           $intIdrol = intval($_POST['idrol']);
+           $modulos = $_POST['modulos'];
+         
+           $this->model->deletePermisos($intIdrol);
+           foreach ($modulos as $modulo)
+           {
+               $idModulo = $modulo['id_modulo'];
+               $r = empty($modulo['r']) ? 0 : 1;
+               $w = empty($modulo['w']) ? 0 : 1;
+               $u = empty($modulo['u']) ? 0 : 1;
+               $d = empty($modulo['d']) ? 0 : 1;
+               
+               // Intenta insertar el permiso y si tiene éxito, aumenta el contador
+               if ($this->model->insertPermisos($intIdrol, $idModulo, $r, $w, $u, $d)) {
+                   $requestPermisos++;
+               }
+           }
+   
+           if($requestPermisos > 0)
+           {
+               $arrResponse = array('status' => true, 'msg' => 'Permisos asignados correctamente');
+           } else {
+               $arrResponse = array('status' => false, 'msg' => 'No es posible asignar los permisos');
+           }
+           
+           echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+       }
+       die();  
    }
+   
     
 
 }
