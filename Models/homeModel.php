@@ -1,5 +1,5 @@
 <?php
- class homeModel extends mysql{
+ class HomeModel extends mysql{
     function __construct()
     {
       parent::__construct();

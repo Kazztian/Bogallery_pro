@@ -4,11 +4,14 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Mini Framework </title>
   </head>
 
+
   <body>
-    <h1>Holaaaa</h1>
+
+  <p> Mini Bogallery Bienvenido</p>
   </body>
 
   </html>

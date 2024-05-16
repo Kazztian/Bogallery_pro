@@ -1,22 +1,53 @@
 <?php
-//Retorna la URL del proyrcto
+//Retorna la URL del proyecto
     function base_url()
     {
         return BASE_URL;
     }
+
     function media(){
         return BASE_URL."/Assets";
     }
+
+
+//Retorna la ruta de Assets y lo que contenga
+    function media(){
+
+            return BASE_URL."/Assets";
+    }
+//Funcines para que se muestren las partes completas del templete en cada seccion que hagamos
+function headerAdmin($data="")
+{
+    $view_header = "Views/Template/header_admin.php";
+    require_once ($view_header);
+}
+
+function footerAdmin($data="")
+{
+    $view_footer = "Views/Template/footer_admin.php";
+    require_once ($view_footer);
+}
+
+
 //Muestra la informacion formateada o mas lejible
     function dep($data)
     {
-        $format = print_r('<pre>');
+        $format  = print_r('<pre>');
         $format .= print_r($data);
         $format .= print_r('</pre>');
         return $format;
     }
-    //Elimina el exceso de espacios entre palabras
+  
 
+    //Funcion para el formulario de roles 
+   function getModal(string $nameModal,$data){
+
+    $view_modal ="Views/Template/Modals/{$nameModal}.php";
+    require_once $view_modal;
+   }
+
+
+  //Elimina el exceso de espacios entre palabras
     function strClean($strCadena){
         $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);
         $string = trim($string); //Elimina espacios en blanco al inicio y al final
