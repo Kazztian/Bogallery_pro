@@ -31,7 +31,7 @@ class Roles extends Controllers
 
             }
             $arrData[$i]['options'] = '<div class="text-center">
-                <button class="btn btn-outline-secondary btn-sm btnPermisosRol" onClick="'.$arrData[$i]['id_rol'].'"  title="Permisos"><i class="bi bi-key-fill"></i></button>
+                <button class="btn btn-outline-secondary btn-sm btnPermisosRol" onClick="fntPermisos('.$arrData[$i]['id_rol'].')"title="Permisos"><i class="bi bi-key-fill"></i></button>
 
                 <button class="btn btn-warning btn-sm btnEditRol" onClick="fntEditRol('.$arrData[$i]['id_rol'].')" title="Editar"><i class="bi bi-pencil-square"></i></button>
 

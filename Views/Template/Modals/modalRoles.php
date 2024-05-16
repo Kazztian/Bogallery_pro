@@ -42,14 +42,3 @@
 </div>
 
 
-       <div class="modal fade" id="exampleModalXL" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-           <div class="modal-dialog modal-xl" role="document">
-         <div class="modal-content">
-                    <!-- Aquí coloca el contenido del modal -->
-           <p>Este es un modal de tamaño extra grande.</p>
-        </div>
-   
- 
-         </div>
-    </div>
- 

@@ -26,7 +26,7 @@ function footerAdmin($data="")
 //Muestra la informacion formateada o mas lejible
     function dep($data)
     {
-        $format = print_r('<pre>');
+        $format  = print_r('<pre>');
         $format .= print_r($data);
         $format .= print_r('</pre>');
         return $format;
