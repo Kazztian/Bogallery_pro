@@ -42,44 +42,39 @@
 
 
                     ?>
-                      <tr>
-                        <td>
 
-                          <?= $no; ?>
-                          <input type="hidden" name="modulos[<?= $i; ?>][id_modulo]" value="<?= $idmod ?>" required>
-                        </td>
+                      <tr>
+                        <td><?= $no; ?><input type="hidden" name="modulos[<?= $i; ?>][id_modulo]" value="<?= $idmod ?>" required></td>
+                        <td><?= $modulos[$i]['titulo']; ?></td>
                         <td>
-                          <?= $modulos[$i]['titulo']; ?>
-                        </td>
-                        <td>
-                          <div class="toggle-flip">
-                            <label>
+                          <div class="switch">
+                            <label class="switch">
                               <input type="checkbox" name="modulos[<?= $i; ?>][r]" <?= $rCheck ?>>
-                              <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                              <span class="slider"></span>
                             </label>
                           </div>
                         </td>
                         <td>
-                          <div class="toggle-flip">
-                            <label>
+                          <div class="switch">
+                            <label class="switch">
                               <input type="checkbox" name="modulos[<?= $i; ?>][w]" <?= $wCheck ?>>
-                              <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                              <span class="slider"></span>
                             </label>
                           </div>
                         </td>
                         <td>
-                          <div class="toggle-flip">
-                            <label>
+                          <div class="switch">
+                            <label class="switch">
                               <input type="checkbox" name="modulos[<?= $i; ?>][u]" <?= $uCheck ?>>
-                              <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                              <span class="slider"></span>
                             </label>
                           </div>
                         </td>
                         <td>
-                          <div class="toggle-flip">
-                            <label>
+                          <div class="switch">
+                            <label class="switch">
                               <input type="checkbox" name="modulos[<?= $i; ?>][d]" <?= $dCheck ?>>
-                              <span class="flip-indecator" data-toggle-on="ON" data-toggle-off="OFF"></span>
+                              <span class="slider"></span>
                             </label>
                           </div>
                         </td>
