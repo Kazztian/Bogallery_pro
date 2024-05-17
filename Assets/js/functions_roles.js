@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
             aProcessing: true,
             aServerSide: true,
             language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+                url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json", //Configuracion del lenguaje
             },
             ajax: {
                 url: "" + base_url + "/Roles/getRoles",

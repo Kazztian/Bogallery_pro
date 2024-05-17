@@ -39,7 +39,8 @@
   
       $sql ="SELECT * FROM rol WHERE nombrerol = '{$this->strRol}'";
       $request = $this->select_all($sql);
-  
+
+      //Validacion para saber si ya existe ese rol
       if(empty($request))
       {
           $query_insert = "INSERT INTO rol(nombrerol, descripcion, status) VALUES (?, ?, ?)";
@@ -81,8 +82,8 @@
         $request = $this->select_all($sql);
         if(empty($request))
         {
-            $sql = "UPDATE rol SET status = ? WHERE id_rol = $this->intIdrol";
-            $arrData = array(0);
+            $sql = "UPDATE rol SET status = ? WHERE id_rol = $this->intIdrol";//Se realiza un update para guardar los registros 
+            $arrData = array(0); //y tienen un estado 0
             $request = $this -> update($sql, $arrData);
             if($request)
             {
