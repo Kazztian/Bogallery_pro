@@ -4,10 +4,9 @@
         <div class="modal-content">
             <div class="modal-header headerRegister">
                 <h5 class="modal-title" id="titleModal">Nuevo Rol</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div> 
+                <button type="button" class="custom-close-btn" data-dismiss="modal" aria-label="Close"></button>
+
+            </div>
             <div class="modal-body">
                 <div class="tile">
                     <div class="tile-body">
@@ -30,15 +29,18 @@
                                 </select>
                             </div>
                             <div class="tile-footer">
-                                <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="bi bi-check-circle-fill me-2"></i><span id="btnText">Guardar</span> </button>
-                                <a class="btn btn-secondary"  type="button" data-bs-dismiss="modal"><i class="bi bi-x-circle-fill me-2"></i>Cancelar</a>
+                                <button id="btnActionForm" class="btn btn-primary" type="submit">
+                                    <i class="bi bi-check-circle-fill me-2"></i><span id="btnText">Guardar</span>
+                                </button>
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">
+                                    <i class="bi bi-x-circle-fill me-2"></i>Cancelar
+                                </button>
                             </div>
+
                         </form>
-                    </div> 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-

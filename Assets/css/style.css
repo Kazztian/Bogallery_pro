@@ -69,4 +69,28 @@ input:checked + .slider:before {
 .switch {
     margin-bottom: 30px; /* Agrega un margen inferior de 10px entre cada interruptor */
 }
+.custom-close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    padding: 1rem;
+    background: transparent;
+    border: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+  }
+  .custom-close-btn::before {
+    content: '\00d7';
+    font-size: 1.5rem;
+    color: #000;
+  }
+  .custom-close-btn:hover::before {
+    /* Ajusta el color del borde según sea necesario */
+    border-radius: 2px; /* Esquinas más rectas */
+    padding: 0.05rem 0.2rem; /* Ajusta el espacio alrededor de la "x" */
+    background-color: rgba(0, 0, 0, 0.1); /* Ajusta el color de fondo del cuadro */
+    color: #000; /* Asegura que el color de la "x" sea adecuado */
+  }
+  
 /* Fin del diseño de la tabla permisos */
