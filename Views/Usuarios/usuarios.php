@@ -3,6 +3,8 @@ headerAdmin($data);
 getModal('modalUsuarios', $data);
 ?>
 
+<div id="contentAjax"></div>
+
 <main class="app-content">
     <div class="app-title">
         <div>
@@ -12,7 +14,7 @@ getModal('modalUsuarios', $data);
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="bi bi-house-door fs-6"></i></li>
-            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/roles"><?= $data['page_title'] ?></a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/usuarios"><?= $data['page_title'] ?></a></li>
         </ul>
     </div>
     </div>
@@ -22,7 +24,7 @@ getModal('modalUsuarios', $data);
             <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered" id="tableUsuarios">
+                        <table class="table table-hover table-bordered table-sm" id="tableUsuarios">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -43,7 +45,7 @@ getModal('modalUsuarios', $data);
                                     <td>juan@</td>
                                     <td>454444</td>
                                     <td>Administrador</td>
-                                    <td>Activos</td>
+                                    <td>Activo</td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -53,7 +55,6 @@ getModal('modalUsuarios', $data);
             </div>
         </div>
     </div>
-
 </main>
 
 <?php footerAdmin($data); ?>

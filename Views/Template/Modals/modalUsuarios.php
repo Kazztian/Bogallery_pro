@@ -112,12 +112,65 @@
                         <button id="btnActionForm" class="btn btn-primary" type="submit">
                             <i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span>
                         </button>&nbsp;&nbsp;&nbsp;
+
                         <button class="btn btn-danger" type="button" data-dismiss="modal">
                             <i class="fa fa-fw fa-lg fa-check-circle"></i>Cerrar
                         </button>
                     </div>
 
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Odal de usuario -->
+
+<!-- Vertically centered scrollable modal -->
+<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog  modal-lg">
+        <div class="modal-content">
+            <div class="modal-header header-primary">
+                <h5 class="modal-title" id="titleModal">Datos del usuario</h5>
+                <button type="button" class="custom-close-btn" data-dismiss="modal" aria-label="Close"></button>
+
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td>Nombres</td>
+                            <td id="celNombre">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Apellidos</td>
+                            <td id="celApellidos">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Email (Usuario)</td>
+                            <td id="celEmail">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Telefono</td>
+                            <td id="celTelefono">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Tipo Usuario</td>
+                            <td id="celTipoUsuario">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Estatus</td>
+                            <td id="celEstado">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Fecha registro</td>
+                            <td id="celFechaRegistro">Jose</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

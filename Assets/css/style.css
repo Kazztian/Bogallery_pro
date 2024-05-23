@@ -1,5 +1,5 @@
 
-.headerRegister{
+.headerRegister, .header-prymary{
     background: #009688;
     color: #fff;
 }
@@ -94,3 +94,6 @@ input:checked + .slider:before {
   }
   
 /* Fin del diseño de la tabla permisos */
+#tableUsuarios th, #tableUsuarios td {
+    white-space: nowrap;
+}

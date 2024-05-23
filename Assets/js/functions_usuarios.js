@@ -1,26 +1,40 @@
 var tableUsuarios;
-document.addEventListener('DOMContentLoaded', function(){
 
-    tableUsuarios = $('#tableUsuarios').dataTable({
+document.addEventListener('DOMContentLoaded', function() {
+    // Creamos un elemento <script> para cargar SweetAlert desde el CDN
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@9';
+
+    // Agregamos un evento para manejar el estado de carga del script
+    script.onload = function() {
+        // Una vez que SweetAlert está cargado, podemos usarlo
+        inicializarTabla();
+    };
+
+    // Agregamos el script al final del <body> para asegurarnos de que se cargue antes de usarlo
+    document.body.appendChild(script);
+});
+
+function inicializarTabla() {
+    tableUsuarios = $("#tableUsuarios").DataTable({
         aProcessing: true,
         aServerSide: true,
         language: {
-            url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json", //Configuracion del lenguaje
+            url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
         },
-        "ajax": {
-            "url": " "+base_url+"/Usuarios/getUsuarios",
-            "dataSrc": "",
+        ajax: {
+            url: base_url + "/Usuarios/getUsuarios",
+            dataSrc: ''
         },
-        "columns": [
-            { "data": "id_usuario" },
-            { "data": "nombres" },
-            { "data": "apellidos" },
-            { "data": "edad" },
-            { "data": "telefono" },
-            { "data": "email_user" },
-            { "data": "primer_idioma" },
-            { "data": "status" },
-            { "data": "options" },
+        columns: [
+            { data: "id_usuario" },
+            { data: "nombres" },
+            { data: "apellidos" },
+            { data: "email_user" },
+            { data: "telefono" },
+            { data: "nombrerol" },
+            { data: "status" },
+            { data: "options" },
         ],
         responsive: true,
         bDestroy: true,
@@ -28,8 +42,9 @@ document.addEventListener('DOMContentLoaded', function(){
         order: [[0, "desc"]],
     });
 
+    // Manejo del formulario de usuario
     var formUsuario = document.querySelector("#formUsuario");
-    formUsuario.onsubmit = function(e){
+    formUsuario.onsubmit = function(e) {
         e.preventDefault();
 
         var strNombre = document.querySelector('#txtNombre').value;
@@ -43,7 +58,8 @@ document.addEventListener('DOMContentLoaded', function(){
         var intTipousuario = document.querySelector('#listRolid').value;
         var strPassword = document.querySelector('#txtPassword').value;
 
-        if(strNombre == '' || strApellido == '' || strEmail == '' || intTelefono == '' || intEdad == '' || strDireccion == '' || strPrimerI == '' || strSegundoI == '' || intTipousuario == '') {
+        if (strNombre === '' || strApellido === '' || strEmail === '' || intTelefono === '' || intEdad === '' || strDireccion === '' || strPrimerI === '' || strSegundoI === '' || intTipousuario === '') {
+            // Utilizamos SweetAlert en lugar de swal()
             Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
             return false;
         }
@@ -54,36 +70,37 @@ document.addEventListener('DOMContentLoaded', function(){
         request.open("POST", ajaxUrl, true);
         request.send(formData);
 
-        request.onreadystatechange = function(){
-            if(request.readyState == 4 && request.status == 200){
+        request.onreadystatechange = function() {
+            if (request.readyState === 4 && request.status === 200) {
                 var objData = JSON.parse(request.responseText);
-                if(objData.status) {
+                if (objData.status) {
                     $('#modalFormUsuario').modal("hide");
+                    // Utilizamos SweetAlert en lugar de swal()
                     Swal.fire("Usuarios", objData.msg, "success");
-                    tableUsuarios.api().ajax.reload(function(){
+                    tableUsuarios.ajax.reload(function() {
                         // Callback function after reloading the table, if needed
                     });
                 } else {
+                    // Utilizamos SweetAlert en lugar de swal()
                     Swal.fire("Error", objData.msg, "error");
                 }
             }
         }
-    }
-}, false);
+    };
 
-window.addEventListener('load', function(){
+    // Cargar roles de usuarios al cargar la página
     ftnRolesUsuarios();
-}, false);
+}
 
-function ftnRolesUsuarios(){
-    var ajazUrl = base_url + '/Roles/getSelectRoles';
+function ftnRolesUsuarios() {
+    var ajaxUrl = base_url + '/Roles/getSelectRoles';
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
 
-    request.open("GET", ajazUrl, true);
+    request.open("GET", ajaxUrl, true);
     request.send();
 
-    request.onreadystatechange = function(){
-        if(request.readyState == 4 && request.status == 200){
+    request.onreadystatechange = function() {
+        if (request.readyState === 4 && request.status === 200) {
             document.querySelector('#listRolid').innerHTML = request.responseText;
             document.querySelector('#listRolid').value = 1;
             $('#listRolid').selectpicker('render');
