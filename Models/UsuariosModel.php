@@ -79,6 +79,7 @@ class UsuariosModel extends mysql
         return $return;
     }
 
+    //Metodos para seleccionar los usuarios y el nombre rol
     public function selectUsuarios()
     {
         $sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.edad, u.telefono, u.email_user, u.primer_idioma, u.status, r.nombrerol
@@ -87,6 +88,19 @@ class UsuariosModel extends mysql
         ON u.id_rol = r.id_rol
         WHERE u.status != 0 ";
         $request = $this->select_all($sql);
+        return $request;
+    }
+    public function selectUsuario(int $id_usuario)
+    {
+        $this->intIdUsuario = $id_usuario;
+        $sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.edad, u.telefono, u.email_user, u.primer_idioma, u.segundo_idioma, u.status, r.id_rol, r.nombrerol,
+    DATE_FORMAT(u.datecreated, '%d-%m-%Y') as fechaRegistro
+    FROM usuarios u
+    INNER JOIN rol r
+    ON u.id_rol = r.id_rol
+    WHERE u.id_usuario = $this->intIdUsuario";
+
+        $request = $this->select($sql);
         return $request;
     }
 }

@@ -124,11 +124,11 @@
     </div>
 </div>
 
-<!-- Odal de usuario -->
+<!-- MOdal de usuario -->
 
 <!-- Vertically centered scrollable modal -->
 <div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog  modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header header-primary">
                 <h5 class="modal-title" id="titleModal">Datos del usuario</h5>
@@ -147,12 +147,25 @@
                             <td id="celApellidos">Jose</td>
                         </tr>
                         <tr>
+                            <td>Edad</td>
+                            <td id="celEdad">Jose</td>
+                        </tr>
+                        <tr>
                             <td>Email (Usuario)</td>
                             <td id="celEmail">Jose</td>
                         </tr>
                         <tr>
                             <td>Telefono</td>
                             <td id="celTelefono">Jose</td>
+                        </tr>
+
+                        <tr>
+                            <td>Primer Idioma</td>
+                            <td id="celPrimerIdioma">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Primer Idioma</td>
+                            <td id="celSegundoIdioma">Jose</td>
                         </tr>
                         <tr>
                             <td>Tipo Usuario</td>
@@ -163,6 +176,7 @@
                             <td id="celEstado">Jose</td>
                         </tr>
                         <tr>
+                        <tr>
                             <td>Fecha registro</td>
                             <td id="celFechaRegistro">Jose</td>
                         </tr>
@@ -170,7 +184,7 @@
                 </table>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>

@@ -89,7 +89,11 @@ function inicializarTabla() {
     };
 
     // Cargar roles de usuarios al cargar la página
-    ftnRolesUsuarios();
+    window.addEventListener('load', function(){
+        ftnRolesUsuarios();
+       
+    }, false);
+    
 }
 
 function ftnRolesUsuarios() {
@@ -106,6 +110,42 @@ function ftnRolesUsuarios() {
             $('#listRolid').selectpicker('render');
         }
     }
+}
+
+function ftnbViewUsuario(id_usuario) {
+    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl = base_url + '/Usuarios/getUsuario/' + id_usuario;
+
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            var objData = JSON.parse(request.responseText);
+            if (objData.status) {
+                var estadoUsuario = objData.data.status == 1 ?
+                '<span class="me-1 badge bg-success" style="display: inline-block; font-size: 0.9rem;">Activo</span>' :
+                    '<span class="me-1 badge bg-danger" style="display: inline-block; font-size: 0.9rem;">Inactivo</span>';
+
+                document.querySelector("#celNombre").innerHTML = objData.data.nombres;
+                document.querySelector("#celApellidos").innerHTML = objData.data.apellidos;
+                document.querySelector("#celEdad").innerHTML = objData.data.edad;
+                document.querySelector("#celEmail").innerHTML = objData.data.email_user;
+                document.querySelector("#celTelefono").innerHTML = objData.data.telefono;
+                document.querySelector("#celPrimerIdioma").innerHTML = objData.data.primer_idioma;
+                 document.querySelector("#celSegundoIdioma").innerHTML = objData.data.segundo_idioma;
+                document.querySelector("#celEstado").innerHTML = estadoUsuario;
+                document.querySelector("#celTipoUsuario").innerHTML = objData.data.nombrerol;
+                document.querySelector("#celFechaRegistro").innerHTML = objData.data.fechaRegistro;
+
+                if (!$('#modalViewUser').hasClass('show')) {
+                    $('#modalViewUser').modal('show');
+                }
+            } else {
+                Swal.fire("Error", objData.msg, "error");
+            }
+        }
+    };
+
+    request.open("GET", ajaxUrl, true);
+    request.send();
 }
 
 function openModal() {
