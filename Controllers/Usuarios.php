@@ -25,43 +25,67 @@ class Usuarios extends Controllers
                 empty($_POST['txtEdad']) || empty($_POST['txtDireccion']) || empty($_POST['txtPrimerI']) || empty($_POST['txtSegundoI']) ||
                 empty($_POST['listRolid']) || empty($_POST['listStatus'])
             ) {
-
                 $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
             } else {
+                $idUsuario = intval($_POST['id_usuario']);
                 $strNombre = ucwords(strClean($_POST['txtNombre']));
                 $strApellido = ucwords(strClean($_POST['txtApellido']));
                 $intTelefono = intval(strClean($_POST['txtTelefono']));
                 $strEmail = strtolower(strClean($_POST['txtEmail']));
-                $intEdad = intval(strClean($_POST['txtEdad'])); // Asegurarse de convertir a entero
+                $intEdad = intval(strClean($_POST['txtEdad']));
                 $strDireccion = strClean($_POST['txtDireccion']);
                 $srtPrimerI = strClean($_POST['txtPrimerI']);
                 $strSegundoI = strClean($_POST['txtSegundoI']);
                 $intTipoId = intval(strClean($_POST['listRolid']));
                 $intStatus = intval(strClean($_POST['listStatus']));
 
-                $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
+                if ($idUsuario == 0) {
+                    $option = 1;
+                    $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
 
-                // Llamada al modelo con los parámetros corregidos
-                $request_user = $this->model->insertUsuario(
-                    $strNombre,
-                    $strApellido,
-                    $intTelefono,
-                    $strEmail,
-                    $strPassword, // Faltaba este argumento
-                    $intEdad,
-                    $strDireccion,
-                    $srtPrimerI,
-                    $strSegundoI,
-                    $intTipoId,
-                    $intStatus
-                );
-                /*El problema de todo esto es que en el condicional del controlador
- Usuarios if($request_user > 0), con la nueva version de php, si $request_user tiene el valor "exist", php toma que ese valor es mayor que 0, por tanto, 
- aunque el usuario exista, entra en el if de datos guardados correctamente.
-Se debe cambiar el if al siguiente -> if ($request_user != "exist" && $request_user > 0) */
-                if ($request_user != "exist") {
-                    $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
-                } elseif ($request_user > 0) {
+                    // Llamada al modelo con los parámetros corregidos
+                    $request_user = $this->model->insertUsuario(
+                        $strNombre,
+                        $strApellido,
+                        $intTelefono,
+                        $strEmail,
+                        $strPassword, // Faltaba este argumento
+                        $intEdad,
+                        $strDireccion,
+                        $srtPrimerI,
+                        $strSegundoI,
+                        $intTipoId,
+                        $intStatus
+                    );
+                } else {
+                    $option = 2;
+                    $strPassword = empty($_POST['txtPassword']) ? "" : hash("SHA256", $_POST['txtPassword']);
+
+                    // Llamada al modelo con los parámetros corregidos
+                    $request_user = $this->model->updateUsuario(
+                        $idUsuario,
+                        $strNombre,
+                        $strApellido,
+                        $intTelefono,
+                        $strEmail,
+                        $strPassword, // Faltaba este argumento
+                        $intEdad,
+                        $strDireccion,
+                        $srtPrimerI,
+                        $strSegundoI,
+                        $intTipoId,
+                        $intStatus
+                    );
+                }
+
+                // Ajuste en la lógica de los condicionales para manejar las comparaciones correctamente
+                if ($request_user !== "exist" && $request_user > 0) {
+                    if ($option == 1) {
+                        $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
+                    } else {
+                        $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
+                    }
+                } elseif ($request_user == "exist") {
                     $arrResponse = array('status' => false, 'msg' => '¡ATENCIÓN! El email o la identificación ya existe.');
                 } else {
                     $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
@@ -71,6 +95,7 @@ Se debe cambiar el if al siguiente -> if ($request_user != "exist" && $request_u
         }
         die();
     }
+
 
     public function getUsuarios()
     {

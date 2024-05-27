@@ -72,6 +72,7 @@ function inicializarTabla() {
 
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
+                console.log(request.responseText);  // Añade esto
                 var objData = JSON.parse(request.responseText);
                 if (objData.status) {
                     $('#modalFormUsuario').modal("hide");
@@ -91,6 +92,7 @@ function inicializarTabla() {
     // Cargar roles de usuarios al cargar la página
     window.addEventListener('load', function(){
         ftnRolesUsuarios();
+        
        
     }, false);
     
@@ -128,9 +130,10 @@ function ftnbViewUsuario(id_usuario) {
                 document.querySelector("#celApellidos").innerHTML = objData.data.apellidos;
                 document.querySelector("#celEdad").innerHTML = objData.data.edad;
                 document.querySelector("#celEmail").innerHTML = objData.data.email_user;
+                document.querySelector("#celDireccion").innerHTML = objData.data.direccion;
                 document.querySelector("#celTelefono").innerHTML = objData.data.telefono;
                 document.querySelector("#celPrimerIdioma").innerHTML = objData.data.primer_idioma;
-                 document.querySelector("#celSegundoIdioma").innerHTML = objData.data.segundo_idioma;
+                document.querySelector("#celSegundoIdioma").innerHTML = objData.data.segundo_idioma;
                 document.querySelector("#celEstado").innerHTML = estadoUsuario;
                 document.querySelector("#celTipoUsuario").innerHTML = objData.data.nombrerol;
                 document.querySelector("#celFechaRegistro").innerHTML = objData.data.fechaRegistro;
@@ -147,6 +150,49 @@ function ftnbViewUsuario(id_usuario) {
     request.open("GET", ajaxUrl, true);
     request.send();
 }
+
+function fntEditUsuario(id_usuario) {
+    document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+    document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
+    document.querySelector('#btnText').innerHTML = 'Actualizar';
+    document.querySelector('#titleModal').innerHTML = "Actualizar Usuario";
+
+    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    var ajaxUrl = base_url + '/Usuarios/getUsuario/' + id_usuario;
+
+    request.onreadystatechange = function() {
+        if (request.readyState == 4 && request.status == 200) {
+            var objData = JSON.parse(request.responseText);
+            if (objData.status) {
+                document.querySelector("#idUsuario").value = objData.data.id_usuario;
+                document.querySelector("#txtNombre").value = objData.data.nombres;
+                document.querySelector("#txtApellido").value = objData.data.apellidos;
+                document.querySelector("#txtTelefono").value = objData.data.telefono;
+                document.querySelector("#txtEmail").value = objData.data.email_user;
+                document.querySelector("#txtDireccion").value = objData.data.direccion;
+                document.querySelector("#txtEdad").value = objData.data.edad;
+                document.querySelector("#txtPrimerI").value = objData.data.primer_idioma;
+                document.querySelector("#txtSegundoI").value = objData.data.segundo_idioma;
+                document.querySelector("#listRolid").value = objData.data.id_rol;
+                $('#listRolid').selectpicker('render');
+
+                if(objData.data.status == 1){
+                    document.querySelector("#listStatus").value = 1;
+                }else{
+                    document.querySelector("#listStatus").value = 2;
+                }
+                $('#listStatus').selectpicker('render');
+            }
+
+            // Mostrar el modal solo después de que los datos se hayan cargado
+            $('#modalFormUsuario').modal('show');
+        }
+    };
+
+    request.open("GET", ajaxUrl, true);
+    request.send();
+}
+
 
 function openModal() {
     document.querySelector('#idUsuario').value = "";

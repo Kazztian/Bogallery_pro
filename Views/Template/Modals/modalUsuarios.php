@@ -9,7 +9,7 @@
             </div>
             <div class="modal-body">
                 <form id="formUsuario" name="formUsuario" class="form-horizontal">
-                    <input type="hidden" id="idUsuario" name="idUsuario" value="">
+                    <input type="hidden" id="idUsuario" name="id_usuario" value="">
                     <p class="text-primary">Todos los campos son obligatorios</p>
 
                     <!-- <div class="form-row">
@@ -149,6 +149,10 @@
                         <tr>
                             <td>Edad</td>
                             <td id="celEdad">Jose</td>
+                        </tr>
+                        <tr>
+                            <td>Dirreccion</td>
+                            <td id="celDireccion">Jose</td>
                         </tr>
                         <tr>
                             <td>Email (Usuario)</td>
