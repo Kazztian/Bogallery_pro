@@ -135,4 +135,22 @@ class Usuarios extends Controllers
         }
         die();
     }
+
+    public function delUsuario()
+    {
+        if ($_POST) {
+            $intIdUsuario = intval($_POST['idUsuario']);
+            $requestDelete = $this->model->deleteUsuario($intIdUsuario);
+            
+            if ($requestDelete) {
+                $arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el usuario');
+            } else {
+                $arrResponse = array('status' => false, 'msg' => 'Error al eliminar el usuario');
+            }
+            
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+    
 }

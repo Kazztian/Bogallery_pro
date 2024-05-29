@@ -130,10 +130,10 @@ class UsuariosModel extends mysql
         $this->strSegundoI = $segundoi;
         $this->intTipoId = $tipoid;
         $this->intStatus = $status;
-    
+
         $sql = "SELECT * FROM usuarios WHERE (email_user = '{$this->strEmail}' AND id_usuario != $this->intIdUsuario)";
         $request = $this->select_all($sql);
-    
+
         if (empty($request)) {
             if ($this->strPassword != "") {
                 $sql = "UPDATE usuarios SET nombres=?, apellidos=?, edad=?, telefono=?, email_user=?, password=?, direccion=?, primer_idioma=?, segundo_idioma=?, id_rol=?, status=? WHERE id_usuario = $this->intIdUsuario";
@@ -171,6 +171,15 @@ class UsuariosModel extends mysql
         }
         return $request;
     }
-    
+
+    public function deleteUsuario(int $intIdUsuario)
+    {
+        $this->intIdUsuario = $intIdUsuario;
+        $sql = "UPDATE usuarios SET status = ? WHERE id_usuario = $this->intIdUsuario";
+        $arrData = array(0);
+        $request = $this->update($sql, $arrData);
+
+        return $request;
+    }
 }
 ?>

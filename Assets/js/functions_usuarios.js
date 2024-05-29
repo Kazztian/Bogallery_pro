@@ -92,7 +92,7 @@ function inicializarTabla() {
     // Cargar roles de usuarios al cargar la página
     window.addEventListener('load', function(){
         ftnRolesUsuarios();
-        
+        //AQUI PODRIAN IR LAS FUNCIONES DE USUARIO SI NO ABREN
        
     }, false);
     
@@ -192,7 +192,43 @@ function fntEditUsuario(id_usuario) {
     request.open("GET", ajaxUrl, true);
     request.send();
 }
-
+function fntDelUsuario(idUsuario) {
+    Swal.fire({
+        title: "Eliminar Usuario",
+        text: "¿Realmente quiere eliminar el Usuario?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si eliminar",
+        cancelButtonText: "No, cancelar",
+        closeOnConfirm: false,
+        closeOnCancel: true,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            var request = window.XMLHttpRequest
+                ? new XMLHttpRequest()
+                : new ActiveXObject("Microsoft.XMLHTTP");
+            var ajaxUrl = base_url + "/Usuarios/delUsuario/";
+            var strData = "idUsuario=" + idUsuario;
+            request.open("POST", ajaxUrl, true);
+            request.setRequestHeader(
+                "Content-type",
+                "application/x-www-form-urlencoded"
+            );
+            request.send(strData);
+            request.onreadystatechange = function () {
+                if (request.readyState == 4 && request.status == 200) {
+                    var objData = JSON.parse(request.responseText);
+                    if (objData.status) {
+                        Swal.fire("Eliminar!", objData.msg, "success");
+                        tableUsuarios.ajax.reload(); // Recargar la tabla sin llamar a fntDelRol nuevamente
+                    } else {
+                        Swal.fire("Atencion!", objData.msg, "error");
+                    }
+                }
+            };
+        }
+    });
+}
 
 function openModal() {
     document.querySelector('#idUsuario').value = "";
