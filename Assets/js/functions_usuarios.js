@@ -36,6 +36,31 @@ function inicializarTabla() {
             { data: "status" },
             { data: "options" },
         ],
+        dom: 'lBfrtip',  // Indica a DataTables que muestre los botones en la tabla
+        buttons: [
+           
+            {
+                "extend": "copyHtml5",
+                "text": "<i class='far fa-copy'></i> Copiar",
+                "titleAttr":"Copiar",
+                "className": "btn btn-secondary"
+            },{
+                "extend": "excelHtml5",
+                "text": "<i class='fas fa-file-excel'></i> Excel",
+                "titleAttr":"Esportar a Excel",
+                "className": "btn btn-success"
+            },{
+                "extend": "pdfHtml5",
+                "text": "<i class='fas fa-file-pdf'></i> PDF",
+                "titleAttr":"Esportar a PDF",
+                "className": "btn btn-danger"
+            },{
+                "extend": "csvHtml5",
+                "text": "<i class='fas fa-file-csv'></i> CSV",
+                "titleAttr":"Esportar a CSV",
+                "className": "btn btn-info"
+            }
+        ],
         responsive: true,
         bDestroy: true,
         iDisplayLength: 10,
@@ -63,6 +88,14 @@ function inicializarTabla() {
             Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
             return false;
         }
+
+        let elementsValid = document.getElementsByClassName("valid");
+        for (let i = 0; i < elementsValid.length; i++) { 
+            if(elementsValid[i].classList.contains('is-invalid')) { 
+                Swal.fire("Atención", "Por favor verifique los campos en rojo." , "error");
+                return false;
+            } 
+        } 
 
         var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
         var ajaxUrl = base_url + '/Usuarios/setUsuario'; 

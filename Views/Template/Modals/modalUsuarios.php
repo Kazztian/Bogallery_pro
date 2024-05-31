@@ -23,13 +23,13 @@
                         <div class=" col-md-6">
                             <div class="form-group">
                                 <label for="txtNombre">Nombres</label>
-                                <input type="text" class="form-control" id="txtNombre" name="txtNombre" required="">
+                                <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtApellido">Apellidos</label>
-                                <input type="text" class="form-control" id="txtApellido" name="txtApellido" required="">
+                                <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
                             </div>
                         </div>
                     </div>
@@ -39,13 +39,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtTelefono">Telefono</label>
-                                <input type="text" class="form-control" id="txtTelefono" name="txtTelefono" required="">
+                                <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtEmail">Email</label>
-                                <input type="email" class="form-control" id="txtEmail" name="txtEmail" required="">
+                                <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtEdad">Edad</label>
-                                <input type="text" class="form-control" id="txtEdad" name="txtEdad" required="">
+                                <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -68,13 +68,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtPrimerI">Primer Idioma</label>
-                                <input type="text" class="form-control" id="txtPrimerI" name="txtPrimerI" required="">
+                                <input type="text" class="form-control valid validText" id="txtPrimerI" name="txtPrimerI" required="">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtSegundoI">Segundo Idioma</label>
-                                <input type="text" class="form-control" id="txtSegundoI" name="txtSegundoI" required="">
+                                <input type="text" class="form-control valid validText" id="txtSegundoI" name="txtSegundoI" required="">
                             </div>
                         </div>
                     </div>

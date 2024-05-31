@@ -46,7 +46,9 @@ class Roles extends Controllers
         $arrData = $this->model->selectRoles();
         if (count($arrData) > 0) {
             for ($i = 0; $i < count($arrData); $i++) {
-                $htmlOptions .= '<option value="' . $arrData[$i]['id_rol'] . '">' . $arrData[$i]['nombrerol'] . '</option>';
+                if ($arrData[$i]['status'] == 1) {
+                    $htmlOptions .= '<option value="' . $arrData[$i]['id_rol'] . '">' . $arrData[$i]['nombrerol'] . '</option>';
+                }
             }
         }
         echo $htmlOptions;
@@ -126,4 +128,3 @@ class Roles extends Controllers
         die();
     }
 }
-?>

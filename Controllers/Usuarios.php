@@ -79,24 +79,27 @@ class Usuarios extends Controllers
                 }
 
                 // Ajuste en la lógica de los condicionales para manejar las comparaciones correctamente
-                if ($request_user !== "exist" && $request_user > 0) {
+                if ($request_user != "exist") {
                     if ($option == 1) {
                         $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
                     } else {
-                        $arrResponse = array('status' => true, 'msg' => 'Datos Actualizados correctamente.');
+                        $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
+
+                        // $arrResponse = array('status' => true, 'msg' => 'Datos actualizados correctamente.');
                     }
-                } elseif ($request_user == "exist") {
+                } elseif ($request_user === "exist") {
                     $arrResponse = array('status' => false, 'msg' => '¡ATENCIÓN! El email o la identificación ya existe.');
                 } else {
-                    $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
+                    $arrResponse = array('status' => true, 'msg' => 'Datos actualizados correctamente.');
+
+                    // $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
                 }
+
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
-            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            die();
         }
-        die();
     }
-
-
     public function getUsuarios()
     {
         $arrData = $this->model->selectUsuarios();
@@ -141,16 +144,15 @@ class Usuarios extends Controllers
         if ($_POST) {
             $intIdUsuario = intval($_POST['idUsuario']);
             $requestDelete = $this->model->deleteUsuario($intIdUsuario);
-            
+
             if ($requestDelete) {
                 $arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el usuario');
             } else {
                 $arrResponse = array('status' => false, 'msg' => 'Error al eliminar el usuario');
             }
-            
+
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
         die();
     }
-    
 }
