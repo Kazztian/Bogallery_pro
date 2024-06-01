@@ -16,7 +16,9 @@ class Usuarios extends Controllers
 
         $this->views->getView($this, "usuarios", $data);
     }
-
+/* Metodo para enviar los datos a la ruta de setUsuario en 
+function_usuario donde de busca este archivo y este metodo
+empty= Verifica si esta vacio algun campo*/
     public function setUsuario()
     {
         if ($_POST) {
@@ -34,11 +36,13 @@ class Usuarios extends Controllers
                 $strEmail = strtolower(strClean($_POST['txtEmail']));
                 $intEdad = intval(strClean($_POST['txtEdad']));
                 $strDireccion = strClean($_POST['txtDireccion']);
-                $srtPrimerI = strClean($_POST['txtPrimerI']);
-                $strSegundoI = strClean($_POST['txtSegundoI']);
+                $srtPrimerI = ucwords(strClean($_POST['txtPrimerI']));
+                $strSegundoI = ucwords(strClean($_POST['txtSegundoI']));
                 $intTipoId = intval(strClean($_POST['listRolid']));
                 $intStatus = intval(strClean($_POST['listStatus']));
+//Se crea las variables que van almacenar los datos en las lineas de arriba
 
+//Validacion para generar contraseña si el usuario no tiene una, hash lo que hace es encriptar
                 if ($idUsuario == 0) {
                     $option = 1;
                     $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
@@ -100,6 +104,7 @@ class Usuarios extends Controllers
             die();
         }
     }
+    //Metodo para invocar lo que se hizo en selectUsuarios en el ModelUsuario
     public function getUsuarios()
     {
         $arrData = $this->model->selectUsuarios();
@@ -124,6 +129,8 @@ class Usuarios extends Controllers
         echo json_encode($arrData, JSON_UNESCAPED_UNICODE); //Formato json para que pueda ser interpretado por cualquier lenguaje(Se convierta en un objeto)
         die();  //Finaliza el proceso
     }
+    /*Metodo que extrae los datos de un usuario el cual esta 
+    conectado con fuction Usuarios*/
     public function getUsuario(int $id_usuario)
     {
         $idusuario = intval($id_usuario);
@@ -138,7 +145,7 @@ class Usuarios extends Controllers
         }
         die();
     }
-
+//Metodo para eliminar un usuario
     public function delUsuario()
     {
         if ($_POST) {

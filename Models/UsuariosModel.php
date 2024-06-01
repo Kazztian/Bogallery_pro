@@ -21,7 +21,7 @@ class UsuariosModel extends mysql
     {
         parent::__construct();
     }
-
+//Se reciben todos los datos que se envian desde el controlador Usuarios
     public function insertUsuario(
         string $nombre,
         string $apellido,
@@ -35,7 +35,7 @@ class UsuariosModel extends mysql
         int $tipoid,
         int $status
     ) {
-
+//Se asignan los valores declarados en la parte superior 
         $this->strNombre = $nombre;
         $this->strApellido = $apellido;
         $this->intTelefono = $telefono;
@@ -48,11 +48,12 @@ class UsuariosModel extends mysql
         $this->intTipoId = $tipoid;
         $this->intStatus = $status;
         $return = 0;
-
+//Validacion para el email y saber si ya existe ese email
         $sql = "SELECT * FROM usuarios WHERE email_user = '{$this->strEmail}'";
 
         $request = $this->select_all($sql);
-
+/*Lo que hace $request es buscar y si no encuentra singun usuario con ese email 
+deja registrar los datos del usuario  */
         if (empty($request)) {
             $query_insert = "INSERT INTO usuarios(
              nombres, apellidos, edad, telefono, email_user, password, direccion, primer_idioma, segundo_idioma, id_rol,status)  
@@ -79,7 +80,7 @@ class UsuariosModel extends mysql
         return $return;
     }
 
-    //Metodos para seleccionar los usuarios y el nombre rol
+    //Metodos para seleccionar y extraer los usuarios y el nombre rol
     public function selectUsuarios()
     {
         $sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.edad, u.telefono, u.email_user, u.primer_idioma, u.status, r.nombrerol
@@ -90,6 +91,8 @@ class UsuariosModel extends mysql
         $request = $this->select_all($sql);
         return $request;
     }
+    /*Nos sirve para extraer los datos y mostrarlos en el modal
+    por medio de una sentencia sql */
     public function selectUsuario(int $id_usuario)
     {
         $this->intIdUsuario = $id_usuario;
@@ -103,7 +106,7 @@ class UsuariosModel extends mysql
         $request = $this->select($sql);
         return $request;
     }
-
+//Metodo para actualizar un usuario
     public function updateUsuario(
         int $idUsuario,
         string $nombre,
@@ -171,7 +174,7 @@ class UsuariosModel extends mysql
         }
         return $request;
     }
-
+//Metodo para eliminar un usuario
     public function deleteUsuario(int $intIdUsuario)
     {
         $this->intIdUsuario = $intIdUsuario;

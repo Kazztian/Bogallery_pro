@@ -15,6 +15,7 @@
   <!-- Main CSS-->
   <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
   <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.min.css">
+<!-- Libreria de bootstrap para extrar datos de otras tablas-->
   <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/bootstrap-select.min.css">
 
   <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">

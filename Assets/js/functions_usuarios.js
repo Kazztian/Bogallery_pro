@@ -71,7 +71,7 @@ function inicializarTabla() {
     var formUsuario = document.querySelector("#formUsuario");
     formUsuario.onsubmit = function(e) {
         e.preventDefault();
-
+//Capturacion de datos del formulario de usuarios 
         var strNombre = document.querySelector('#txtNombre').value;
         var strApellido = document.querySelector('#txtApellido').value;
         var strEmail = document.querySelector('#txtEmail').value;
@@ -82,13 +82,15 @@ function inicializarTabla() {
         var strSegundoI = document.querySelector('#txtSegundoI').value;
         var intTipousuario = document.querySelector('#listRolid').value;
         var strPassword = document.querySelector('#txtPassword').value;
+//Para generar el status inactivo lo tendriamos que llamar como arriba en listRolid
 
+//Validacion patra los datos vacios
         if (strNombre === '' || strApellido === '' || strEmail === '' || intTelefono === '' || intEdad === '' || strDireccion === '' || strPrimerI === '' || strSegundoI === '' || intTipousuario === '') {
             // Utilizamos SweetAlert en lugar de swal()
             Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
             return false;
         }
-
+//Validacion de alerta datos vacios 
         let elementsValid = document.getElementsByClassName("valid");
         for (let i = 0; i < elementsValid.length; i++) { 
             if(elementsValid[i].classList.contains('is-invalid')) { 
@@ -102,7 +104,10 @@ function inicializarTabla() {
         var formData = new FormData(formUsuario);
         request.open("POST", ajaxUrl, true);
         request.send(formData);
-
+/*Aqui se optine el resultado del Model Y controlador de Usuarios
+para insertar un nuevo usuario y asi poder optener los datos y convertir el
+JSON en un objeto el cual estamos opteniendo en Usuarios 
+osea el array de los mensajes*/
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
                 console.log(request.responseText);  // Añade esto
@@ -130,7 +135,8 @@ function inicializarTabla() {
     }, false);
     
 }
-
+/*Funcion que hace la peticion para extraer los roles del controlador
+Roles y el metodo getSelectRoles*/
 function ftnRolesUsuarios() {
     var ajaxUrl = base_url + '/Roles/getSelectRoles';
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -146,11 +152,11 @@ function ftnRolesUsuarios() {
         }
     }
 }
-
+//Funccion para abrir el modal del usuario
 function ftnbViewUsuario(id_usuario) {
     var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     var ajaxUrl = base_url + '/Usuarios/getUsuario/' + id_usuario;
-
+//Valida sisi se hizo la peticion y si devuelve informacion
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
             var objData = JSON.parse(request.responseText);
@@ -158,7 +164,7 @@ function ftnbViewUsuario(id_usuario) {
                 var estadoUsuario = objData.data.status == 1 ?
                 '<span class="me-1 badge bg-success" style="display: inline-block; font-size: 0.9rem;">Activo</span>' :
                     '<span class="me-1 badge bg-danger" style="display: inline-block; font-size: 0.9rem;">Inactivo</span>';
-
+//Cargar los datos del formulario
                 document.querySelector("#celNombre").innerHTML = objData.data.nombres;
                 document.querySelector("#celApellidos").innerHTML = objData.data.apellidos;
                 document.querySelector("#celEdad").innerHTML = objData.data.edad;
@@ -183,7 +189,7 @@ function ftnbViewUsuario(id_usuario) {
     request.open("GET", ajaxUrl, true);
     request.send();
 }
-
+//Funcion para editar los datos del usuario
 function fntEditUsuario(id_usuario) {
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
@@ -225,6 +231,7 @@ function fntEditUsuario(id_usuario) {
     request.open("GET", ajaxUrl, true);
     request.send();
 }
+//Funcion para Eliminar un usuario
 function fntDelUsuario(idUsuario) {
     Swal.fire({
         title: "Eliminar Usuario",
@@ -263,6 +270,7 @@ function fntDelUsuario(idUsuario) {
     });
 }
 
+//Codigo para abrir el modal de los usuarios
 function openModal() {
     document.querySelector('#idUsuario').value = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
