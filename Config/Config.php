@@ -1,6 +1,8 @@
  <?php
 
   //define("BASE_URL", "http://localhost:8080/Bogallery_pro");
+  //define("BASE_URL", "http://localhost/bogallery_pro");
+
 
   const BASE_URL = "http://localhost/bogallery_pro";
   //Zona horaria
