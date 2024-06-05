@@ -13,7 +13,7 @@ class Usuarios extends Controllers
         $data['page_tag'] = "Usuarios";
         $data['page_title'] = "USUARIOS <small> Bogallery </small>";
         $data['page_name'] = "usuarios";
-
+        $data['page_functions_js'] = "functions_usuarios.js";
         $this->views->getView($this, "usuarios", $data);
     }
 /* Metodo para enviar los datos a la ruta de setUsuario en 

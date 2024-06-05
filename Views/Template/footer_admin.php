@@ -30,17 +30,9 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
 <script type="text/javascript" src="<?= media(); ?>/js/functions_admin.js"></script>
+<script src="<?= media(); ?>/js/<?=$data['page_functions_js'];?>"></script>
 
-<!--Aque lo que se hace es una condicion para abrir la pagina
-   seleccionada-->
-<?php if ($data['page_name'] == "rol_usuario") { ?>
-  <script src="<?= media(); ?>/js/functions_roles.js"></script>
-    
-    <?php } ?>
-    <?php if ($data['page_name'] == "usuarios") { ?>
-        <script src = "<?= media(); ?>/js/functions_usuarios.js" >
-  </script>
-<?php } ?>
+
 <!-- Page specific javascripts-->
 <!-- Google analytics script-->
 
