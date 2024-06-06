@@ -3,13 +3,13 @@
 
 class UsuariosModel extends mysql
 {
-    private $intIdUsuario;
+    private    $intIdUsuario;
     private    $strNombre;
     private    $strApellido;
     private    $intTelefono;
-    private     $strEmail;
-    private $strPassword;
-    private     $intEdad;
+    private    $strEmail;
+    private    $strPassword;
+    private    $intEdad;
     private    $strDireccion;
     private    $strPrimerI;
     private     $strSegundoI;

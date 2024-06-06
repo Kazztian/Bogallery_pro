@@ -4,7 +4,14 @@
 class Usuarios extends Controllers
 {
     public function __construct()
+
     {
+        // codigo que permite que funcione correctamente si no esta logiado
+        session_start();
+        if(empty($_SESSION['login']))
+        {
+            header('Location: '.base_url().'/login');
+        }
         parent::__construct();
     }
 

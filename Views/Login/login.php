@@ -14,7 +14,7 @@
  
   
  
-  <title><?php $data['page_tag  ']; ?></title>
+  <title><?= $data['page_tag']; ?></title>
   </head>
   <body>
     <section class="material-half-bg">
@@ -22,18 +22,18 @@
     </section>
     <section class="login-content">
       <div class="logo">
-      <h1>BoGallery</h1>
+      <h1><?= $data['page_title']; ?></h1>
       </div>
       <div id="login-box" class="login-box">
-        <form class="login-form" action="index.html">
+        <form class="login-form" name="formLogin" id="formLogin" action="">
           <h3 id="login-head" class="login-head"><i class="bi bi-person me-2"></i>Inicio Sesion</h3>
           <div class="mb-3">
             <label id="form-label" class="form-label">USUARIO</label>
-            <input  id="txtEmail" id="form-control" class="form-control" type="email" placeholder="Email" autofocus>
+            <input  id="txtEmail" name="txtEmail" id="form-control" class="form-control" type="email" placeholder="Email" autofocus>
           </div>
           <div class="mb-3">
             <label id="form-label" class="form-label">CONTRASEÑA</label>
-            <input id="txtPassword" id="form-control" class="form-control" type="password" placeholder="Contraseña">
+            <input id="txtPassword" name="txtPassword" id="form-control" class="form-control" type="password" placeholder="Contraseña">
           </div>
           <div class="mb-3">
             <div class="utility">
@@ -63,10 +63,14 @@
         </form>
       </div>
     </section>
+    <script>
+      const base_url = "<?=base_url();?>"
+    </script>
     <!-- Essential javascripts for application to work-->
     <script src="<?= media(); ?>/js/jquery-3.7.0.min.js"></script>
     <script src="<?= media(); ?>/js/bootstrap.min.js"></script>
     <script src="<?= media(); ?>/js/main.js"></script>
+
     <script src="<?= media(); ?>/js/<?=$data['page_functions_js'];?>"></script>
     <!-- Font-icon css-->
   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
