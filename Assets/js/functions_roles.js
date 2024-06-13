@@ -3,6 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     var script = document.createElement("script");
     script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@9";
 
+
+    
+
     // Agregamos el script al final del <body> para asegurarnos de que se cargue antes de usarlo
     document.body.appendChild(script);
 

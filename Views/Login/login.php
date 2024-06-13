@@ -45,15 +45,16 @@
               <div class="mb-3 btn-container d-grid">
                <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-box-arrow-in-right"></i> INICIAR SESIÓN</button>
           </div>
+    <!--Formulario Recuperar Constraseña  -->
         </form>
-        <form class="forget-form" action="index.html">
+        <form id="formRecetPass" name="formRecetPass" class="forget-form" action="">
           <h3 id="login-head" class="login-head"><i class="bi bi-person-lock me-2"></i>¿Has olvidado tu contraseña?</h3>
           <div class="mb-3">
             <label id="form-label" class="form-label">EMAIL</label>
-            <input id="txtEmailReset" id="form-control"  class="form-control" type="text" placeholder="Email">
+            <input id="txtEmailReset" name="txtEmailReset" id="form-control"  class="form-control" type="email" placeholder="Email">
           </div>
           <div class="mb-3 btn-container d-grid">
-            <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-unlock me-2 fs-5"></i>REINICIAR</button>
+            <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-unlock me-2 fs-5"></i>RESTABLECER</button>
           </div>
           <div class="mb-3 mt-3">
             <p id="semibold-text mb-0" class="semibold-text mb-0">
