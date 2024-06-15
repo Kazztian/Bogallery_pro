@@ -29,11 +29,11 @@
           <h3 id="login-head" class="login-head"><i class="bi bi-person me-2"></i>Inicio Sesion</h3>
           <div class="mb-3">
             <label id="form-label" class="form-label">USUARIO</label>
-            <input  id="txtEmail" name="txtEmail" class="form-control" type="email" placeholder="Email" autofocus>
+            <input  id="txtEmail" name="txtEmail" id="form-control" class="form-control" type="email" placeholder="Email" autofocus>
           </div>
           <div class="mb-3">
             <label id="form-label" class="form-label">CONTRASEÑA</label>
-            <input id="txtPassword" name="txtPassword" class="form-control" type="password" placeholder="Contraseña">
+            <input id="txtPassword" name="txtPassword" id="form-control" class="form-control" type="password" placeholder="Contraseña">
           </div>
           <div class="mb-3">
             <div class="utility">
@@ -51,7 +51,7 @@
           <h3 id="login-head" class="login-head"><i class="bi bi-person-lock me-2"></i>¿Has olvidado tu contraseña?</h3>
           <div class="mb-3">
             <label id="form-label" class="form-label">EMAIL</label>
-            <input id="txtEmailReset" name="txtEmailReset"  class="form-control" type="email" placeholder="Email">
+            <input id="txtEmailReset" name="txtEmailReset" id="form-control"  class="form-control" type="email" placeholder="Email">
           </div>
           <div class="mb-3 btn-container d-grid">
             <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-unlock me-2 fs-5"></i>RESTABLECER</button>
