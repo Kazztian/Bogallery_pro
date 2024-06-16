@@ -24,6 +24,8 @@
         <div id="login-box" class="login-box flipped">
             <form id="formCambiarPass" name="formCambiarPass" class="forget-form" action="">
                 <input type="hidden" id="id_usuario" name="id_usuario" value="<?= $data['id_usuario']; ?>" required>
+                <input type="hidden" id="txtEmail" name="txtEmail" value="<?= $data['email']; ?>" required>
+                <input type="hidden" id="txtToken" name="txtToken" value="<?= $data['token']; ?>" required>
                 <h3 id="login-head" class="login-head"><i class="fas fa-key"></i>Cambiar Contraseña</h3>
                 <div class="mb-3">
                     <input id="txtPassword" name="txtPassword" class="form-control" type="password" placeholder="Nueva Contraseña" required>

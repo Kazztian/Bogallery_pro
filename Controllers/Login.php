@@ -100,6 +100,8 @@ class Login extends Controllers
                 $data['page_tag'] = "Cambiar contraseña";
                 $data['page_name'] = "cambiar_contraseña";
                 $data['page_title'] = "Cambiar contraseña";
+                $data['email'] = $strEmail ;
+                $data['token'] =  $strToken;
                 $data['id_usuario'] = $arrResponse['id_usuario'];
                 $data['page_functions_js'] = "functions_login.js";
                 $this->views->getView($this, "cambiar_password",$data);
@@ -110,9 +112,40 @@ class Login extends Controllers
         die();
 
     }
-    public function setPassword(){
-        dep($_POST);
-        die();
+    public function setPassword()
+{
+    if ($_POST) {
+        if (empty($_POST['id_usuario']) || empty($_POST['txtEmail']) || empty($_POST['txtToken']) || empty($_POST['txtPassword']) || empty($_POST['txtPasswordConfirm'])) {
+            $arrResponse = array('status' => false, 'msg' => 'Error de datos');
+        } else {
+            $intIdUsuario = intval($_POST['id_usuario']);
+            $strPassword = $_POST['txtPassword'];
+            $strPasswordConfirm = $_POST['txtPasswordConfirm'];
+            $strEmail = strClean($_POST['txtEmail']);
+            $strToken = strClean($_POST['txtToken']);
+
+            if ($strPassword != $strPasswordConfirm) {
+                $arrResponse = array('status' => false, 'msg' => 'Las contraseñas no son iguales');
+            } else {
+                $arrResponseUser = $this->model->getUsuario($strEmail, $strToken);
+                if (empty($arrResponseUser)) {
+                    $arrResponse = array('status' => false, 'msg' => 'Error de datos.');
+                } else {
+                    $strPassword = hash("SHA256", $strPassword); // Encriptamos
+                    $requestPass = $this->model->insertPassword($intIdUsuario, $strPassword);
+
+                    if ($requestPass) {
+                        $arrResponse = array('status' => true, 'msg' => 'Contraseña actualizada con éxito');
+                    } else {
+                        $arrResponse = array('status' => false, 'msg' => 'No es posible realizar el proceso, intente más tarde');
+                    }
+                }
+            }
+        }
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
     }
+    die();
+}
+
 }
 ?>
