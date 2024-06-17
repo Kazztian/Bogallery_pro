@@ -42,6 +42,26 @@ function footerAdmin($data="")
     require_once $view_modal;
    }
 
+   //Envio de correos
+   function sendEmail($data, $template)
+{
+    $asunto = $data['asunto'];
+    $emailDestino = $data['email'];
+    $empresa = NOMBRE_REMITENTE;
+    $remitente = EMAIL_REMITENTE;
+
+    //ENVIO DE CORREO
+    $de = "MIME-Version: 1.0 \r\n";
+    $de .= "Content-type:text/html; charset=UTF-8\r\n";
+    $de .= "From: {$empresa}<{$remitente}>\r\n";
+    ob_start();
+    require_once("Views/Template/Email/{$template}.php");
+    $mensaje = ob_get_clean();
+    $send = mail($emailDestino, $asunto, $mensaje, $de);
+    return $send;
+}
+
+
 
   //Elimina el exceso de espacios entre palabras
     function strClean($strCadena){
@@ -76,6 +96,7 @@ function footerAdmin($data="")
         $string = str_ireplace("==","",$string);
         return $string;
     }
+
 
     //Genera una contraseña de 10 caracteres
 	function passGenerator($length = 10)

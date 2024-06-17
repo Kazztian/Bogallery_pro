@@ -20,3 +20,9 @@
 
   //Simbolo de la moneda
   const SMONEY = "$";
+
+ //Datos envio correo
+ const NOMBRE_REMITENTE = "BoGallery";
+ const EMAIL_REMITENTE = "no-reply@estefa.com";
+ const NOMBRE_EMPRESA ="BoGallery";
+ const WEB_EMPRESA ="WWW.BoGallery.com";
