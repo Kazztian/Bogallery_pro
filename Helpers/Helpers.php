@@ -61,6 +61,22 @@ function footerAdmin($data="")
     return $send;
 }
 
+function getPermisos(int $id_modulo){
+    require_once("Models/PermisosModel.php");
+    $objPermisos = new PermisosModel();
+    $idrol = $_SESSION['userData']['id_rol'];
+    $arrPermisos = $objPermisos->permisosModulo($idrol);
+    $permisos = '';
+    $permisosMod = '';
+
+    if(count($arrPermisos) > 0){
+        $permisos = $arrPermisos;
+        $permisosMod = isset($arrPermisos[$id_modulo]) ?  $arrPermisos[$id_modulo] : '';
+    }
+
+    $_SESSION['permisos'] = $permisos;
+    $_SESSION['permisosMod'] = $permisosMod;
+}
 
 
   //Elimina el exceso de espacios entre palabras

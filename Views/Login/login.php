@@ -11,6 +11,7 @@
  
   <link rel="stylesheet" type="text/css" href="<?=media();?>/css/login.css">
   <link rel="stylesheet" type="text/css" href="<?=media();?>/css/main.css">
+  <link rel="stylesheet" type="text/css" href="<?=media();?>/css/style.css">
  
   
  
@@ -25,6 +26,9 @@
       <h1><?= $data['page_title']; ?></h1>
       </div>
       <div id="login-box" class="login-box">
+        <div id="divLoading">
+          <div><img src="http://localhost:8080/Bogallery_pro/Assets/images/loading.svg" alt="Loading"></div>
+        </div>
         <form class="login-form" name="formLogin" id="formLogin" action="">
           <h3 id="login-head" class="login-head"><i class="bi bi-person me-2"></i>Inicio Sesion</h3>
           <div class="mb-3">
@@ -45,8 +49,9 @@
               <div class="mb-3 btn-container d-grid">
                <button type="submit" class="btn btn-primary btn-block"><i class="bi bi-box-arrow-in-right"></i> INICIAR SESIÓN</button>
           </div>
-    <!--Formulario Recuperar Constraseña  -->
+    
         </form>
+        <!--Formulario Recuperar Constraseña  -->
         <form id="formRecetPass" name="formRecetPass" class="forget-form" action="">
           <h3 id="login-head" class="login-head"><i class="bi bi-person-lock me-2"></i>¿Has olvidado tu contraseña?</h3>
           <div class="mb-3">
@@ -65,7 +70,7 @@
       </div>
     </section>
     <script>
-      const base_url = "<?=base_url();?>"
+      const base_url = "<?=base_url();?>" 
     </script>
     <!-- Essential javascripts for application to work-->
     <script src="<?= media(); ?>/js/jquery-3.7.0.min.js"></script>

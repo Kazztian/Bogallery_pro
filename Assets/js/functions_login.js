@@ -10,6 +10,7 @@ $('.login-content [data-toggle="flip"]').click(function () {
 });
 
 // Función para manejar el envío del formulario y mostrar alertas
+var divLoading = document.querySelector('#divLoading');
 document.addEventListener(
   "DOMContentLoaded",
   function () {
@@ -25,6 +26,7 @@ document.addEventListener(
           Swal.fire("Por Favor", "Escribe usuario y contraseña.", "error");
           return false;
         } else {
+          divLoading.style.display = "flex";
           var request = window.XMLHttpRequest
             ? new XMLHttpRequest()
             : new ActiveXObject("Microsoft.XMLHTTP");
@@ -46,6 +48,7 @@ document.addEventListener(
             } else {
               Swal.fire("Atencion", "Error en el proceso", "error");
             }
+            divLoading.style.display="none";
             return false;
           };
         }
@@ -62,6 +65,7 @@ document.addEventListener(
           Swal.fire("Por favor", "Escribe tu correo electrónico.", "error");
           return false;
         } else {
+          divLoading.style.display="flex";
           var request = window.XMLHttpRequest
             ? new XMLHttpRequest()
             : new ActiveXObject("Microsoft.XMLHTTP");
@@ -91,6 +95,7 @@ document.addEventListener(
             } else {
               Swal.fire("Atencion", "Error en el proceso", "error");
             }
+            divLoading.style.display="none";
             return false;
           };
         }
@@ -123,7 +128,7 @@ document.addEventListener(
             Swal.fire("Atención", "Las contraseñas no son iguales.", "error");
             return false;
           }
-
+          divLoading.style.display="flex";
           var request = window.XMLHttpRequest
             ? new XMLHttpRequest()
             : new ActiveXObject("Microsoft.XMLHTTP");
@@ -152,6 +157,7 @@ document.addEventListener(
             } else {
               Swal.fire("Atención", "Error en el proceso", "error");
             }
+            divLoading.style.display="none";
           };
         }
       };

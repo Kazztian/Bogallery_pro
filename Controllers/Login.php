@@ -121,8 +121,6 @@ class Login extends Controllers
                 $data['id_usuario'] = $arrResponse['id_usuario'];
                 $data['page_functions_js'] = "functions_login.js";
                 $this->views->getView($this, "cambiar_password",$data);
-
-
           }
         }
         die();
