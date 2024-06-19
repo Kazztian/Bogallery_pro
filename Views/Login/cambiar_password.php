@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,9 +11,10 @@
     <meta name="theme-color" content="#009688">
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/login.css">
     <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/main.css">
-    <link rel="stylesheet" type="text/css" href="<?=media();?>/css/style.css">
+    <link rel="stylesheet" type="text/css" href="<?= media(); ?>/css/style.css">
     <title><?= $data['page_tag']; ?></title>
 </head>
+
 <body>
     <section class="material-half-bg">
         <div class="cover"></div>
@@ -23,9 +25,9 @@
         </div>
         <!--Formulario Recuperar Contraseña  -->
         <div id="login-box" class="login-box flipped">
-        <div id="divLoading">
-          <div><img src="http://localhost:8080/Bogallery_pro/Assets/images/loading.svg" alt="Loading"></div>
-        </div>
+            <div id="divLoading">
+                <div><img src="http://localhost/bogallery_pro/Assets/images/loading.svg" alt="Loading"></div>
+            </div>
             <form id="formCambiarPass" name="formCambiarPass" class="forget-form" action="">
                 <input type="hidden" id="id_usuario" name="id_usuario" value="<?= $data['id_usuario']; ?>" required>
                 <input type="hidden" id="txtEmail" name="txtEmail" value="<?= $data['email']; ?>" required>
@@ -54,4 +56,5 @@
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </body>
+
 </html>
