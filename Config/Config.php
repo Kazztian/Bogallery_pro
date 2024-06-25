@@ -4,7 +4,7 @@
   //define("BASE_URL", "http://localhost/bogallery_pro");
 
 
-  const BASE_URL = "http://localhost/bogallery_pro";
+  const BASE_URL = "http://localhost:8080/Bogallery_pro";
   //Zona horaria
   date_default_timezone_set('America/Bogota');
 
@@ -20,3 +20,9 @@
 
   //Simbolo de la moneda
   const SMONEY = "$";
+
+ //Datos envio correo
+ const NOMBRE_REMITENTE = "BoGallery";
+ const EMAIL_REMITENTE = "no-reply@estefa.com";
+ const NOMBRE_EMPRESA ="BoGallery";
+ const WEB_EMPRESA ="WWW.BoGallery.com";
