@@ -8,7 +8,9 @@ getModal('modalRoles', $data);
   <div class="app-title">
     <div>
       <h1><i class="bi bi-person-lines-fill"></i> <?= $data['page_title'] ?>
-        <button class="btn btn-success" type="button" onclick="openModal();"><i class="bi bi-plus-circle"></i></i></i>Nuevo</button>
+        <?php if ($_SESSION['permisosMod']['w']) { ?>
+          <button class="btn btn-success" type="button" onclick="openModal();"><i class="bi bi-plus-circle"></i></i></i>Nuevo</button>
+        <?php } ?>
       </h1>
     </div>
     <ul class="app-breadcrumb breadcrumb">
