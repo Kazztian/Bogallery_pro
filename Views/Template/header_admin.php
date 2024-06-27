@@ -38,7 +38,7 @@
         </a>
         <ul class="dropdown-menu settings-menu dropdown-menu-right">
           <li><a class="dropdown-item" href="<?= base_url(); ?>/opciones"><i class="bi bi-gear me-2 fs-5"></i> Configuraciones</a></li>
-          <li><a class="dropdown-item" href="<?= base_url(); ?>/perfil"><i class="bi bi-person me-2 fs-5"></i> Perfil</a></li>
+          <li><a class="dropdown-item" href="<?= base_url(); ?>/usuarios/perfil"><i class="bi bi-person me-2 fs-5"></i> Perfil</a></li>
           <li><a class="dropdown-item" href="<?= base_url(); ?>/logout"><i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout</a></li>
         </ul>
       </li>

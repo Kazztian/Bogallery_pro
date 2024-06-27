@@ -194,4 +194,12 @@ empty= Verifica si esta vacio algun campo*/
         }
         die();
     }
+    public function perfil(){
+       
+        $data['page_tag'] = "Perfil";
+        $data['page_title'] = "Perfil de Usuario";
+        $data['page_name'] = "perfil";
+        $data['page_functions_js'] = "functions_usuarios.js";
+        $this->views->getView($this, "perfil", $data);
+    }
 }
