@@ -3,13 +3,13 @@
 
 class UsuariosModel extends mysql
 {
-    private $intIdUsuario;
+    private    $intIdUsuario;
     private    $strNombre;
     private    $strApellido;
     private    $intTelefono;
-    private     $strEmail;
-    private $strPassword;
-    private     $intEdad;
+    private    $strEmail;
+    private    $strPassword;
+    private    $intEdad;
     private    $strDireccion;
     private    $strPrimerI;
     private     $strSegundoI;
@@ -21,7 +21,7 @@ class UsuariosModel extends mysql
     {
         parent::__construct();
     }
-//Se reciben todos los datos que se envian desde el controlador Usuarios
+    //Se reciben todos los datos que se envian desde el controlador Usuarios
     public function insertUsuario(
         string $nombre,
         string $apellido,
@@ -35,7 +35,7 @@ class UsuariosModel extends mysql
         int $tipoid,
         int $status
     ) {
-//Se asignan los valores declarados en la parte superior 
+        //Se asignan los valores declarados en la parte superior 
         $this->strNombre = $nombre;
         $this->strApellido = $apellido;
         $this->intTelefono = $telefono;
@@ -48,11 +48,11 @@ class UsuariosModel extends mysql
         $this->intTipoId = $tipoid;
         $this->intStatus = $status;
         $return = 0;
-//Validacion para el email y saber si ya existe ese email
+        //Validacion para el email y saber si ya existe ese email
         $sql = "SELECT * FROM usuarios WHERE email_user = '{$this->strEmail}'";
 
         $request = $this->select_all($sql);
-/*Lo que hace $request es buscar y si no encuentra singun usuario con ese email 
+        /*Lo que hace $request es buscar y si no encuentra singun usuario con ese email 
 deja registrar los datos del usuario  */
         if (empty($request)) {
             $query_insert = "INSERT INTO usuarios(
@@ -83,11 +83,15 @@ deja registrar los datos del usuario  */
     //Metodos para seleccionar y extraer los usuarios y el nombre rol
     public function selectUsuarios()
     {
-        $sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.edad, u.telefono, u.email_user, u.primer_idioma, u.status, r.nombrerol
+        $whereAdmin = "";
+        if ($_SESSION['idUser'] != 1) {
+            $whereAdmin = " and u.id_usuario != 1";
+        }
+        $sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.edad, u.telefono, u.email_user, u.primer_idioma, u.status,r.id_rol, r.nombrerol
         FROM usuarios u
         INNER JOIN rol r
         ON u.id_rol = r.id_rol
-        WHERE u.status != 0 ";
+        WHERE u.status != 0 " . $whereAdmin;
         $request = $this->select_all($sql);
         return $request;
     }
@@ -106,7 +110,7 @@ deja registrar los datos del usuario  */
         $request = $this->select($sql);
         return $request;
     }
-//Metodo para actualizar un usuario
+    //Metodo para actualizar un usuario
     public function updateUsuario(
         int $idUsuario,
         string $nombre,
@@ -174,7 +178,7 @@ deja registrar los datos del usuario  */
         }
         return $request;
     }
-//Metodo para eliminar un usuario
+    //Metodo para eliminar un usuario
     public function deleteUsuario(int $intIdUsuario)
     {
         $this->intIdUsuario = $intIdUsuario;

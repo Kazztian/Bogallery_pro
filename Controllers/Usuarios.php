@@ -4,19 +4,29 @@
 class Usuarios extends Controllers
 {
     public function __construct()
+
     {
+        // codigo que permite que funcione correctamente si no esta logiado
         parent::__construct();
+        session_start();
+        if (empty($_SESSION['login'])) {
+            header('Location: ' . base_url() . '/login');
+        }
+        getPermisos(2);
     }
 
     public function Usuarios()
     {
+        if (empty($_SESSION['permisosMod']['r'])) {
+            header("Location:" . base_url() . '/dashboard');
+        }
         $data['page_tag'] = "Usuarios";
         $data['page_title'] = "USUARIOS <small> Bogallery </small>";
         $data['page_name'] = "usuarios";
-
+        $data['page_functions_js'] = "functions_usuarios.js";
         $this->views->getView($this, "usuarios", $data);
     }
-/* Metodo para enviar los datos a la ruta de setUsuario en 
+    /* Metodo para enviar los datos a la ruta de setUsuario en 
 function_usuario donde de busca este archivo y este metodo
 empty= Verifica si esta vacio algun campo*/
     public function setUsuario()
@@ -40,9 +50,9 @@ empty= Verifica si esta vacio algun campo*/
                 $strSegundoI = ucwords(strClean($_POST['txtSegundoI']));
                 $intTipoId = intval(strClean($_POST['listRolid']));
                 $intStatus = intval(strClean($_POST['listStatus']));
-//Se crea las variables que van almacenar los datos en las lineas de arriba
+                //Se crea las variables que van almacenar los datos en las lineas de arriba
 
-//Validacion para generar contraseña si el usuario no tiene una, hash lo que hace es encriptar
+                //Validacion para generar contraseña si el usuario no tiene una, hash lo que hace es encriptar
                 if ($idUsuario == 0) {
                     $option = 1;
                     $strPassword = empty($_POST['txtPassword']) ? hash("SHA256", passGenerator()) : hash("SHA256", $_POST['txtPassword']);
@@ -111,19 +121,41 @@ empty= Verifica si esta vacio algun campo*/
 
         // for para que se muestre el mensae correcto dependiendo del status, se recorre todo el array y llega a la posicion del status 
         for ($i = 0; $i < count($arrData); $i++) {
+            $btnView = "";
+            $btnEdit = "";
+            $btnDelete = "";
 
             if ($arrData[$i]['status'] == 1) {
                 $arrData[$i]['status'] = '<span class="me-1 badge bg-success" style="display: inline-block; font-size: 0.9rem;">Activo</span>';
             } else {
                 $arrData[$i]['status'] = '<span class="me-1 badge bg-danger"style="display: inline-block; font-size: 0.9rem;">Inactivo</span>';
             }
-            $arrData[$i]['options'] = '<div class="text-center">
-                   <button class="btn btn-outline-info btn-sm btnViewUsuario" onClick="ftnbViewUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Ver Usuario"><i class="bi bi-eye-fill"></i></button>
 
-                <button class="btn btn-warning btn-sm btnEditUsuario"  onClick="fntEditUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Editar Usuario"><i class="bi bi-pencil-square"></i></button>
+            if ($_SESSION['permisosMod']['r']) {
+                $btnView = ' <button class="btn btn-outline-info btn-sm btnViewUsuario" onClick="ftnbViewUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Ver Usuario"><i class="bi bi-eye-fill"></i></button>';
+            }
 
-                <button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Eliminar"><i class="bi bi-trash"></i></button>
-                </div>';
+            if ($_SESSION['permisosMod']['u']) {
+                if (($_SESSION['idUser'] == 1 && $_SESSION['userData']['id_rol'] == 1) ||
+                    ($_SESSION['userData']['id_rol'] == 1 && $arrData[$i]['id_rol'] != 1)
+                ) {
+                    $btnEdit = ' <button class="btn btn-warning btn-sm btnEditUsuario"  onClick="fntEditUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Editar Usuario"><i class="bi bi-pencil-square"></i></button>';
+                } else {
+                    $btnEdit = ' <button class="btn btn-warning btn-sm btnEditUsuario" disabled ><i class="bi bi-pencil-square"></i></button>';
+                }
+            }
+
+            if ($_SESSION['permisosMod']['d']) {
+                if (($_SESSION['idUser'] == 1 and $_SESSION['userData']['id_rol'] == 1) ||
+                    ($_SESSION['userData']['id_rol'] == 1 and $arrData[$i]['id_rol'] != 1) and
+                    ($_SESSION['userData']['id_usuario'] != $arrData[$i]['id_usuario'])
+                ) {
+                    $btnDelete = '<button class="btn btn-danger btn-sm btnDelUsuario" onClick="fntDelUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Eliminar"><i class="bi bi-trash"></i></button>';
+                } else {
+                    $btnDelete = '<button class="btn btn-danger btn-sm" disabled><i class="bi bi-trash"></i></button>';
+                }
+            }
+            $arrData[$i]['options'] = '<div class="text-center"> ' . $btnView . ' ' . $btnEdit . ' ' . $btnDelete . ' </div>';
         }
 
         echo json_encode($arrData, JSON_UNESCAPED_UNICODE); //Formato json para que pueda ser interpretado por cualquier lenguaje(Se convierta en un objeto)
@@ -145,7 +177,7 @@ empty= Verifica si esta vacio algun campo*/
         }
         die();
     }
-//Metodo para eliminar un usuario
+    //Metodo para eliminar un usuario
     public function delUsuario()
     {
         if ($_POST) {

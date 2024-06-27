@@ -42,6 +42,42 @@ function footerAdmin($data="")
     require_once $view_modal;
    }
 
+   //Envio de correos
+   function sendEmail($data, $template)
+{
+    $asunto = $data['asunto'];
+    $emailDestino = $data['email'];
+    $empresa = NOMBRE_REMITENTE;
+    $remitente = EMAIL_REMITENTE;
+
+    //ENVIO DE CORREO
+    $de = "MIME-Version: 1.0 \r\n";
+    $de .= "Content-type:text/html; charset=UTF-8\r\n";
+    $de .= "From: {$empresa}<{$remitente}>\r\n";
+    ob_start();
+    require_once("Views/Template/Email/{$template}.php");
+    $mensaje = ob_get_clean();
+    $send = mail($emailDestino, $asunto, $mensaje, $de);
+    return $send;
+}
+
+function getPermisos(int $id_modulo){
+    require_once("Models/PermisosModel.php");
+    $objPermisos = new PermisosModel();
+    $idrol = $_SESSION['userData']['id_rol'];
+    $arrPermisos = $objPermisos->permisosModulo($idrol);
+    $permisos = '';
+    $permisosMod = '';
+
+    if(count($arrPermisos) > 0){
+        $permisos = $arrPermisos;
+        $permisosMod = isset($arrPermisos[$id_modulo]) ?  $arrPermisos[$id_modulo] : '';
+    }
+
+    $_SESSION['permisos'] = $permisos;
+    $_SESSION['permisosMod'] = $permisosMod;
+}
+
 
   //Elimina el exceso de espacios entre palabras
     function strClean($strCadena){
@@ -76,6 +112,7 @@ function footerAdmin($data="")
         $string = str_ireplace("==","",$string);
         return $string;
     }
+
 
     //Genera una contraseña de 10 caracteres
 	function passGenerator($length = 10)
