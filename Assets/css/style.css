@@ -99,7 +99,7 @@ input:checked + .slider:before {
 }
 /* Diseño del svg de cargar */
 #divLoading{
-    position: absolute;
+    position: fixed;
     top: 0;
     width: 100%;
     height: 100%;
@@ -109,11 +109,16 @@ input:checked + .slider:before {
     justify-content: center;
     align-items: center;
     background: rgba(200, 233, 236, 0.65);
-    z-index: 1;
+    z-index: 9999;
     display: none;
 }
 
 #divLoading img{
     width: 50px;
     height: 50px;
+}
+.required{
+    color:red;
+    font-size: 13pt;
+    font-weight: bold;
 }

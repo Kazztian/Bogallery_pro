@@ -1,4 +1,5 @@
 <?php headerAdmin($data);
+getModal('modalperfil', $data);
 ?>
 
 <main class="app-content">
@@ -60,17 +61,17 @@
                             <div class="row mb-4">
                                 <div class="col-md-6">
                                     <label>Identificación Tributaria</label>
-                                    <input class="form-control" type="text" id="txtNit" name="txtNit" value="<?= isset($_SESSION['userData']['nit']) ? $_SESSION['userData']['nit'] : ''; ?>">
+                                    <input class="form-control" type="text" id="txtNit" name="txtNit" value="<?= $_SESSION['userData']['nit']; ?>">
                                 </div>
                                 <div class="col-md-6">
                                     <label>Nombre fiscal</label>
-                                    <input class="form-control" type="text" id="txtNombreFiscal" name="txtNombreFiscal" value="<?= isset($_SESSION['userData']['nombrefiscal']) ? $_SESSION['userData']['nombrefiscal'] : ''; ?>">
+                                    <input class="form-control" type="text" id="txtNombreFiscal" name="txtNombreFiscal" value="<?= $_SESSION['userData']['nombrefiscal']; ?>">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-12 mb-4">
                                     <label>Dirección fiscal</label>
-                                    <input class="form-control" type="text" id="txtDirFiscal" name="txtDirFiscal" value="<?= isset($_SESSION['userData']['direccionfiscal']) ? $_SESSION['userData']['direccionfiscal'] : ''; ?>">
+                                    <input class="form-control" type="text" id="txtDirFiscal" name="txtDirFiscal" value="<?= $_SESSION['userData']['direccionfiscal']; ?>">
                                 </div>
                             </div>
                             <div class="row mb-10">

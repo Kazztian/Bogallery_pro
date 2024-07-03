@@ -24,6 +24,11 @@
 </head>
 
 <body class="app sidebar-mini">
+<div id="divLoading" >
+      <div>
+        <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+      </div>
+    </div>
   <!-- Navbar -->
   <header class="app-header">
     <a class="app-header__logo" href="<?= base_url(); ?>/dashboard">BoGallery</a>

@@ -14,10 +14,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="tile">
-                <div class="tile-body">Create a beautiful dashboard</div>
-                <?php dep($_SESSION['userData']);
+                <div class="tile-body">dashboard</div>
 
-                ?>
             </div>
         </div>
     </div>
