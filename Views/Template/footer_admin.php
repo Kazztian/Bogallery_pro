@@ -2,7 +2,6 @@
   const base_url = "<?= base_url(); ?>";
 </script>
 
-
 <!-- Essential javascripts for application to work-->
 <script src="<?= media(); ?>/js/jquery-3.7.0.min.js"></script>
 <script src="<?= media(); ?>/js/popper.min.js"></script>
