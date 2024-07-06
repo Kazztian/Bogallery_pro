@@ -30,7 +30,7 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
 <script type="text/javascript" src="<?= media(); ?>/js/functions_admin.js"></script>
-<script src="<?= media(); ?>/js/<?=$data['page_functions_js'];?>"></script>
+<script src="<?= media(); ?>/js/<?= $data['page_functions_js']; ?>"></script>
 
 
 <!-- Page specific javascripts-->

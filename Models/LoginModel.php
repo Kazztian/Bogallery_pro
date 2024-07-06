@@ -33,6 +33,9 @@ class LoginModel extends mysql
                        u.edad,
                        u.telefono,
                        u.email_user,
+                       u.nit,
+					   u.nombrefiscal,
+					   u.direccionfiscal,
                        u.direccion,
                        u.primer_idioma ,
                        u.segundo_idioma,
@@ -43,6 +46,7 @@ class LoginModel extends mysql
                 ON u.id_rol = r.id_rol
                 WHERE u.id_usuario = $this->intIdUsuario";
         $request = $this->select($sql);
+        $_SESSION['userData'] = $request;
         return $request;
     }
 

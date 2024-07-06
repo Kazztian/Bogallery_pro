@@ -1,8 +1,10 @@
-var tableUsuarios;
+let tableUsuarios;
+let rowTable = "";
+let divLoading = document.querySelector('#divLoading');
 
 document.addEventListener('DOMContentLoaded', function() {
     // Creamos un elemento <script> para cargar SweetAlert desde el CDN
-    var script = document.createElement('script');
+    let script = document.createElement('script');
     script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@9';
 
     // Agregamos un evento para manejar el estado de carga del script
@@ -13,7 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Agregamos el script al final del <body> para asegurarnos de que se cargue antes de usarlo
     document.body.appendChild(script);
-});
+
 
 function inicializarTabla() {
     tableUsuarios = $("#tableUsuarios").DataTable({
@@ -66,22 +68,24 @@ function inicializarTabla() {
         iDisplayLength: 10,
         order: [[0, "desc"]],
     });
-
+}
     // Manejo del formulario de usuario
-    var formUsuario = document.querySelector("#formUsuario");
+    if(document.querySelector("#formUsuario")){
+    let formUsuario = document.querySelector("#formUsuario");
     formUsuario.onsubmit = function(e) {
         e.preventDefault();
 //Capturacion de datos del formulario de usuarios 
-        var strNombre = document.querySelector('#txtNombre').value;
-        var strApellido = document.querySelector('#txtApellido').value;
-        var strEmail = document.querySelector('#txtEmail').value;
-        var intTelefono = document.querySelector('#txtTelefono').value;
-        var intEdad = document.querySelector('#txtEdad').value;
-        var strDireccion = document.querySelector('#txtDireccion').value;
-        var strPrimerI = document.querySelector('#txtPrimerI').value;
-        var strSegundoI = document.querySelector('#txtSegundoI').value;
-        var intTipousuario = document.querySelector('#listRolid').value;
-        var strPassword = document.querySelector('#txtPassword').value;
+        let strNombre = document.querySelector('#txtNombre').value;
+        let strApellido = document.querySelector('#txtApellido').value;
+        let strEmail = document.querySelector('#txtEmail').value;
+        let intTelefono = document.querySelector('#txtTelefono').value;
+        let intEdad = document.querySelector('#txtEdad').value;
+        let strDireccion = document.querySelector('#txtDireccion').value;
+        let strPrimerI = document.querySelector('#txtPrimerI').value;
+        let strSegundoI = document.querySelector('#txtSegundoI').value;
+        let intTipousuario = document.querySelector('#listRolid').value;
+        let strPassword = document.querySelector('#txtPassword').value;
+        let intStatus = document.querySelector('#listStatus').value;
 //Para generar el status inactivo lo tendriamos que llamar como arriba en listRolid
 
 //Validacion patra los datos vacios
@@ -98,10 +102,10 @@ function inicializarTabla() {
                 return false;
             } 
         } 
-
-        var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-        var ajaxUrl = base_url + '/Usuarios/setUsuario'; 
-        var formData = new FormData(formUsuario);
+        divLoading.style.display = "flex";
+        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        let ajaxUrl = base_url + '/Usuarios/setUsuario'; 
+        let formData = new FormData(formUsuario);
         request.open("POST", ajaxUrl, true);
         request.send(formData);
 /*Aqui se optine el resultado del Model Y controlador de Usuarios
@@ -111,8 +115,25 @@ osea el array de los mensajes*/
         request.onreadystatechange = function() {
             if (request.readyState === 4 && request.status === 200) {
                 console.log(request.responseText);  // Añade esto
-                var objData = JSON.parse(request.responseText);
+                let objData = JSON.parse(request.responseText);
                 if (objData.status) {
+                    if(rowTable == ""){
+                        tableUsuarios.ajax.reload(function() {
+                            // Callback function after reloading the table, if needed
+                        });
+
+                    }else{
+                        htmlStatus = intStatus == 1 ? 
+                        '<span class="badge badge-success">Activo</span>' : 
+                        '<span class="badge badge-danger">Inactivo</span>';
+                        rowTable.cells[1].textContent = strNombre;
+                        rowTable.cells[2].textContent = strApellido;
+                        rowTable.cells[3].textContent = strEmail;
+                        rowTable.cells[4].textContent = intTelefono;
+                        rowTable.cells[5].textContent = document.querySelector("#listRolid").selectedOptions[0].text;
+                        rowTable.cells[6].innerHTML = htmlStatus;
+                            rowTable="";
+                    }
                     $('#modalFormUsuario').modal("hide");
                     // Utilizamos SweetAlert en lugar de swal()
                     Swal.fire("Usuarios", objData.msg, "success");
@@ -124,44 +145,188 @@ osea el array de los mensajes*/
                     Swal.fire("Error", objData.msg, "error");
                 }
             }
+            divLoading.style.display="none";
+            return false;
         }
     };
 
-    // Cargar roles de usuarios al cargar la página
-    window.addEventListener('load', function(){
-        ftnRolesUsuarios();
-        //AQUI PODRIAN IR LAS FUNCIONES DE USUARIO SI NO ABREN
-       
-    }, false);
     
 }
+//Actualizar perfil
+if(document.querySelector("#formPerfil")){
+    let formUsuario = document.querySelector("#formPerfil");
+    formUsuario.onsubmit = function(e) {
+        e.preventDefault();
+//Capturacion de datos del formulario de usuarios 
+        let strNombre = document.querySelector('#txtNombre').value;
+        let strApellido = document.querySelector('#txtApellido').value;
+        let intTelefono = document.querySelector('#txtTelefono').value;
+        let intEdad = document.querySelector('#txtEdad').value;
+        let strDireccion = document.querySelector('#txtDireccion').value;
+        let strPrimerI = document.querySelector('#txtPrimerI').value;
+        let strSegundoI = document.querySelector('#txtSegundoI').value;
+        let strPassword = document.querySelector('#txtPassword').value;
+        let strPasswordConfirm = document.querySelector('#txtPasswordConfirm').value;
+//Para generar el status inactivo lo tendriamos que llamar como arriba en listRolid
+
+//Validacion patra los datos vacios
+        if (strNombre === '' || strApellido === ''  || intTelefono === '' || intEdad === '' || strDireccion === '' || strPrimerI === '' || strSegundoI === '' ) {
+            // Utilizamos SweetAlert en lugar de swal()
+            Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
+            return false;
+        }
+        if(strPassword != "" || strPasswordConfirm != "")
+            {   
+                if( strPassword != strPasswordConfirm ){
+                    Swal.fire("Atención", "Las contraseñas no son iguales." , "info");
+                    return false;
+                }           
+                if(strPassword.length < 5 ){
+                    Swal.fire("Atención", "La contraseña debe tener un mínimo de 5 caracteres." , "info");
+                    return false;
+                }
+            }
+//Validacion de alerta datos vacios 
+        let elementsValid = document.getElementsByClassName("valid");
+        for (let i = 0; i < elementsValid.length; i++) { 
+            if(elementsValid[i].classList.contains('is-invalid')) { 
+                Swal.fire("Atención", "Por favor verifique los campos en rojo." , "error");
+                return false;
+            } 
+        } 
+        divLoading.style.display = "flex";
+        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        let ajaxUrl = base_url + '/Usuarios/putPerfil'; 
+        let formData = new FormData(formPerfil);
+        request.open("POST", ajaxUrl, true);
+        request.send(formData);
+/*Aqui se optine el resultado del Model Y controlador de Usuarios
+para insertar un nuevo usuario y asi poder optener los datos y convertir el
+JSON en un objeto el cual estamos opteniendo en Usuarios 
+osea el array de los mensajes*/
+request.onreadystatechange = function() {
+    if (request.readyState !== 4) return;
+    if (request.status === 200) {
+        console.log(request.responseText);  // Añade esto para depurar
+        let objData = JSON.parse(request.responseText);
+        if (objData.status) {
+            $('#modalFormPerfil').modal("hide");
+            Swal.fire({
+                title: "",
+                text: objData.msg,
+                icon: "success",
+                confirmButtonText: "Aceptar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
+        } else {
+            Swal.fire("Error", objData.msg, "error");
+        }
+    }
+    divLoading.style.display = "none";
+    return false;
+}
+
+    };
+}
+ 
+//Actualizar Datos Fiscales
+if(document.querySelector("#formDataFiscal")){
+    let formUsuario = document.querySelector("#formDataFiscal");
+    formUsuario.onsubmit = function(e) {
+        e.preventDefault();
+//Capturacion de datos del formulario de usuarios 
+        let strNit = document.querySelector('#txtNit').value;
+        let strNombreFiscal = document.querySelector('#txtNombreFiscal').value;
+        let strDirFiscal = document.querySelector('#txtDirFiscal').value;
+    
+//Para generar el status inactivo lo tendriamos que llamar como arriba en listRolid
+
+//Validacion patra los datos vacios
+        if (strNit === '' || strNombreFiscal === ''  || strDirFiscal === '') {
+            // Utilizamos SweetAlert en lugar de swal()
+            Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
+            return false;
+        }
+        divLoading.style.display = "flex";
+        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        let ajaxUrl = base_url + '/Usuarios/putDfiscal'; 
+        let formData = new FormData(formDataFiscal);
+        request.open("POST", ajaxUrl, true);
+        request.send(formData);
+/*Aqui se optine el resultado del Model Y controlador de Usuarios
+para insertar un nuevo usuario y asi poder optener los datos y convertir el
+JSON en un objeto el cual estamos opteniendo en Usuarios 
+osea el array de los mensajes*/
+
+request.onreadystatechange = function() {
+    if (request.readyState !== 4) return;
+    if (request.status === 200) {
+        console.log(request.responseText);  // Añade esto para depurar
+        let objData = JSON.parse(request.responseText);
+        if (objData.status) {
+            $('#modalFormPerfil').modal("hide");
+            Swal.fire({
+                title: "",
+                text: objData.msg,
+                icon: "success",
+                confirmButtonText: "Aceptar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    location.reload();
+                }
+            });
+        } else {
+            Swal.fire("Error", objData.msg, "error");
+        }
+    }
+    divLoading.style.display = "none";
+    return false;
+}
+    };
+}
+}, false);
+
+// Cargar roles de usuarios al cargar la página
+window.addEventListener('load', function(){
+    ftnRolesUsuarios();
+    //AQUI PODRIAN IR LAS FUNCIONES DE USUARIO SI NO ABREN
+   
+}, false);
+
 /*Funcion que hace la peticion para extraer los roles del controlador
 Roles y el metodo getSelectRoles*/
 function ftnRolesUsuarios() {
-    var ajaxUrl = base_url + '/Roles/getSelectRoles';
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-
-    request.open("GET", ajaxUrl, true);
-    request.send();
-
-    request.onreadystatechange = function() {
-        if (request.readyState === 4 && request.status === 200) {
-            document.querySelector('#listRolid').innerHTML = request.responseText;
-            document.querySelector('#listRolid').value = 1;
-            $('#listRolid').selectpicker('render');
+    if(document.querySelector('#listRolid'))
+        {
+            let ajaxUrl = base_url + '/Roles/getSelectRoles';
+            let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        
+            request.open("GET", ajaxUrl, true);
+            request.send();
+        
+            request.onreadystatechange = function() {
+                if (request.readyState === 4 && request.status === 200) {
+                    document.querySelector('#listRolid').innerHTML = request.responseText;
+                   // document.querySelector('#listRolid').value = 1;
+                    $('#listRolid').selectpicker('render');
+                }
+            }
         }
-    }
-}
+        }
+   
 //Funccion para abrir el modal del usuario
 function ftnbViewUsuario(id_usuario) {
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = base_url + '/Usuarios/getUsuario/' + id_usuario;
+    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl = base_url + '/Usuarios/getUsuario/' + id_usuario;
 //Valida sisi se hizo la peticion y si devuelve informacion
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
+            let objData = JSON.parse(request.responseText);
             if (objData.status) {
-                var estadoUsuario = objData.data.status == 1 ?
+                let estadoUsuario = objData.data.status == 1 ?
                 '<span class="me-1 badge bg-success" style="display: inline-block; font-size: 0.9rem;">Activo</span>' :
                     '<span class="me-1 badge bg-danger" style="display: inline-block; font-size: 0.9rem;">Inactivo</span>';
 //Cargar los datos del formulario
@@ -190,18 +355,20 @@ function ftnbViewUsuario(id_usuario) {
     request.send();
 }
 //Funcion para editar los datos del usuario
-function fntEditUsuario(id_usuario) {
+function fntEditUsuario(element,id_usuario) {
+    rowTable = element.parentNode.parentNode.parentNode;
+ 
     document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
     document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
     document.querySelector('#btnText').innerHTML = 'Actualizar';
     document.querySelector('#titleModal').innerHTML = "Actualizar Usuario";
 
-    var request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-    var ajaxUrl = base_url + '/Usuarios/getUsuario/' + id_usuario;
+    let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+    let ajaxUrl = base_url + '/Usuarios/getUsuario/' + id_usuario;
 
     request.onreadystatechange = function() {
         if (request.readyState == 4 && request.status == 200) {
-            var objData = JSON.parse(request.responseText);
+            let objData = JSON.parse(request.responseText);
             if (objData.status) {
                 document.querySelector("#idUsuario").value = objData.data.id_usuario;
                 document.querySelector("#txtNombre").value = objData.data.nombres;
@@ -244,11 +411,11 @@ function fntDelUsuario(idUsuario) {
         closeOnCancel: true,
     }).then((result) => {
         if (result.isConfirmed) {
-            var request = window.XMLHttpRequest
+            let request = window.XMLHttpRequest
                 ? new XMLHttpRequest()
                 : new ActiveXObject("Microsoft.XMLHTTP");
-            var ajaxUrl = base_url + "/Usuarios/delUsuario/";
-            var strData = "idUsuario=" + idUsuario;
+            let ajaxUrl = base_url + "/Usuarios/delUsuario/";
+            let strData = "idUsuario=" + idUsuario;
             request.open("POST", ajaxUrl, true);
             request.setRequestHeader(
                 "Content-type",
@@ -257,7 +424,7 @@ function fntDelUsuario(idUsuario) {
             request.send(strData);
             request.onreadystatechange = function () {
                 if (request.readyState == 4 && request.status == 200) {
-                    var objData = JSON.parse(request.responseText);
+                    let objData = JSON.parse(request.responseText);
                     if (objData.status) {
                         Swal.fire("Eliminar!", objData.msg, "success");
                         tableUsuarios.ajax.reload(); // Recargar la tabla sin llamar a fntDelRol nuevamente
@@ -272,6 +439,7 @@ function fntDelUsuario(idUsuario) {
 
 //Codigo para abrir el modal de los usuarios
 function openModal() {
+    rowTable = "";
     document.querySelector('#idUsuario').value = "";
     document.querySelector('.modal-header').classList.replace("headerUpdate", "headerRegister");
     document.querySelector('#btnActionForm').classList.replace("btn-info", "btn-primary");
@@ -279,4 +447,7 @@ function openModal() {
     document.querySelector('#titleModal').innerHTML = "Nuevo Usuario";
     document.querySelector("#formUsuario").reset();
     $('#modalFormUsuario').modal('show');
+}
+function openModalPerfil(){
+    $('#modalFormPerfil').modal('show');
 }

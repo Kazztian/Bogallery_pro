@@ -1,49 +1,51 @@
 <?php
 //Retorna la URL del proyecto
-    function base_url()
-    {
-        return BASE_URL;
-    }
-
- 
-//Retorna la ruta de Assets y lo que contenga
-    function media(){
-
-            return BASE_URL."/Assets";
-    }
-//Funcines para que se muestren las partes completas del templete en cada seccion que hagamos
-function headerAdmin($data="")
+function base_url()
 {
-    $view_header = "Views/Template/header_admin.php";
-    require_once ($view_header);
+    return BASE_URL;
 }
 
-function footerAdmin($data="")
+
+//Retorna la ruta de Assets y lo que contenga
+function media()
+{
+
+    return BASE_URL . "/Assets";
+}
+//Funcines para que se muestren las partes completas del templete en cada seccion que hagamos
+function headerAdmin($data = "")
+{
+    $view_header = "Views/Template/header_admin.php";
+    require_once($view_header);
+}
+
+function footerAdmin($data = "")
 {
     $view_footer = "Views/Template/footer_admin.php";
-    require_once ($view_footer);
+    require_once($view_footer);
 }
 
 
 //Muestra la informacion formateada o mas lejible
-    function dep($data)
-    {
-        $format  = print_r('<pre>');
-        $format .= print_r($data);
-        $format .= print_r('</pre>');
-        return $format;
-    }
-  
+function dep($data)
+{
+    $format  = print_r('<pre>');
+    $format .= print_r($data);
+    $format .= print_r('</pre>');
+    return $format;
+}
 
-    //Funcion para el formulario de roles 
-   function getModal(string $nameModal,$data){
 
-    $view_modal ="Views/Template/Modals/{$nameModal}.php";
+//Funcion para el formulario de roles 
+function getModal(string $nameModal, $data)
+{
+
+    $view_modal = "Views/Template/Modals/{$nameModal}.php";
     require_once $view_modal;
-   }
+}
 
-   //Envio de correos
-   function sendEmail($data, $template)
+//Envio de correos
+function sendEmail($data, $template)
 {
     $asunto = $data['asunto'];
     $emailDestino = $data['email'];
@@ -61,7 +63,8 @@ function footerAdmin($data="")
     return $send;
 }
 
-function getPermisos(int $id_modulo){
+function getPermisos(int $id_modulo)
+{
     require_once("Models/PermisosModel.php");
     $objPermisos = new PermisosModel();
     $idrol = $_SESSION['userData']['id_rol'];
@@ -69,7 +72,7 @@ function getPermisos(int $id_modulo){
     $permisos = '';
     $permisosMod = '';
 
-    if(count($arrPermisos) > 0){
+    if (count($arrPermisos) > 0) {
         $permisos = $arrPermisos;
         $permisosMod = isset($arrPermisos[$id_modulo]) ?  $arrPermisos[$id_modulo] : '';
     }
@@ -78,75 +81,92 @@ function getPermisos(int $id_modulo){
     $_SESSION['permisosMod'] = $permisosMod;
 }
 
-
-  //Elimina el exceso de espacios entre palabras
-    function strClean($strCadena){
-        $string = preg_replace(['/\s+/','/^\s|\s$/'],[' ',''], $strCadena);
-        $string = trim($string); //Elimina espacios en blanco al inicio y al final
-        $string = stripslashes($string); // Elimina las \ diagonales invertidas
-        $string = str_ireplace("<script>","",$string);
-        $string = str_ireplace("</script>","",$string);
-        $string = str_ireplace("<script src>","",$string);
-        $string = str_ireplace("<script type=>","",$string);
-        $string = str_ireplace("SELECT * FROM","",$string);
-        $string = str_ireplace("DELETE FROM","",$string);
-        $string = str_ireplace("INSERT INTO","",$string);
-        $string = str_ireplace("SELECT COUNT(*) FROM","",$string);
-        $string = str_ireplace("DROP TABLE","",$string);
-        $string = str_ireplace("OR '1'='1","",$string);
-        $string = str_ireplace('OR "1"="1"',"",$string);
-        $string = str_ireplace('OR ´1´=´1´',"",$string);
-        $string = str_ireplace("is NULL; --","",$string);
-        $string = str_ireplace("is NULL; --","",$string);
-        $string = str_ireplace("LIKE '","",$string);
-        $string = str_ireplace('LIKE "',"",$string);
-        $string = str_ireplace("LIKE ´","",$string);
-        $string = str_ireplace("OR 'a'='a","",$string);
-        $string = str_ireplace('OR "a"="a',"",$string);
-        $string = str_ireplace("OR ´a´=´a","",$string);
-        $string = str_ireplace("OR ´a´=´a","",$string);
-        $string = str_ireplace("--","",$string);
-        $string = str_ireplace("^","",$string);
-        $string = str_ireplace("[","",$string);
-        $string = str_ireplace("]","",$string);
-        $string = str_ireplace("==","",$string);
-        return $string;
-    }
-
-
-    //Genera una contraseña de 10 caracteres
-	function passGenerator($length = 10)
-    {
-        $pass = "";
-        $longitudPass=$length;
-        $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-        $longitudCadena=strlen($cadena);
-
-        for($i=1; $i<=$longitudPass; $i++)
-        {
-            $pos = rand(0,$longitudCadena-1);
-            $pass .= substr($cadena,$pos,1);
+function sessionUser(int $idusuario)
+{
+    require_once("Models/LoginModel.php");
+    $objLogin = new LoginModel();
+    $request = $objLogin->sessionLogin($idusuario);
+    return $request;
+}
+function sessionStart()
+{
+    session_start();
+    $inactive = 900;
+    if (isset($_SESSION['timeout'])) {
+        $session_in = time() - $_SESSION['inicio'];
+        if ($session_in > $inactive) {
+            header("Location: " . BASE_URL . "/logout");
         }
-        return $pass;
+    } else {
+        header("Location: " . BASE_URL . "/logout");
     }
-    //Generador de token para restablecer contraseña
+}
 
-    function token()
-    {
-        $r1 = bin2hex(random_bytes(10));
-        $r2 = bin2hex(random_bytes(10));
-        $r3 = bin2hex(random_bytes(10));
-        $r4 = bin2hex(random_bytes(10));
-        $token = $r1.'-'.$r2.'-'.$r3.'-'.$r4;
-    
-        return $token;
+//Elimina el exceso de espacios entre palabras
+function strClean($strCadena)
+{
+    $string = preg_replace(['/\s+/', '/^\s|\s$/'], [' ', ''], $strCadena);
+    $string = trim($string); //Elimina espacios en blanco al inicio y al final
+    $string = stripslashes($string); // Elimina las \ diagonales invertidas
+    $string = str_ireplace("<script>", "", $string);
+    $string = str_ireplace("</script>", "", $string);
+    $string = str_ireplace("<script src>", "", $string);
+    $string = str_ireplace("<script type=>", "", $string);
+    $string = str_ireplace("SELECT * FROM", "", $string);
+    $string = str_ireplace("DELETE FROM", "", $string);
+    $string = str_ireplace("INSERT INTO", "", $string);
+    $string = str_ireplace("SELECT COUNT(*) FROM", "", $string);
+    $string = str_ireplace("DROP TABLE", "", $string);
+    $string = str_ireplace("OR '1'='1", "", $string);
+    $string = str_ireplace('OR "1"="1"', "", $string);
+    $string = str_ireplace('OR ´1´=´1´', "", $string);
+    $string = str_ireplace("is NULL; --", "", $string);
+    $string = str_ireplace("is NULL; --", "", $string);
+    $string = str_ireplace("LIKE '", "", $string);
+    $string = str_ireplace('LIKE "', "", $string);
+    $string = str_ireplace("LIKE ´", "", $string);
+    $string = str_ireplace("OR 'a'='a", "", $string);
+    $string = str_ireplace('OR "a"="a', "", $string);
+    $string = str_ireplace("OR ´a´=´a", "", $string);
+    $string = str_ireplace("OR ´a´=´a", "", $string);
+    $string = str_ireplace("--", "", $string);
+    $string = str_ireplace("^", "", $string);
+    $string = str_ireplace("[", "", $string);
+    $string = str_ireplace("]", "", $string);
+    $string = str_ireplace("==", "", $string);
+    return $string;
+}
+
+
+//Genera una contraseña de 10 caracteres
+function passGenerator($length = 10)
+{
+    $pass = "";
+    $longitudPass = $length;
+    $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+    $longitudCadena = strlen($cadena);
+
+    for ($i = 1; $i <= $longitudPass; $i++) {
+        $pos = rand(0, $longitudCadena - 1);
+        $pass .= substr($cadena, $pos, 1);
     }
+    return $pass;
+}
+//Generador de token para restablecer contraseña
 
-    function formatMoney($cantidad)
-    {
-        $cantidad = number_format($cantidad,2,SPD,SPM);
-        return $cantidad;
-    }
-  
+function token()
+{
+    $r1 = bin2hex(random_bytes(10));
+    $r2 = bin2hex(random_bytes(10));
+    $r3 = bin2hex(random_bytes(10));
+    $r4 = bin2hex(random_bytes(10));
+    $token = $r1 . '-' . $r2 . '-' . $r3 . '-' . $r4;
 
-?>
+    return $token;
+}
+
+function formatMoney($cantidad)
+{
+    $cantidad = number_format($cantidad, 2, SPD, SPM);
+    return $cantidad;
+}
