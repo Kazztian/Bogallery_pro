@@ -91,7 +91,7 @@ function sessionUser(int $idusuario)
 function sessionStart()
 {
     session_start();
-    $inactive = 180;
+    $inactive = 900;
     if (isset($_SESSION['timeout'])) {
         $session_in = time() - $_SESSION['inicio'];
         if ($session_in > $inactive) {
