@@ -102,6 +102,19 @@ function sessionStart()
     }
 }
 
+function uploadImage(array $data, string $name){
+    $url_temp = $data['tmp_name'];
+    $destino = 'Assets/images/uploads/'.$name;
+    $move = move_uploaded_file($url_temp, $destino);
+    return $move;   
+}
+
+function deleteFile(string $name){
+    unlink('Assets/images/uploads/'.$name);
+}
+
+
+
 //Elimina el exceso de espacios entre palabras
 function strClean($strCadena)
 {
