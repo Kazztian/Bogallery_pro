@@ -24,7 +24,7 @@ getModal('modalClientes', $data);
             <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-sm" id="tableUsuarios">
+                        <table class="table table-hover table-bordered table-sm" id="tableClientes">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -32,22 +32,11 @@ getModal('modalClientes', $data);
                                     <th>Apellido</th>
                                     <th>Email</th>
                                     <th>Telefono</th>
-                                    <th>Rol</th>
-                                    <th>Status</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Carlos</td>
-                                    <td>rrrr</td>
-                                    <td>juan@</td>
-                                    <td>454444</td>
-                                    <td>Administrador</td>
-                                    <td>Activo</td>
-                                    <td></td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>

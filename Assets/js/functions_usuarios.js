@@ -112,42 +112,35 @@ function inicializarTabla() {
 para insertar un nuevo usuario y asi poder optener los datos y convertir el
 JSON en un objeto el cual estamos opteniendo en Usuarios 
 osea el array de los mensajes*/
-        request.onreadystatechange = function() {
-            if (request.readyState === 4 && request.status === 200) {
-                console.log(request.responseText);  // Añade esto
-                let objData = JSON.parse(request.responseText);
-                if (objData.status) {
-                    if(rowTable == ""){
-                        tableUsuarios.ajax.reload(function() {
-                            // Callback function after reloading the table, if needed
-                        });
-
-                    }else{
-                        htmlStatus = intStatus == 1 ? 
-                        '<span class="badge badge-success">Activo</span>' : 
-                        '<span class="badge badge-danger">Inactivo</span>';
-                        rowTable.cells[1].textContent = strNombre;
-                        rowTable.cells[2].textContent = strApellido;
-                        rowTable.cells[3].textContent = strEmail;
-                        rowTable.cells[4].textContent = intTelefono;
-                        rowTable.cells[5].textContent = document.querySelector("#listRolid").selectedOptions[0].text;
-                        rowTable.cells[6].innerHTML = htmlStatus;
-                            rowTable="";
-                    }
-                    $('#modalFormUsuario').modal("hide");
-                    // Utilizamos SweetAlert en lugar de swal()
-                    Swal.fire("Usuarios", objData.msg, "success");
-                    tableUsuarios.ajax.reload(function() {
-                        // Callback function after reloading the table, if needed
-                    });
-                } else {
-                    // Utilizamos SweetAlert en lugar de swal()
-                    Swal.fire("Error", objData.msg, "error");
-                }
+request.onreadystatechange = function() {
+    if (request.readyState === 4 && request.status === 200) {
+        console.log(request.responseText);
+        let objData = JSON.parse(request.responseText);
+        if (objData.status) {
+            if(rowTable == ""){
+                tableUsuarios.ajax.reload(function() {});
+            }else{
+                htmlStatus = intStatus == 1 ? 
+                '<span class="badge badge-success">Activo</span>' : 
+                '<span class="badge badge-danger">Inactivo</span>';
+                rowTable.cells[1].textContent = strNombre;
+                rowTable.cells[2].textContent = strApellido;
+                rowTable.cells[3].textContent = strEmail;
+                rowTable.cells[4].textContent = intTelefono;
+                rowTable.cells[5].textContent = document.querySelector("#listRolid").selectedOptions[0].text;
+                rowTable.cells[6].innerHTML = htmlStatus;
+                rowTable="";
             }
-            divLoading.style.display="none";
-            return false;
+            $('#modalFormUsuario').modal("hide");
+            Swal.fire("Usuarios", objData.msg, "success");
+            tableUsuarios.ajax.reload(null, false); // Recarga la tabla sin perder la paginación
+        } else {
+            Swal.fire("Error", objData.msg, "error");
         }
+    }
+    divLoading.style.display = "none";
+    return false;
+}
     };
 
     
