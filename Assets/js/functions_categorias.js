@@ -129,8 +129,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (rowTable == "") {
                         tableCategorias.api().ajax.reload();
                     } else {
-                        let htmlStatus = intStatus == 1 ? '<span class="badge badge-success">Activo</span>' :
-                                                          '<span class="badge badge-danger">Inactivo</span>';
+                        let htmlStatus = intStatus == 1 ? 
+                        '<span class="badge badge-success">Activo</span>' :
+                        '<span class="badge badge-danger">Inactivo</span>';
                         rowTable.cells[1].textContent = strNombre;
                         rowTable.cells[2].textContent = strDescripcion;
                         rowTable.cells[3].innerHTML = htmlStatus;
@@ -232,7 +233,6 @@ function fntEditInfo(element, id_categoria) {
 }
 
 function fntDelInfo(id_categoria) {
-    var id_categoria = id_categoria;
     Swal.fire({
         title: "Eliminar Categoría",
         text: "¿Realmente quiere eliminar la categoría?",

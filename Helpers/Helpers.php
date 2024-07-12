@@ -110,7 +110,7 @@ function uploadImage(array $data, string $name){
 }
 
 function deleteFile(string $name){
-    unlink('Assets/images/uploads/'.$name);
+unlink('Assets/images/uploads/'.$name);
 }
 
 
