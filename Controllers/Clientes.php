@@ -105,16 +105,16 @@ class Clientes extends Controllers
                 // Ajuste en la lógica de los condicionales para manejar las comparaciones correctamente
                 if ($request_user  != "exist") {
                     if ($option == 1) {
-                        $nombreUsuario = $strNombre . '' . $strApellido;
                         $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
 
-                        $dataUsuario = array(
-                            'nombreUsuario' => $nombreUsuario,
+                        /*$nombreUsuario = $strNombre .''. $strApellido;
+                    
+                        $dataUsuario = array('nombreUsuario' => $nombreUsuario,
                             'email' => $strEmail,
                             'password' => $strPassword,
                             'asunto' => 'Bienvenido a BoGallery',
                         );
-                        sendEmail($dataUsuario, 'email_bienvenida');
+                        sendEmail($dataUsuario, 'email_bienvenida');*/
                     } else {
                         $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
 

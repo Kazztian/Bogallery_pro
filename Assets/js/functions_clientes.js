@@ -1,4 +1,5 @@
 let tableClientes;
+let rowTable = "";
 let divLoading = document.querySelector('#divLoading');
 
 document.addEventListener('DOMContentLoaded', function() {
