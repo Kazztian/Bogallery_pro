@@ -1,9 +1,5 @@
 <!-- Vertically centered scrollable modal -->
-<<<<<<< HEAD
-<div class="modal fade" id="modalFormUsuario" tabindex="-1" role="dialog" aria-hidden="true">
-=======
 <div class="modal fade" id="modalFormCliente" tabindex="-1" role="dialog" aria-hidden="true">
->>>>>>> Juanse
     <div class="modal-dialog  modal-lg">
         <div class="modal-content">
             <div class="modal-header headerRegister">
@@ -12,15 +8,9 @@
 
             </div>
             <div class="modal-body">
-<<<<<<< HEAD
-                <form id="formUsuario" name="formUsuario" class="form-horizontal">
-                    <input type="hidden" id="idUsuario" name="id_usuario" value="">
-                    <p class="text-primary">Todos los campos son obligatorios</p>
-=======
                 <form id="formCliente" name="formCliente" class="form-horizontal">
                     <input type="hidden" id="idUsuario" name="id_usuario" value="">
                     <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
->>>>>>> Juanse
 
                     <!-- <div class="form-row">
                         <div class="form-group col-md-6">
@@ -30,62 +20,6 @@
                     </div> -->
 
                     <div class="row">
-<<<<<<< HEAD
-                        <div class=" col-md-6">
-                            <div class="form-group">
-                                <label for="txtNombre">Nombres</label>
-                                <input type="text" class="form-control valid validText" id="txtNombre" name="txtNombre" required="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="txtApellido">Apellidos</label>
-                                <input type="text" class="form-control valid validText" id="txtApellido" name="txtApellido" required="">
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="txtTelefono">Telefono</label>
-                                <input type="text" class="form-control valid validNumber" id="txtTelefono" name="txtTelefono" required="" onkeypress="return controlTag(event);">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="txtEmail">Email</label>
-                                <input type="email" class="form-control valid validEmail" id="txtEmail" name="txtEmail" required="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="txtEdad">Edad</label>
-                                <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="txtDireccion">Direccion</label>
-                                <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" required="">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="txtPrimerI">Primer Idioma</label>
-                                <input type="text" class="form-control valid validText" id="txtPrimerI" name="txtPrimerI" required="">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="txtSegundoI">Segundo Idioma</label>
-=======
                         <div class=" col-md-4">
                             <div class="form-group">
                                 <label for="txtNombre">Nombres <span class="required">*</span></label>
@@ -144,42 +78,11 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtSegundoI">Segundo Idioma <span class="required">*</span></label>
->>>>>>> Juanse
                                 <input type="text" class="form-control valid validText" id="txtSegundoI" name="txtSegundoI" required="">
                             </div>
                         </div>
                     </div>
 
-<<<<<<< HEAD
-
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="listRolid">Tipo usuario</label>
-                                <select class="form-control" data-live-search="true" id="listRolid" name="listRolid" required>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="listStatus">Status</label>
-                                <select class="form-control selectpicker" id="listStatus" name="listStatus" required>
-                                    <option value="1">Activo</option>
-                                    <option value="2">Inactivo</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="txtPassword">Passaword</label>
-                            <input type="password" class="form-control" id="txtPassword" name="txtPassword">
-                        </div>
-                    </div>
-                    <br><br>
-=======
                     <hr>
                     <p class="text-primary">Datos Fiscales</p>
                     <div class="row">
@@ -197,7 +100,6 @@
                         </div>
 
                     </div>
->>>>>>> Juanse
 
                     <div class="tile-footer">
                         <button id="btnActionForm" class="btn btn-primary" type="submit">
@@ -218,19 +120,11 @@
 <!-- MOdal de usuario -->
 
 <!-- Vertically centered scrollable modal -->
-<<<<<<< HEAD
-<div class="modal fade" id="modalViewUser" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header header-primary">
-                <h5 class="modal-title" id="titleModal">Datos del usuario</h5>
-=======
 <div class="modal fade" id="modalViewCliente" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header header-primary">
                 <h5 class="modal-title" id="titleModal">Datos del Cliente</h5>
->>>>>>> Juanse
                 <button type="button" class="custom-close-btn" data-dismiss="modal" aria-label="Close"></button>
 
             </div>
@@ -271,16 +165,6 @@
                             <td id="celSegundoIdioma">Jose</td>
                         </tr>
                         <tr>
-<<<<<<< HEAD
-                            <td>Tipo Usuario</td>
-                            <td id="celTipoUsuario">Jose</td>
-                        </tr>
-                        <tr>
-                            <td>Estatus</td>
-                            <td id="celEstado">Jose</td>
-                        </tr>
-                        <tr>
-=======
                             <td>Identificación Tributaria:</td>
                             <td id="celIde">Larry</td>
                         </tr>
@@ -294,7 +178,6 @@
                         </tr>
 
                         <tr>
->>>>>>> Juanse
                         <tr>
                             <td>Fecha registro</td>
                             <td id="celFechaRegistro">Jose</td>
@@ -307,8 +190,4 @@
             </div>
         </div>
     </div>
-<<<<<<< HEAD
 </div>
-=======
-</div>
->>>>>>> Juanse

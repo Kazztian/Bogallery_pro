@@ -1,25 +1,14 @@
-<<<<<<< HEAD
-<?php 
-=======
 <?php
 
->>>>>>> Juanse
 class Clientes extends Controllers
 {
     public function __construct()
 
     {
-<<<<<<< HEAD
         sessionStart();
         // codigo que permite que funcione correctamente si no esta logiado
         parent::__construct();
         //session_start();
-=======
-        //sessionStart();
-        // codigo que permite que funcione correctamente si no esta logiado
-        parent::__construct();
-        session_start();
->>>>>>> Juanse
         //session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
@@ -38,11 +27,6 @@ class Clientes extends Controllers
         $data['page_functions_js'] = "functions_clientes.js";
         $this->views->getView($this, "clientes", $data);
     }
-<<<<<<< HEAD
-}
-
-    ?>
-=======
 
     public function setCliente()
     {
@@ -221,4 +205,3 @@ class Clientes extends Controllers
         die();
     }
 }
->>>>>>> Juanse
