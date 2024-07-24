@@ -20,7 +20,7 @@
 <!-- Data table pluginnn-->
 <script type="text/javascript" src="<?= media(); ?>/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?= media(); ?>/js/plugins/dataTables.bootstrap.min.js"></script>
-<!-- Segunda parte de la libreria de bootstrap para seleccionar campos de otra tabla-->
+<!-- Segunda parte de la libreriaa de bootstrap para seleccionar campos de otra tabla-->
 <script type="text/javascript" src="<?= media(); ?>/js/plugins/bootstrap-select.min.js"></script>
 
 
