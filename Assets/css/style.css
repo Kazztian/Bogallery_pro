@@ -8,8 +8,12 @@
   color: #fff;
 }
 
-.notBlock {
-  display: none;
+.textcenter{
+  text-align:center;
+}
+/* Borde de las listas  */
+.bootstrap-select > .dropdown-toggle{
+  border: 1px solid #ccc;
 }
 
 /* Diseño de la tabla de permisos */
@@ -156,7 +160,7 @@ input:checked + .slider:before {
   height: 100%;
 }
 .upimg,
-.notBlock {
+.notblock {
   display: none !important;
 }
 .errorArchivo {

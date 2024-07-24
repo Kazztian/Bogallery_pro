@@ -45,7 +45,7 @@ class Categorias extends Controllers
     
                 if($nombre_foto != ''){
                     $imgPortada = 'img_'.md5(date('d-m-Y H:m:s')).'.jpg';
-                }
+                 }
     
                 if($intIdcategoria == 0){
                     // Crear
@@ -164,13 +164,13 @@ class Categorias extends Controllers
         }
         die();
     }
-
+//Funcion para extraer las categorias en la lista de planes
     public function getSelectCategorias(){
         $htmlOptions = "";
         $arrData = $this->model->selectCategorias();
         if(count($arrData) > 0 ){
             for ($i=0; $i < count($arrData); $i++) { 
-                if($arrData[$i]['status'] == 1 ){
+                if($arrData[$i]['status'] == 1 ){ //Validacion para mostrar las categorias activas
                 $htmlOptions .= '<option value="'.$arrData[$i]['id_categoria'].'">'.$arrData[$i]['nombre'].'</option>';
                 }
             }
