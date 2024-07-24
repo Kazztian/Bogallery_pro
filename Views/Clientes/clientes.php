@@ -14,7 +14,11 @@ getModal('modalClientes', $data);
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="bi bi-house-door fs-6"></i></li>
+<<<<<<< HEAD
             <li class="breadcrumb-item"><a href="<?= base_url(); ?>/usuarios"><?= $data['page_title'] ?></a></li>
+=======
+            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/clientes"><?= $data['page_title'] ?></a></li>
+>>>>>>> Juanse
         </ul>
     </div>
     </div>
@@ -24,7 +28,11 @@ getModal('modalClientes', $data);
             <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
+<<<<<<< HEAD
                         <table class="table table-hover table-bordered table-sm" id="tableUsuarios">
+=======
+                        <table class="table table-hover table-bordered table-sm" id="tableClientes">
+>>>>>>> Juanse
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -32,12 +40,16 @@ getModal('modalClientes', $data);
                                     <th>Apellido</th>
                                     <th>Email</th>
                                     <th>Telefono</th>
+<<<<<<< HEAD
                                     <th>Rol</th>
                                     <th>Status</th>
+=======
+>>>>>>> Juanse
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
+<<<<<<< HEAD
                                 <tr>
                                     <td>1</td>
                                     <td>Carlos</td>
@@ -48,6 +60,9 @@ getModal('modalClientes', $data);
                                     <td>Activo</td>
                                     <td></td>
                                 </tr>
+=======
+
+>>>>>>> Juanse
                             </tbody>
                         </table>
                     </div>
