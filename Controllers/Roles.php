@@ -5,8 +5,10 @@ class Roles extends Controllers
 
     public function __construct()
     {
+        sessionStart();
         parent::__construct();
-        session_start();
+        //session_start();
+        //session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
         }
@@ -28,6 +30,7 @@ class Roles extends Controllers
     //Metodo para extraer los roles
     public function getRoles()
     {
+        if ($_SESSION['permisosMod']['r']) {
         $btnView = "";
         $btnEdit = "";
         $btnDelete = "";
@@ -60,6 +63,7 @@ class Roles extends Controllers
         }
 
         echo json_encode($arrData, JSON_UNESCAPED_UNICODE); //Formato json para que pueda ser interpretado por cualquier lenguaje(Se convierta en un objeto)
+    }
         die();  //Finaliza el proceso
     }
     /*metodo que se invoca un fuction_usuarios y 
@@ -81,6 +85,7 @@ class Roles extends Controllers
     }
     public function getRol(int $idrol)
     {
+        if ($_SESSION['permisosMod']['r']) {
         $intIdrol = intval(strClean($idrol));
         if ($intIdrol > 0) // si es un id mayor a 0 asi que si es valido, y se realiza lo de adenro
         {
@@ -92,6 +97,7 @@ class Roles extends Controllers
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         } // de sevuelva, y se convierte en formato Json
+    }
         die();
     }
 
@@ -102,6 +108,7 @@ class Roles extends Controllers
     //Crear un Rol
     public function setRol()
     {
+        if ($_SESSION['permisosMod']['w']) {
         $intIdrol = intval($_POST['idrol']);
         $strRol = strClean($_POST['txtNombre']); //la funcionClean Nos sirve para prevenir inyecciones o ataques
         $strDescripcion = strClean($_POST['txtDescripcion']);
@@ -131,7 +138,9 @@ class Roles extends Controllers
         } else {
             $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
         }
+        
         echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+    }
         die();
     }
 
@@ -139,6 +148,7 @@ class Roles extends Controllers
     public function delRol()
     {
         if ($_POST) {
+            if ($_SESSION['permisosMod']['d']) {
             $intIdRol = intval($_POST['idrol']); // Cambiar a $intIdRol
             $requestDelete = $this->model->deleteRol($intIdRol); // Cambiar a $intIdRol
             if ($requestDelete == 'ok') {
@@ -150,6 +160,7 @@ class Roles extends Controllers
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
+    }
         die();
     }
 }

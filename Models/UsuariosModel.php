@@ -16,6 +16,9 @@ class UsuariosModel extends mysql
     private     $strToken;
     private     $intTipoId;
     private     $intStatus;
+    private $strNit;
+    private $strNomFiscal;
+    private $strDirFiscal;
 
     function __construct()
     {
@@ -100,7 +103,7 @@ deja registrar los datos del usuario  */
     public function selectUsuario(int $id_usuario)
     {
         $this->intIdUsuario = $id_usuario;
-        $sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.edad, u.telefono, u.email_user, u.direccion, u.primer_idioma, u.segundo_idioma, u.status, r.id_rol, r.nombrerol,
+        $sql = "SELECT u.id_usuario, u.nombres, u.apellidos, u.edad, u.telefono, u.email_user,u.nit,u.nombrefiscal,u.direccionfiscal, u.direccion, u.primer_idioma, u.segundo_idioma, u.status, r.id_rol, r.nombrerol,
     DATE_FORMAT(u.datecreated, '%d-%m-%Y') as fechaRegistro
     FROM usuarios u
     INNER JOIN rol r
@@ -186,6 +189,73 @@ deja registrar los datos del usuario  */
         $arrData = array(0);
         $request = $this->update($sql, $arrData);
 
+        return $request;
+    }
+    public function updatePerfil(
+        int $idUsuario,
+        string $nombre,
+        string $apellido,
+        int $telefono,
+        string $password,
+        int $edad,
+        string $direccion,
+        string $primeri,
+        string $segundoi
+    ) {
+
+        $this->intIdUsuario = $idUsuario;
+        $this->strNombre = $nombre;
+        $this->strApellido = $apellido;
+        $this->intTelefono = $telefono;
+        $this->strPassword = $password;
+        $this->intEdad = $edad;
+        $this->strDireccion = $direccion;
+        $this->strPrimerI = $primeri;
+        $this->strSegundoI = $segundoi;
+        if ($this->strPassword != "") {
+            $sql = "UPDATE usuarios SET nombres=?, apellidos=?, edad=?, telefono=?, password=?, direccion=?, primer_idioma=?, segundo_idioma=?
+              WHERE id_usuario = $this->intIdUsuario";
+            $arrData = array(
+                $this->strNombre,
+                $this->strApellido,
+                $this->intEdad,
+                $this->intTelefono,
+                $this->strPassword,
+                $this->strDireccion,
+                $this->strPrimerI,
+                $this->strSegundoI
+            );
+        } else {
+            $sql = "UPDATE usuarios SET nombres=?, apellidos=?, edad=?, telefono=?, direccion=?, primer_idioma=?, segundo_idioma=?
+              WHERE id_usuario = $this->intIdUsuario";
+            $arrData = array(
+                $this->strNombre,
+                $this->strApellido,
+                $this->intEdad,
+                $this->intTelefono,
+                $this->strDireccion,
+                $this->strPrimerI,
+                $this->strSegundoI
+            );
+        }
+        $request = $this->update($sql, $arrData);
+        return $request;
+    }
+
+    public function updateDataFiscal(int $idUsuario, string $strNit, string $strNomFiscal, string $strDirFiscal)
+    {
+        $this->intIdUsuario = $idUsuario;
+        $this->strNit = $strNit;
+        $this->strNomFiscal = $strNomFiscal;
+        $this->strDirFiscal = $strDirFiscal;
+        $sql = "UPDATE usuarios SET nit=?, nombrefiscal=?, direccionfiscal=? 
+                    WHERE id_usuario = $this->intIdUsuario";
+        $arrData = array(
+            $this->strNit,
+            $this->strNomFiscal,
+            $this->strDirFiscal
+        );
+        $request = $this->update($sql, $arrData);
         return $request;
     }
 }

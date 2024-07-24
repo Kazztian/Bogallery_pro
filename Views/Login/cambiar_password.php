@@ -25,9 +25,11 @@
         </div>
         <!--Formulario Recuperar Contraseña  -->
         <div id="login-box" class="login-box flipped">
-            <div id="divLoading">
-                <div><img src="http://localhost/bogallery_pro/Assets/images/loading.svg" alt="Loading"></div>
-            </div>
+        <div id="divLoading" >
+          <div>
+            <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+          </div>
+        </div>
             <form id="formCambiarPass" name="formCambiarPass" class="forget-form" action="">
                 <input type="hidden" id="id_usuario" name="id_usuario" value="<?= $data['id_usuario']; ?>" required>
                 <input type="hidden" id="txtEmail" name="txtEmail" value="<?= $data['email']; ?>" required>

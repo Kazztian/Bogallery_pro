@@ -1,3 +1,5 @@
+var tableRoles;
+var divLoading = document.querySelector('#divLoading');
 document.addEventListener("DOMContentLoaded", function () {
     // Creamos un elemento <script> para cargar SweetAlert desde el CDN
     var script = document.createElement("script");
@@ -52,6 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 );
                 return false;
             }
+            divLoading.style.display = "flex";
             var request = window.XMLHttpRequest
                 ? new XMLHttpRequest()
                 : new ActiveXObject("Microsoft.XMLHTTP");
@@ -84,7 +87,10 @@ document.addEventListener("DOMContentLoaded", function () {
                             confirmButtonText: "Ok",
                         });
                     }
+
                 }
+                divLoading.style.display="none";
+                return false;
             };
         };
     };

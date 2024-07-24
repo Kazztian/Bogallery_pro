@@ -12,6 +12,8 @@
 <script src="<?= media(); ?>/js/plugins/pace.js"></script>
 <script src="<?= media(); ?>/js/functions_admin.js"></script>
 <script type="text/javascript" src="<?= media(); ?>js/plugins/sweetalert.min.js"></script>
+<script type="text/javascript" src="<?= media(); ?>/js/tinymce/tinymce.min.js"></script>
+
 <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css">
 
 <!-- Data table plugin-->
@@ -29,7 +31,7 @@
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
 <script type="text/javascript" src="<?= media(); ?>/js/functions_admin.js"></script>
-<script src="<?= media(); ?>/js/<?=$data['page_functions_js'];?>"></script>
+<script src="<?= media(); ?>/js/<?= $data['page_functions_js']; ?>"></script>
 
 
 <!-- Page specific javascripts-->

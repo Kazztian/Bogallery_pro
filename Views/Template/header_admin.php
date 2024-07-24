@@ -24,6 +24,11 @@
 </head>
 
 <body class="app sidebar-mini">
+  <div id="divLoading">
+    <div>
+      <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+    </div>
+  </div>
   <!-- Navbar -->
   <header class="app-header">
     <a class="app-header__logo" href="<?= base_url(); ?>/dashboard">BoGallery</a>
@@ -38,13 +43,17 @@
         </a>
         <ul class="dropdown-menu settings-menu dropdown-menu-right">
           <li><a class="dropdown-item" href="<?= base_url(); ?>/opciones"><i class="bi bi-gear me-2 fs-5"></i> Configuraciones</a></li>
-          <li><a class="dropdown-item" href="<?= base_url(); ?>/perfil"><i class="bi bi-person me-2 fs-5"></i> Perfil</a></li>
+          <li><a class="dropdown-item" href="<?= base_url(); ?>/usuarios/perfil"><i class="bi bi-person me-2 fs-5"></i> Perfil</a></li>
           <li><a class="dropdown-item" href="<?= base_url(); ?>/logout"><i class="bi bi-box-arrow-right me-2 fs-5"></i> Logout</a></li>
         </ul>
       </li>
     </ul>
   </header>
+<<<<<<< HEAD
   <?php require_once("nav_admin.php"); ?>
 
 </body>
 </html>
+=======
+  <?php require_once("nav_admin.php"); ?>
+>>>>>>> Juanse

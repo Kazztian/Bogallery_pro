@@ -29,7 +29,9 @@
     </div>
     <div id="login-box" class="login-box">
       <div id="divLoading">
-        <div><img src="http://localhost/bogallery_pro/Assets/images/loading.svg" alt="Loading"></div>
+        <div>
+          <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+        </div>
       </div>
       <form class="login-form" name="formLogin" id="formLogin" action="">
         <h3 id="login-head" class="login-head"><i class="bi bi-person me-2"></i>Inicio Sesion</h3>
