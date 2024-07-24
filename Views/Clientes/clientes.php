@@ -36,7 +36,6 @@ getModal('modalClientes', $data);
                                 </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
                     </div>
