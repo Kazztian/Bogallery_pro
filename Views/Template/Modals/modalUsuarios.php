@@ -74,7 +74,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtSegundoI">Segundo Idioma</label>
-                                <input type="text" class="form-control valid validText" id="txtSegundoI" name="txtSegundoI" placeholder="Si no tiene Ingrese el Primero Idioma" required="">
+                                <input type="text" class="form-control valid validText" id="txtSegundoI" name="txtSegundoI" required="">
                             </div>
                         </div>
                     </div>
@@ -106,7 +106,7 @@
                             <input type="password" class="form-control" id="txtPassword" name="txtPassword">
                         </div>
                     </div>
-
+                    <br><br>
 
                     <div class="tile-footer">
                         <button id="btnActionForm" class="btn btn-primary" type="submit">
