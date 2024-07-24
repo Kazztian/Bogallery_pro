@@ -20,8 +20,8 @@
                 <input class="form-control" id="txtNombre" name="txtNombre" type="text" required="">
               </div>
               <div class="form-group">
-                <label class="control-label">Descripción Lugar<span class="required">*</span></label>
-                <textarea class="form-control" id="txtDescripcion" name="txtDescripcion" rows="4" required=""></textarea>
+                <label class="control-label">Descripción Lugar</label>
+                <textarea class="form-control" id="txtDescripcion" name="txtDescripcion"></textarea>
               </div>
             </div>
             <div class="col-md-4">
@@ -39,18 +39,39 @@
               <br></br>
               <div class="form-group">
                 <label class="control-label">Direccion<span class="required">*</span></label>
-                <input type="text" class="form-control valid validText" id="txtDireccion" name="txtDireccion" placeholder="Ej: Calle 65 car 13-25" required="">
+                <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" placeholder="Ej: Calle 65 car 13-25" required="">
               </div>
               <br></br>
               <div class="form-group">
                 <label class="control-label">Tipo de lugar<span class="required">*</span></label>
-                <input type="text" class="form-control valid validText" id="txtTipo" name="txtTipo" placeholder="Ej: Religioso, Ambiental, Historico" required="">
+                <input type="text" class="form-control valid validText" id="txtTipoLugar" name="txtTipoLugar" placeholder="Ej: Religioso, Ambiental, Historico" required="">
               </div>
             </div>
           </div>
+          <div class="row">
+            <div class="form-group ">
+              <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span></button>
+              <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
+            </div>
+          </div>
+
           <div class="tile-footer">
-            <button id="btnActionForm" class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i><span id="btnText">Guardar</span></button>&nbsp;&nbsp;&nbsp;
-            <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
+            <div class="form-group col-md-12">
+              <div id="containerGallery">
+                <span>Galeria de fotos</span>
+                <button class="btnAddImage btn btn-info btn-sm" type="button">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+              <hr>
+              <div id="containerImages">
+                <div id="div24">
+                  <div class="preImage">
+                     <img src="<?= media(); ?>/images/uploads" alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </form>
       </div>

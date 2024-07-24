@@ -30,7 +30,7 @@ getModal('modalLugares', $data);
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Localidad</th>
-                                    <th>Descripcion</th>
+                                    <th>direccion</th>
                                     <th>Tipo Lugar</th>
                                     <th>Estado</th>
                                     <th>Acciones</th>
