@@ -16,7 +16,7 @@
 <script type="text/javascript" src="<?= media(); ?>/js/tinymce/tinymce.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/v/bs5/dt-1.13.4/datatables.min.css">
 
-<!-- Data table plugin-->
+<!-- Data table pluginnn-->
 <script type="text/javascript" src="<?= media(); ?>/js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="<?= media(); ?>/js/plugins/dataTables.bootstrap.min.js"></script>
 <!-- Segunda parte de la libreria de bootstrap para seleccionar campos de otra tabla-->
