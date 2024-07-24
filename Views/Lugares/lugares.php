@@ -1,12 +1,12 @@
 <?php
 headerAdmin($data);
-getModal('modalClientes', $data);
+getModal('modalLugares', $data);
 ?>
-<div id="contentAjax"></div>
+<!-- <div id="contentAjax"></div> -->
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="bi bi-person-lines-fill"></i> <?= $data['page_title'] ?>
+            <h1><i class="bi bi-pin-map-fill"></i> <?= $data['page_title'] ?>
                 <?php if ($_SESSION['permisosMod']['w']) { ?>
                     <button class="btn btn-success" type="button" onclick="openModal();"><i class="bi bi-plus-circle"></i></i></i>Nuevo</button>
                 <?php } ?>
@@ -14,7 +14,7 @@ getModal('modalClientes', $data);
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="bi bi-house-door fs-6"></i></li>
-            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/clientes"><?= $data['page_title'] ?></a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/lugares"><?= $data['page_title'] ?></a></li>
         </ul>
     </div>
     </div>
@@ -24,14 +24,15 @@ getModal('modalClientes', $data);
             <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered table-sm" id="tableClientes">
+                        <table class="table table-hover table-bordered" id="tableLugares">
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Nombres</th>
-                                    <th>Apellido</th>
-                                    <th>Email</th>
-                                    <th>Telefono</th>
+                                    <th>Nombre</th>
+                                    <th>Localidad</th>
+                                    <th>direccion</th>
+                                    <th>Tipo Lugar</th>
+                                    <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
