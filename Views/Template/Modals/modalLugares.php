@@ -54,11 +54,10 @@
               <button class="btn btn-danger" type="button" data-dismiss="modal"><i class="fa fa-fw fa-lg fa-times-circle"></i>Cerrar</button>
             </div>
           </div>
-
           <div class="tile-footer">
             <div class="form-group col-md-12">
               <div id="containerGallery">
-                <span>Galeria de fotos</span>
+                <span>Agregar foto (440 x 545)</span>
                 <button class="btnAddImage btn btn-info btn-sm" type="button">
                   <i class="fas fa-plus"></i>
                 </button>
@@ -66,15 +65,30 @@
               <hr>
               <div id="containerImages">
                 <div id="div24">
-                  <div class="preImage">
-                     <img src="<?= media(); ?>/images/uploads" alt="">
+                  <div class="prevImage">
+                    <img src="<?= media(); ?>/images/uploads/MONSERRATE.jpg" alt="">
                   </div>
+                  <input type="file" name="foto" id="img1" class="inputUploadfile">
+                  <label for="img1" class="btnUploadfile"><i class="fas fa-upload "></i></label>
+                  <button class="btnDeleteImage" type="button" onclick="fntDelItem('div24')"><i class="fas fa-trash-alt"></i></button>
                 </div>
               </div>
+              <div id="containerImages">
+                <div id="div24">
+                  <div class="prevImage">
+                    <img class="loading" src="<?= media(); ?>/images/loading.svg" alt="">
+                  </div>
+                  <input type="file" name="foto" id="img1" class="inputUploadfile">
+                  <label for="img1" class="btnUploadfile"><i class="fas fa-upload "></i></label>
+                  <button class="btnDeleteImage" type="button" onclick="fntDelItem('div24')"><i class="fas fa-trash-alt"></i></button>
+                </div>
+              </div>
+
             </div>
           </div>
-        </form>
       </div>
+      </form>
+
     </div>
   </div>
 </div>
