@@ -1,0 +1,69 @@
+
+#login-head {
+    color: #fff; /* Cambia el color del texto a blanco */
+}
+#form-label {
+    color: #fff; /* Cambia el color del texto a blanco */
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    background: url(../images/fondologin.jpg) no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+#login-box {
+    border: 2px solid #fff; /* Añade un borde blanco de 2px */
+    border-radius: 40px;
+    background-color: rgba(156, 142, 142, 0.325); /* Hacer el fondo transparente */
+    backdrop-filter: blur(10px); /* Aplicar desenfoque */
+    width: 100%; /* Asegura que tome el 100% del contenedor */
+    max-width: 500px; /* Establece un ancho máximo */
+
+
+}
+.mb-3 {
+    margin-bottom: 1rem;
+}
+#login-box .btn {
+    background-color: #21ab8b; /* Fondo blanco */
+    color: #f4e6e6; /* Texto blanco */
+}
+#login-box .btn:hover {
+    background-color:#1ab6d5; /* Fondo negro */
+    color:   #000000; /* Texto blanco */
+   
+  }
+
+#form-control {
+    background-color: #eaf1f0; /* Cambia el color de fondo del input a gris oscuro */
+    color: #000000; /* Cambia el color del texto a blanco */
+}
+.semibold-text {
+    color: #fff; /* Cambia el color del texto a blanco */
+}
+
+.label-text {
+    color: #fff; /* Cambia el color del texto a blanco */
+}
+.forgot-password {
+    color: #0fe2bf; /* Cambia este valor al color que desees */
+    text-decoration: none; /* Si no quieres subrayado */
+  }
+  
+  .forgot-password:hover {
+    color: #1ccbee; /* Color al pasar el ratón por encima */
+  }
+
+  .back-to-login {
+    color:  #1ccbee; /* Cambia este valor al color que desees */
+    text-decoration: none; /* Si no quieres subrayado */
+  }
+  
+  .back-to-login:hover {
+    color: #0fe2bf; /* Color al pasar el ratón por encima */
+  }

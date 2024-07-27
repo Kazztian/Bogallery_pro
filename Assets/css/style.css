@@ -1,0 +1,217 @@
+.headerRegister,
+.header-primary {
+  background: #009688;
+  color: #fff;
+}
+.headerUpdate {
+  background: #3474b9;
+  color: #fff;
+}
+.textcenter{
+	text-align: center;
+}
+.textright{
+	text-align: right;
+}
+.textleft{
+	text-align: left;
+}
+
+.textcenter{
+  text-align:center;
+}
+/* Borde de las listas  */
+.bootstrap-select > .dropdown-toggle{
+  border: 1px solid #ccc;
+}
+
+/* Diseño de la tabla de permisos */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 20px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e1522a;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: green;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 6px #60d9e2;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
+}
+.switch {
+  margin-bottom: 30px; /* Agrega un margen inferior de 10px entre cada interruptor */
+}
+.custom-close-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  padding: 1rem;
+  background: transparent;
+  border: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.custom-close-btn::before {
+  content: "\00d7";
+  font-size: 1.5rem;
+  color: #000;
+}
+.custom-close-btn:hover::before {
+  /* Ajusta el color del borde según sea necesario */
+  border-radius: 2px; /* Esquinas más rectas */
+  padding: 0.05rem 0.2rem; /* Ajusta el espacio alrededor de la "x" */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.1
+  ); /* Ajusta el color de fondo del cuadro */
+  color: #000; /* Asegura que el color de la "x" sea adecuado */
+}
+
+/* Fin del diseño de la tabla permisos */
+#tableUsuarios th,
+#tableUsuarios td {
+  white-space: nowrap;
+}
+/* Diseño del svg de cargar */
+#divLoading {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgb(26, 164, 206);
+  display: flex;
+  border-radius: 40px;
+  justify-content: center;
+  align-items: center;
+  background: rgba(200, 233, 236, 0.65);
+  z-index: 9999;
+  display: none;
+}
+
+#divLoading img {
+  width: 50px;
+  height: 50px;
+}
+.required {
+  color: red;
+  font-size: 13pt;
+  font-weight: bold;
+}
+/* Style de categoria foto */
+.prevPhoto {
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+  height: 200px;
+  border: 1px solid #ccc;
+  position: relative;
+  cursor: pointer;
+  background: url(../images/uploads/portada_categorias.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+  margin: auto;
+}
+.prevPhoto label {
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2;
+}
+.prevPhoto img {
+  width: 100%;
+  height: 100%;
+}
+.upimg,
+.notblock {
+  display: none !important;
+}
+.errorArchivo {
+  font-size: 16px;
+  font-family: arial;
+  color: #cc0000;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.delPhoto {
+  color: #fff;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  background: red;
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  z-index: 10;
+}
+#tbl_list_productos img {
+  width: 50px;
+}
+.imgProductoDelete {
+  width: 175px;
+}
+/* Style de categoria foto */
+
+#imgCategoria{
+    text-align: center;
+
+}
+#imgCategoria img{
+    width: 200px;
+    margin: auto;
+
+}
