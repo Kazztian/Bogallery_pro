@@ -29,6 +29,14 @@ window.addEventListener('load', function(){
             {"data": "status"},
             {"data": "options"}
         ],
+
+        "columnDefs":[
+          {'clasName': "textcenter","targets":[3]},
+          {'clasName': "textright","targets":[4]},
+          {'clasName': "textcenter","targets":[5]}
+          
+
+        ],
         'dom': 'lBfrtip',
         'buttons': [
             {
@@ -59,6 +67,7 @@ window.addEventListener('load', function(){
         "order": [[0, "desc"]]
     });
     fntCategorias();
+    fntLugares();
 },false);
 
 
@@ -111,6 +120,23 @@ function fntCategorias() {
   }
 }
 //Funcion para la lista de lugares cuando este
+function fntLugares() {
+  if (document.querySelector("#listLugar")) {
+    let ajaxUrl = base_url + "/Lugares/getSelectLugares";
+    let request = window.XMLHttpRequest
+      ? new XMLHttpRequest()
+      : new ActiveXObject("Microsoft.XMLHTTP");
+    request.open("GET", ajaxUrl, true);
+    request.send();
+    request.onreadystatechange = function () {
+      if (request.readyState == 4 && request.status == 200) {
+        document.querySelector("#listLugar").innerHTML =
+          request.responseText;
+        $("#listLugar").selectpicker("render");
+      }
+    };
+  }
+}
 
 //Funcion para crear el codigo de barras
 function fntBarcode() {

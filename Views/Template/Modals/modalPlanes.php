@@ -50,18 +50,12 @@
                             </div>
                             <div class="row">
                                 <div class="form-group col-md-6">
-                                    <label class="control-label">Total Cupos <span class="required">*</span></label>
-                                    <input class="form-control" id="txtTotalCupos" name="txtTotalCupos" type="text">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-group col-md-6">
                                     <label for="listCategoria">Categoría<span class="required">*</span></label>
                                     <select class="form-control" data-live-search="true" id="listCategoria" name="listCategoria" required></select>
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="listlugares">Lugar<span class="required">*</span></label>
-                                    <select class="form-control" data-live-search="true" id="listlugares" name="listlugares" ></select>
+                                    <label for="listLugar">Lugar<span class="required">*</span></label>
+                                    <select class="form-control" data-live-search="true" id="listLugar" name="listLugar" ></select>
                                 </div>
                             </div>
                             <div class="row">

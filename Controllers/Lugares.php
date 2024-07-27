@@ -99,4 +99,20 @@ class Lugares extends Controllers
         }
         die();
     }
+
+//Funcion para extraer los Lugares en la lista de planes
+public function getSelectLugares(){
+    $htmlOptions = "";
+    $arrData = $this->model->selectLugares();
+    if(count($arrData) > 0 ){
+        for ($i=0; $i < count($arrData); $i++) { 
+            if($arrData[$i]['status'] == 1 ){ //Validacion para mostrar las categorias activas
+            $htmlOptions .= '<option value="'.$arrData[$i]['id_lugar'].'">'.$arrData[$i]['nombre'].'</option>';
+            }
+        }
+    }
+    echo $htmlOptions;
+    die();	
+}
+
 }
