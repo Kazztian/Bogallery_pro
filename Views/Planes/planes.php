@@ -36,7 +36,7 @@ getModal('modalPlanes', $data);
                   <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
+                <tbody>
               </tbody>
             </table>
           </div>

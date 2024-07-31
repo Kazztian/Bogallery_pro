@@ -42,6 +42,8 @@ class Planes extends Controllers
                     $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
                 }
 
+                $arrData[$i]['precio'] = SMONEY.' '.formatMoney($arrData[$i]['precio']);
+
                 if($_SESSION['permisosMod']['r']){
                     $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['id_plan'].')" title="Ver Plan"><i class="far fa-eye"></i></button>';
                 }
@@ -54,6 +56,70 @@ class Planes extends Controllers
                 $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
             }
             echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    public function setPlanes(){
+        if($_POST){
+            if(empty($_POST['txtNombre']) || empty($_POST['txtCodigo']) || empty($_POST['listCategoria']) || empty($_POST['listLugar']) || empty($_POST['txtPrecio']) || empty($_POST['listStatus'])){
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            } else {
+                $idPlan = intval($_POST['idPlanes']);
+                $strNombre = strClean($_POST['txtNombre']);
+                $strDescripcion = strClean($_POST['txtDescripcion']);
+                $strCodigo = strClean($_POST['txtCodigo']);
+                $intIdCategoria = intval($_POST['listCategoria']);
+                $intIdLugar= intval($_POST['listLugar']);
+                $strPrecio = strClean($_POST['txtPrecio']);
+                $intStock= intval($_POST['txtStock']);
+                $intStatus = intval($_POST['listStatus']);
+
+                if($idPlan== 0)
+					{
+						$option = 1;
+						if($_SESSION['permisosMod']['w']){
+							$request_planes = $this->model->insertPlanes($strNombre, 
+																		$strDescripcion, 
+																		$strCodigo, 
+																		$intIdCategoria,
+                                                                        $intIdLugar,
+																		$strPrecio, 
+																		$intStock, 
+																		$intStatus );
+						}
+					}else{
+						$option = 2;
+						if($_SESSION['permisosMod']['u']){
+							$request_planes = $this->model->updateProducto($idPlan,
+																		$strNombre,
+																		$strDescripcion, 
+																		$strCodigo, 
+																		$intIdCategoria,
+                                                                        $intIdLugar,
+																		$strPrecio, 
+																		$intStock, 
+																		$intStatus);
+						}
+					}
+                    if($request_planes > 0 )
+					{
+						if($option == 1){
+							$arrResponse = array('status' => true, 'idplan' => $request_planes, 'msg' => 'Datos guardados correctamente.');
+						}else{
+							
+						}
+					}else if($request_planes == 'exist'){
+						$arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un producto con el Código Ingresado.');		
+					}else{
+						$arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
+					}
+    
+               
+    
+                
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
         die();
     }

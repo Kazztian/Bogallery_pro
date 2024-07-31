@@ -11,8 +11,6 @@
             <div class="modal-body">
                 <form id="formPlanes" name="formPlanes" class="form-horizontal">
                     <input type="hidden" id="idPlanes" name="idPlanes" value="">
-                    <input type="hidden" id="foto_actual" name="foto_actual" value="">
-                    <input type="hidden" id="foto_remove" name="foto_remove" value="0">
                     <p class="text-primary">Los campos con asterisco (<span class="required">*</span>) son obligatorios.</p>
                     <div class="row">
                         <div class="col-md-6">
