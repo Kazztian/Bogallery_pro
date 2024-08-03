@@ -55,7 +55,7 @@ class Planes extends Controllers
                 }
                 $arrData[$i]['options'] = '<div class="text-center">'.$btnView.' '.$btnEdit.' '.$btnDelete.'</div>';
             }
-            echo json_encode($arrData,JSON_UNESCAPED_UNICODE);
+            echo json_encode($arrData, JSON_UNESCAPED_UNICODE);
         }
         die();
     }
@@ -121,6 +121,14 @@ class Planes extends Controllers
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
+        die();
+    }
+
+    public function setImage(){
+        // dep($_POST);
+        // dep($_FILES);
+        $arrResponse=array('status'=>true,'imgname'=>"img_56135ss3555.jpg");
+        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         die();
     }
 

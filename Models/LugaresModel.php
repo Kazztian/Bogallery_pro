@@ -67,8 +67,4 @@ class LugaresModel extends mysql
 
         return $return;
     }
-
-    
-
-
 }
