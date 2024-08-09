@@ -124,11 +124,52 @@ class Planes extends Controllers
         die();
     }
 
+    public function getPlan($idplan){
+        if($_SESSION['permisosMod']['r']){
+            $idplan = intval($idplan);
+            if($idplan> 0){
+                $arrData = $this->model->selectPlan($idplan);
+                if(empty($arrData)){
+                    $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+                }else{
+                    $arrImg = $this->model->selectImages($idplan);
+                    dep($arrImg);
+                    if(count($arrImg) > 0){
+                        for ($i=0; $i < count($arrImg); $i++) { 
+                            $arrImg[$i]['url_image'] = media().'/images/uploads/'.$arrImg[$i]['img'];
+                        }
+                    }
+                    $arrData['images'] = $arrImg;
+                    $arrResponse = array('status' => true, 'data' => $arrData);
+                }
+                    echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+            }
+        }
+        die();
+    }
+
+
+
+
+
     public function setImage(){
-        // dep($_POST);
-        // dep($_FILES);
-        $arrResponse=array('status'=>true,'imgname'=>"img_56135ss3555.jpg");
-        echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+        if($_POST){
+            if(empty($_POST['id_plan'])){
+                $arrResponse = array('status' => false, 'msg' => 'Error de dato.');
+            }else{
+                $idPlan = intval($_POST['id_plan']);
+                $foto      = $_FILES['foto'];
+                $imgNombre = 'pro_'.md5(date('d-m-Y H:m:s')).'.jpg'; //Incriptamos con md5 y se coloca la hora para que el nombre de la img no se repita
+                $request_image = $this->model->insertImage($idPlan,$imgNombre);
+                if($request_image){ 
+                    $uploadImage = uploadImage($foto,$imgNombre);
+                    $arrResponse = array('status' => true, 'imgname' => $imgNombre, 'msg' => 'Archivo cargado.');
+                }else{
+                    $arrResponse = array('status' => false, 'msg' => 'Error de carga.');
+                }
+            }
+            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
+        }
         die();
     }
 

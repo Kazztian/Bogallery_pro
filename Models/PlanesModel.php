@@ -10,6 +10,7 @@ class PlanesModel extends mysql
     private $intIdCategoria;
     private $intIdLugar;
     private $intStatus;
+    private $strImagen;
 
     function __construct()
     {
@@ -76,5 +77,49 @@ class PlanesModel extends mysql
         }
         return $return;
     }
+
+    public function selectPlan(int $idplan){
+        $this->intIdPlan = $idplan;
+        $sql = "SELECT p.id_plan,
+                   p.codigo,
+                   p.nombre,
+                   p.descripcion,
+                   p.id_categoria,
+                   c.nombre AS categoria,
+                   p.precio,
+                   p.stock,
+                   p.status,
+                   p.id_lugar,
+                   l.nombre AS lugar
+                FROM planes p
+                INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                INNER JOIN lugares l ON p.id_lugar = l.id_lugar
+                WHERE p.id_plan  = $this->intIdPlan";
+        $request = $this->select($sql);
+        return $request;    
+
+    }
+
+
+    public function insertImage(int $idplan, string $imagen){
+        $this->intIdPlan= $idplan;
+        $this->strImagen = $imagen;
+        $query_insert  = "INSERT INTO imagenp(id_plan,img) VALUES(?,?)";
+        $arrData = array($this->intIdPlan,
+                        $this->strImagen);
+        $request_insert = $this->insert($query_insert,$arrData);
+        return $request_insert;
+    }
+
+
+    public function selectImages(int $idplan){
+        $this->intIdPlan = $idplan;
+        $sql = "SELECT id_plan,img
+                FROM imagenp
+                WHERE id_plan = $this->intIdPlan";
+        $request = $this->select_all($sql);
+        return $request;
+    }
+
 }
 ?>

@@ -241,6 +241,49 @@ function fntInputFile(){
 }
  
 
+function fntViewInfo(idPlan){
+ 
+  let request = (window.XMLHttpRequest) ? 
+                  new XMLHttpRequest() : 
+                  new ActiveXObject('Microsoft.XMLHTTP');
+  let ajaxUrl = base_url+'/Planes/getPlan/'+idPlan;
+  request.open("GET",ajaxUrl,true);
+  request.send();
+  request.onreadystatechange = function(){
+      if(request.readyState == 4 && request.status == 200){
+          let objData = JSON.parse(request.responseText);
+          if(objData.status)
+          {
+              let htmlImage = "";
+              let objPlan = objData.data;
+              let estadoPlan = objPlan.status == 1 ? 
+              '<span class="badge badge-success">Activo</span>' : 
+              '<span class="badge badge-danger">Inactivo</span>';
+
+              document.querySelector("#celCodigo").innerHTML = objPlan.codigo;
+              document.querySelector("#celNombre").innerHTML = objPlan.nombre;
+              document.querySelector("#celPrecio").innerHTML = objPlan.precio;
+              document.querySelector("#celStock").innerHTML = objPlan.stock;
+              document.querySelector("#celCategoria").innerHTML = objPlan.categoria;
+              document.querySelector("#celLugar").innerHTML = objPlan.lugar;
+              document.querySelector("#celStatus").innerHTML = estadoPlan;
+              document.querySelector("#celDescripcion").innerHTML = objPlan.descripcion;
+
+              if(objPlan.images.length > 0){
+                  let objPlanes = objPlan.images;
+                  for (let p = 0; p < objPlanes.length; p++) {
+                      htmlImage +=`<img src="${objPlanes[p].url_image}"></img>`;
+                  }
+              }
+              document.querySelector("#celFotos").innerHTML = htmlImage;
+               $('#modalViewPlan').modal('show');
+
+          }else{
+            Swal.fire("Error", objData.msg , "error");
+          }
+      }
+  } 
+}
 
 
 
@@ -261,7 +304,7 @@ function fntCategorias() {
   }
 }
 
-// Función para cargar lugares
+// Función para cargar lugares  
 function fntLugares() {
   if (document.querySelector("#listLugar")) {
     let ajaxUrl = base_url + '/Lugares/getSelectLugares';
