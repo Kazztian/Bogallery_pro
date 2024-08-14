@@ -165,19 +165,18 @@ class Categorias extends Controllers
         die();
     }
 //Funcion para extraer las categorias en la lista de planes
-    public function getSelectCategorias(){
-        $htmlOptions = "";
-        $arrData = $this->model->selectCategorias();
-        if(count($arrData) > 0 ){
-            for ($i=0; $i < count($arrData); $i++) { 
-                if($arrData[$i]['status'] == 1 ){ //Validacion para mostrar las categorias activas
-                $htmlOptions .= '<option value="'.$arrData[$i]['id_categoria'].'">'.$arrData[$i]['nombre'].'</option>';
-                }
+public function getSelectCategorias(){
+    $htmlOptions = "";
+    $arrData = $this->model->selectCategorias();
+    if(count($arrData) > 0 ){
+        for ($i=0; $i < count($arrData); $i++) { 
+            if($arrData[$i]['status'] == 1 ){
+            $htmlOptions .= '<option value="'.$arrData[$i]['id_categoria'].'">'.$arrData[$i]['nombre'].'</option>';
             }
         }
-        echo $htmlOptions;
-        die();	
     }
-
+    echo $htmlOptions;
+    die();	
+}
 }
 

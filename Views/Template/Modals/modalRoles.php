@@ -36,7 +36,6 @@
                                     <i class="bi bi-x-circle-fill me-2"></i>Cancelar
                                 </button>
                             </div>
-
                         </form>
                     </div>
                 </div>

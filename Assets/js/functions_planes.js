@@ -100,6 +100,7 @@ window.addEventListener('load', function () {
       let intCodigo = document.querySelector('#txtCodigo').value;
       let strPrecio = document.querySelector('#txtPrecio').value;
       let intStock = document.querySelector('#txtStock').value;
+      let intStatus = document.querySelector('#listStatus').value;
 
       if (strNombre == '' || intCodigo == '' || strPrecio == '' || intStock == '') {
         Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
@@ -125,7 +126,21 @@ window.addEventListener('load', function () {
           if(objData.status){
             Swal.fire("", objData.msg, "success");
             document.querySelector("#idPlanes").value = objData.idplan;
-            tablePlanes.api().ajax.reload();
+            if(rowTable == ""){
+              tablePlanes.api().ajax.reload();
+            }else{
+              htmlStatus = intStatus == 1 ? 
+                            '<span class="badge badge-success">Activo</span>' : 
+                            '<span class="badge badge-danger">Inactivo</span>';
+                            rowTable.cells[1].textContent = intCodigo;
+                            rowTable.cells[2].textContent = strNombre;
+                            rowTable.cells[3].textContent = intStock;
+                            rowTable.cells[4].textContent = smony+strPrecio;
+                            rowTable.cells[5].innerHTML =  htmlStatus;
+                            rowTable = ""; 
+
+            }
+          
           }else{
             Swal.fire("Error", objData.msg, "error");
           }
@@ -157,8 +172,7 @@ window.addEventListener('load', function () {
 
   // Inicializar funciones de categorías y lugares
   fntInputFile();
-  fntCategorias();
-  fntLugares();
+  fntCategorias(); fntLugares();
 }, false);
 
 // Manejar el evento onkeyup para el código de barras
@@ -188,7 +202,7 @@ tinymce.init({
   toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor emoticons",
 });
 
-
+//Funcion para cargar las fotos 
 function fntInputFile(){
   let inputUploadfile = document.querySelectorAll(".inputUploadfile");
   inputUploadfile.forEach(function(inputUploadfile) {
@@ -239,7 +253,33 @@ function fntInputFile(){
       });
   });
 }
- 
+//Funcion para Eliminar imagenes
+function fntDelItem(element){
+  let nameImg = document.querySelector(element+' .btnDeleteImage').getAttribute("imgname");
+  let idPlan = document.querySelector("#idPlanes").value;
+  let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+  let ajaxUrl = base_url+'/Planes/delFile'; 
+//Formulario desde jSript
+  let formData = new FormData();
+  formData.append('idplan',idPlan);
+  formData.append("file",nameImg);
+  request.open("POST",ajaxUrl,true);
+  request.send(formData);
+  request.onreadystatechange = function(){
+      if(request.readyState != 4) return;
+      if(request.status == 200){
+          let objData = JSON.parse(request.responseText);
+          if(objData.status)
+          {
+              let itemRemove = document.querySelector(element);
+              itemRemove.parentNode.removeChild(itemRemove);
+          }else{
+              Swal.fire("", objData.msg , "error");
+          }
+      }
+  }
+}
+
 
 function fntViewInfo(idPlan){
  
@@ -273,7 +313,7 @@ function fntViewInfo(idPlan){
                   let objPlanes = objPlan.images;
                   for (let p = 0; p < objPlanes.length; p++) {
                       htmlImage +=`<img src="${objPlanes[p].url_image}"></img>`;
-                  }
+                  } 
               }
               document.querySelector("#celFotos").innerHTML = htmlImage;
                $('#modalViewPlan').modal('show');
@@ -284,21 +324,108 @@ function fntViewInfo(idPlan){
       }
   } 
 }
+//Funcion para actualizar o editar un plan
+function fntEditInfo(element,idPlan){
+  rowTable = element.parentNode.parentNode.parentNode;
+  console.log(rowTable);
+  document.querySelector('#titleModal').innerHTML ="Actualizar Producto";
+  document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+  document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
+  document.querySelector('#btnText').innerHTML ="Actualizar";
+  let request = (window.XMLHttpRequest) ? 
+                  new XMLHttpRequest() : 
+                  new ActiveXObject('Microsoft.XMLHTTP');
+  let ajaxUrl = base_url+'/Planes/getPlan/'+idPlan;
+  request.open("GET",ajaxUrl,true);
+  request.send();
+  request.onreadystatechange = function(){
+      if(request.readyState == 4 && request.status == 200){
+          let objData = JSON.parse(request.responseText);
+          if(objData.status)
+          {
+              let htmlImage = "";
+              let objPlan = objData.data;
+              document.querySelector("#idPlanes").value = objPlan.id_plan;
+              document.querySelector("#txtNombre").value = objPlan.nombre;
+              document.querySelector("#txtDescripcion").value = objPlan.descripcion;
+              document.querySelector("#txtCodigo").value = objPlan.codigo;
+              document.querySelector("#txtPrecio").value = objPlan.precio;
+              document.querySelector("#txtStock").value = objPlan.stock;
+              document.querySelector("#listCategoria").value = objPlan.id_categoria;
+              document.querySelector("#listLugar").value = objPlan.id_lugar;
+              document.querySelector("#listStatus").value = objPlan.status;
+               tinymce.activeEditor.setContent(objPlan.descripcion); 
+               $('#listCategoria').selectpicker('render');
+               $('#listLugar').selectpicker('render');
+               $('#listStatus').selectpicker('render');
+               fntBarcode(); //Llamar y general el codigo de barra
 
+              if(objPlan.images.length > 0){
+                  let objPlanes = objPlan.images;
+                  for (let p = 0; p < objPlanes.length; p++) {
+                      let key = Date.now()+p;
+                      htmlImage +=`<div id="div${key}">
+                          <div class="prevImage">
+                          <img src="${objPlanes[p].url_image}"></img>
+                          </div>
+                          <button type="button" class="btnDeleteImage" onclick="fntDelItem('#div${key}')" imgname="${objPlanes[p].img}">
+                          <i class="fas fa-trash-alt"></i></button></div>`;
+                  }
+              }
+                   document.querySelector("#containerImages").innerHTML = htmlImage; 
+                   document.querySelector("#divBarCode").classList.remove("notblock");
+                   document.querySelector("#containerGallery").classList.remove("notblock");           
+              $('#modalFormPlanes').modal('show');
+          }else{
+            Swal.fire("Error", objData.msg , "error");
+          }
+      }
+  }
+}
 
-
+function fntDelInfo(idPlan) {
+  Swal.fire({
+      title: "Eliminar Plan",
+      text: "¿Realmente quiere eliminar el plan?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar!",
+      cancelButtonText: "No, cancelar!",
+      reverseButtons: true
+  }).then((result) => {
+      if (result.isConfirmed) {
+          let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+          let ajaxUrl = base_url + '/Planes/delPlan';
+          let strData = "idPlan=" + idPlan;
+          request.open("POST", ajaxUrl, true);
+          request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          request.send(strData);
+          request.onreadystatechange = function() {
+              if (request.readyState == 4 && request.status == 200) {
+                  let objData = JSON.parse(request.responseText);
+                  if (objData.status) {
+                      Swal.fire("Eliminar!", objData.msg, "success");
+                      tablePlanes.api().ajax.reload();
+                  } else {
+                      Swal.fire("Atención!", objData.msg, "error");
+                  }
+              }
+          }
+      }
+  });
+}
 
 // Función para cargar categorías
 function fntCategorias() {
-  if (document.querySelector("#listCategoria")) {
+  if (document.querySelector('#listCategoria')) {
     let ajaxUrl = base_url + '/Categorias/getSelectCategorias';
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
     request.open("GET", ajaxUrl, true);
     request.send();
-    request.onreadystatechange = function () {
+    request.onreadystatechange = function() {
       if (request.readyState == 4 && request.status == 200) {
-        document.querySelector("#listCategoria").innerHTML = request.responseText;
-        $("#listCategoria").selectpicker("render");
+        document.querySelector('#listCategoria').innerHTML = request.responseText;
+        $('#listCategoria').selectpicker("render");
       }
     };
   }
@@ -306,15 +433,15 @@ function fntCategorias() {
 
 // Función para cargar lugares  
 function fntLugares() {
-  if (document.querySelector("#listLugar")) {
+  if (document.querySelector('#listLugar')) {
     let ajaxUrl = base_url + '/Lugares/getSelectLugares';
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
     request.open("GET", ajaxUrl, true);
     request.send();
-    request.onreadystatechange = function () {
+    request.onreadystatechange = function() {
       if (request.readyState == 4 && request.status == 200) {
-        document.querySelector("#listLugar").innerHTML = request.responseText;
-        $("#listLugar").selectpicker("render");
+        document.querySelector('#listLugar').innerHTML = request.responseText;
+        $('#listLugar').selectpicker("render");
       }
     };
   }

@@ -100,13 +100,59 @@ class Lugares extends Controllers
         die();
     }
 
+    public function getLugar($idLugar)
+    {
+        $idLugar = intval($idLugar);
+        if ($idLugar > 0) {
+            $arrData = $this->model->selectLugar($idLugar);
+            if (empty($arrData)) {
+                $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+            } else {
+                $arrImg = $this->model->selectImages($idLugar);
+                if (count($arrImg) > 0) {
+                    for ($i = 0; $i < count($arrImg); $i++) {
+                        $arrImg[$i]['url_image'] = media() . '/images/uploads/' . $arrImg[$i]['img'];
+                    }
+                }
+                $arrData['images'] = $arrImg;
+                $arrResponse = array('status' => true, 'data' => $arrData);
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            die();
+        }
+    }
+
+    public function setImage()
+    {
+        //dep($_POST);
+        //dep($_FILES);
+        if ($_POST) {
+            if (empty($_POST['id_lugar'])) {
+                $arrResponse = array('status' => false, 'msg' => 'Error de dato.');
+            } else {
+                $idLugar = intval($_POST['id_lugar']);
+                $foto = $_FILES['foto'];
+                $imgNombre = 'pro' . md5(date('d-m-Y H:m:s')) . '.jpg';
+                $request_image = $this->model->insertImage($idLugar, $imgNombre);
+                if ($request_image) {
+                    $uploadImage = uploadImage($foto, $imgNombre);
+                    $arrResponse = array('status' => true, 'imgname' => $imgNombre, 'msg' => 'Archivo cargado.');
+                } else {
+                    $arrResponse = array('status' => false, 'msg' => 'Error carga.');
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
 //Funcion para extraer los Lugares en la lista de planes
 public function getSelectLugares(){
     $htmlOptions = "";
     $arrData = $this->model->selectLugares();
     if(count($arrData) > 0 ){
         for ($i=0; $i < count($arrData); $i++) { 
-            if($arrData[$i]['status'] == 1 ){ //Validacion para mostrar las categorias activas
+            if($arrData[$i]['status'] == 1 ){
             $htmlOptions .= '<option value="'.$arrData[$i]['id_lugar'].'">'.$arrData[$i]['nombre'].'</option>';
             }
         }
@@ -116,3 +162,7 @@ public function getSelectLugares(){
 }
 
 }
+
+
+
+

@@ -77,6 +77,56 @@ class PlanesModel extends mysql
         }
         return $return;
     }
+    public function updatePlanes(int $idplan, string $nombre, string $descripcion, int $codigo, int $idcategoria, int $idlugar, string $precio, int $stock, int $status) {
+        $this->intIdPlan = $idplan;
+        $this->strNombre = $nombre;
+        $this->strDescripcion = $descripcion;
+        $this->intCodigo = $codigo;
+        $this->intIdCategoria = $idcategoria;
+        $this->intIdLugar = $idlugar;
+        $this->strPrecio = $precio;
+        $this->intStock = $stock;
+        $this->intStatus = $status;
+        $return = 0;
+        
+        // Verifica si el código ya existe en otro plan
+        $sql = "SELECT * FROM planes WHERE codigo = '{$this->intCodigo}' AND id_plan != $this->intIdPlan";
+        $request = $this->select_all($sql);
+        
+        if(empty($request)) {
+            // Realiza la actualización
+            $sql = "UPDATE planes 
+                    SET id_categoria = ?,
+                        id_lugar = ?,
+                        codigo = ?,
+                        nombre = ?,
+                        descripcion = ?,
+                        precio = ?,
+                        stock = ?,
+                        status = ?
+                    WHERE id_plan = $this->intIdPlan";
+            $arrData = array(
+                $this->intIdCategoria,
+                $this->intIdLugar,
+                $this->intCodigo,
+                $this->strNombre,
+                $this->strDescripcion,
+                $this->strPrecio,
+                $this->intStock,
+                $this->intStatus
+            );
+            
+            $request = $this->update($sql, $arrData);
+            $return = $request;
+        } else {
+            $return = "exist";
+        }
+        
+        return $return;
+    }
+    
+
+
 
     public function selectPlan(int $idplan){
         $this->intIdPlan = $idplan;
@@ -109,7 +159,7 @@ class PlanesModel extends mysql
                         $this->strImagen);
         $request_insert = $this->insert($query_insert,$arrData);
         return $request_insert;
-    }
+    }   
 
 
     public function selectImages(int $idplan){
@@ -118,6 +168,25 @@ class PlanesModel extends mysql
                 FROM imagenp
                 WHERE id_plan = $this->intIdPlan";
         $request = $this->select_all($sql);
+        return $request;
+    }
+
+
+    public function deleteImage(int $idplan, string $imagen){
+        $this->intIdPlan = $idplan;
+        $this->strImagen = $imagen;
+        $query  = "DELETE FROM imagenp
+                    WHERE id_plan = $this->intIdPlan
+                    AND img = '{$this->strImagen}'";
+        $request_delete = $this->delete($query);
+        return $request_delete;
+    }
+
+    public function deletePlan(int $idplan){
+        $this->intIdPlan = $idplan;
+        $sql = "UPDATE planes SET status = ? WHERE id_plan = $this->intIdPlan ";
+        $arrData = array(0);
+        $request = $this->update($sql,$arrData);
         return $request;
     }
 

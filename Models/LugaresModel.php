@@ -1,13 +1,14 @@
 <?php
 class LugaresModel extends mysql
 {
-    private $intIdLugares;
+    private $intIdLugar;
     private $strNombre;
     private $strDescripcion;
     private $strLocalidad;
     private $strDireccion;
     private $strTipoLugar;
     private $intStatus;
+    private $strImagen;
 
     function __construct()
     {
@@ -66,5 +67,42 @@ class LugaresModel extends mysql
         }
 
         return $return;
+    }
+    public function selectLugar(int $idlugar)
+    {
+        $this->intIdLugar = $idlugar;
+        $sql = "SELECT l.id_lugar,
+        l.nombre,
+        l.descripcion,
+        l.localidad,
+        l.direccion,
+        l.tipo_lugar,
+        l.status
+    FROM lugares l
+    WHERE l.id_lugar = $this->intIdLugar";
+        $request = $this->select($sql);
+        return $request;
+    }
+    public function insertImage(int $idlugar, string $imagen)
+    {
+        $this->intIdLugar = $idlugar;
+        $this->strImagen = $imagen;
+        $query_insert = "INSERT INTO imagen(id_lugar,img) VALUES(?,?)";
+        $arrData = array(
+            $this->intIdLugar,
+            $this->strImagen
+        );
+        $request_insert = $this->insert($query_insert, $arrData);
+        return $request_insert;
+    }
+
+    public function selectImages(int $idlugar)
+    {
+        $this->intIdLugar = $idlugar;
+        $sql = "SELECT id_lugar,img
+        FROM imagen
+        WHERE id_lugar = $this->intIdLugar";
+        $request = $this->select_all($sql);
+        return $request;
     }
 }

@@ -1,3 +1,5 @@
+/* un . es una clase y # es un id */
+
 .headerRegister,
 .header-primary {
   background: #009688;
@@ -256,4 +258,8 @@ input:checked + .slider:before {
 .prevImage .loading{
   width: 40px;
   height: 40px;
+}
+#celFotos img{
+  width: 150px;
+  margin: 10px;
 }

@@ -120,62 +120,61 @@
     </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalViewPlan" tabindex="-1" role="dialog" aria-hidden="true">
+  <!-- Modal -->
+  <div class="modal fade" id="modalViewPlan" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-xl">
-        <div class="modal-content">
-            <div class="modal-header header-primary">
-                <h5 class="modal-title" id="titleModal">Datos del Plan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table class="table table-bordered">
-                    <tbody>
-                    <tr>
-              <td>Codigo:</td>
-              <td id="celCodigo"></td>
-            </tr>
-            <tr>
-              <td>Nombres:</td>
-              <td id="celNombre"></td>
-            </tr>
-            <tr>
-              <td>Precio:</td>
-              <td id="celPrecio"></td>
-            </tr>
-            <tr>
-              <td>Stock:</td>
-              <td id="celStock"></td>
-            </tr>
-            <tr>
-              <td>Categoría:</td>
-              <td id="celCategoria"></td>
-            </tr>
-            <tr>
-              <td>Lugar:</td>
-              <td id="celLugar"></td>
-            </tr>
-            <tr>
-              <td>Status:</td>
-              <td id="celStatus"></td>
-            </tr>
-            <tr>
-              <td>Descripción:</td>
-              <td id="celDescripcion"></td>
-            </tr>
-            <tr>
-              <td>Fotos de referencia:</td>
-              <td id="celFotos">
-              </td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header header-primary">
+          <h5 class="modal-title" id="titleModal">Datos del Plan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td>Codigo:</td>
+                <td id="celCodigo"></td>
+              </tr>
+              <tr>
+                <td>Nombres:</td>
+                <td id="celNombre"></td>
+              </tr>
+              <tr>    
+                <td>Precio:</td>
+                <td id="celPrecio"></td>
+              </tr>
+              <tr>
+                <td>Stock:</td>
+                <td id="celStock"></td>
+              </tr>
+              <tr>
+                <td>Categoría:</td>
+                <td id="celCategoria"></td>
+              </tr>
+              <tr>
+                <td>Lugar:</td>
+                <td id="celLugar"></td>
+              </tr>
+              <tr>
+                <td>Status:</td>
+                <td id="celStatus"></td>
+              </tr>
+              <tr>
+                <td>Descripción:</td>
+                <td id="celDescripcion"></td>
+              </tr>
+              <tr>
+                <td>Fotos de referencia:</td>
+                <td id="celFotos"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
