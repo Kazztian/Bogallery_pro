@@ -1,6 +1,8 @@
 <?php
 headerAdmin($data);
+if ($_SESSION['permisosMod']['r']) {
 getModal('modalLugares', $data);
+}
 ?>
 <!-- <div id="contentAjax"></div> -->
 <main class="app-content">

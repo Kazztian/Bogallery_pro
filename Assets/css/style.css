@@ -131,34 +131,34 @@ input:checked + .slider:before {
     font-size: 13pt;
     font-weight: bold;
 }
-/*Upload fotos*/
-#containerImages{
+
+
+/* Upload fotos */
+#containerImages {
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
 }
-#containerImages > div{
+#containerImages > div {
     margin-right:  10px;
     margin-bottom: 8px;
 }
-.prevImage{
+.prevImage {
     border: 1px solid #CCC;
     width:  180px;
     height: 130px;
     display: flex;
     justify-content: center;
     align-items: center;
-    
 }
-
-.prevImage img{
+.prevImage img {
     width: 100%;
 }
-.inputUploadfile{
+.inputUploadfile {
     display: none;
 }
-.btnUploadfile, .btnDeleteImage{
+.btnUploadfile, .btnDeleteImage {
     border: 0;
     background-color: #009688;
     text-align: center;
@@ -167,13 +167,19 @@ input:checked + .slider:before {
     font-size: 9pt;
     cursor: pointer;
     width: 100%;
-
 }
-.btnDeleteImage{
-    background-color:  red;
+.btnDeleteImage {
+    background-color: red;
 }
-
-.prevImage .loading{
+.prevImage .loading {
     width: 30px;
     height: 30px;
+}
+.notblock {
+    display: none;
+}
+
+#celFotos img{
+    width: 150px;
+    margin: 10px;
 }
