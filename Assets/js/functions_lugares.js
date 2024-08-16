@@ -231,6 +231,56 @@ if(document.querySelector(".btnAddImage")){
         });
     }
 
+    function fntDelItem(element) {
+        let nameImg = document.querySelector(element + ' .btnDeleteImage').getAttribute("imgname");
+        let id_lugar = document.querySelector("#id_lugar").value;
+    
+        Swal.fire({
+            title: "¿Eliminar imagen?",
+            text: "¿Estás seguro de que deseas eliminar esta imagen?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Sí",
+            cancelButtonText: "No",
+            confirmButtonColor: "#28a745",  // Color verde para el botón de "Sí"
+            cancelButtonColor: "#ff8c00"  // Color naranja para el botón de "No"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+                let ajaxUrl = base_url + '/Lugares/delFile';
+    
+                let formData = new FormData();
+                formData.append('id_lugar', id_lugar);
+                formData.append("file", nameImg);
+    
+                request.open("POST", ajaxUrl, true);
+                request.send(formData);
+    
+                request.onreadystatechange = function () {
+                    if (request.readyState != 4) return;
+                    if (request.status == 200) {
+                        let objData = JSON.parse(request.responseText);
+                        if (objData.status) {
+                            let itemRemove = document.querySelector(element);
+                            itemRemove.parentNode.removeChild(itemRemove);
+    
+                            Swal.fire({
+                                title: "Imagen eliminada",
+                                text: "La imagen ha sido eliminada correctamente.",
+                                icon: "success",
+                                confirmButtonText: "OK",
+                                confirmButtonColor: "#28a745"
+                            });
+                        } else {
+                            Swal.fire("", objData.msg, "error");
+                        }
+                    }
+                }
+            }
+        });
+    }
+    
+/*
     function fntDelItem(element){
         let nameImg = document.querySelector(element+' .btnDeleteImage').getAttribute("imgname");
     
@@ -268,7 +318,7 @@ if(document.querySelector(".btnAddImage")){
         }
 
     }
-
+*/
     function fntViewInfo(id_lugar){
         let request = (window.XMLHttpRequest) ?
                 new XMLHttpRequest() :
