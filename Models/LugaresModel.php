@@ -135,6 +135,8 @@ class LugaresModel extends mysql
         $request = $this->select($sql);
         return $request;
     }
+
+    
     public function insertImage(int $idlugar, string $imagen)
     {
         $this->intIdLugar = $idlugar;

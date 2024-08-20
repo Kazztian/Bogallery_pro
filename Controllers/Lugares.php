@@ -11,7 +11,7 @@ class Lugares extends Controllers
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
         }
-        getPermisos(5);
+        getPermisos(8);
     }
 
     public function Lugares()
@@ -43,7 +43,6 @@ class Lugares extends Controllers
 
                 if ($_SESSION['permisosMod']['r']) {
                     $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo(' . $arrData[$i]['id_lugar'] . ')" title="Ver lugar"><i class="far fa-eye"></i></button>';
-                
                 }
                 if ($_SESSION['permisosMod']['u']) {
                     $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="fntEditInfo(this,' . $arrData[$i]['id_lugar'] . ')" title="Editar lugar"><i class="fas fa-pencil-alt"></i></button>';
@@ -75,28 +74,28 @@ class Lugares extends Controllers
                 if ($idLugar == 0) {
                     $option = 1;
                     if ($_SESSION['permisosMod']['w']) {
-                    $request_lugar = $this->model->insertLugar(
-                        $strNombre,
-                        $strDescripcion,
-                        $strLocalidad,
-                        $strDireccion,
-                        $strTipoLugar,
-                        $intStatus
-                    );
-                }
+                        $request_lugar = $this->model->insertLugar(
+                            $strNombre,
+                            $strDescripcion,
+                            $strLocalidad,
+                            $strDireccion,
+                            $strTipoLugar,
+                            $intStatus
+                        );
+                    }
                 } else {
                     $option = 2;
                     if ($_SESSION['permisosMod']['r']) {
-                    $request_lugar = $this->model->updateLugar(
-                        $idLugar,
-                        $strNombre,
-                        $strDescripcion,
-                        $strLocalidad,
-                        $strDireccion,
-                        $strTipoLugar,
-                        $intStatus
-                    );
-                }
+                        $request_lugar = $this->model->updateLugar(
+                            $idLugar,
+                            $strNombre,
+                            $strDescripcion,
+                            $strLocalidad,
+                            $strDireccion,
+                            $strTipoLugar,
+                            $intStatus
+                        );
+                    }
                 }
 
                 if ($request_lugar > 0) {
@@ -119,23 +118,23 @@ class Lugares extends Controllers
     public function getLugar($idLugar)
     {
         if ($_SESSION['permisosMod']['r']) {
-        $idLugar = intval($idLugar);
-        if ($idLugar > 0) {
-            $arrData = $this->model->selectLugar($idLugar);
-            if (empty($arrData)) {
-                $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
-            } else {
-                $arrImg = $this->model->selectImages($idLugar);
-                if (count($arrImg) > 0) {
-                    for ($i = 0; $i < count($arrImg); $i++) {
-                        $arrImg[$i]['url_image'] = media() . '/images/uploads/' . $arrImg[$i]['img'];
+            $idLugar = intval($idLugar);
+            if ($idLugar > 0) {
+                $arrData = $this->model->selectLugar($idLugar);
+                if (empty($arrData)) {
+                    $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+                } else {
+                    $arrImg = $this->model->selectImages($idLugar);
+                    if (count($arrImg) > 0) {
+                        for ($i = 0; $i < count($arrImg); $i++) {
+                            $arrImg[$i]['url_image'] = media() . '/images/uploads/' . $arrImg[$i]['img'];
+                        }
                     }
+                    $arrData['images'] = $arrImg;
+                    $arrResponse = array('status' => true, 'data' => $arrData);
                 }
-                $arrData['images'] = $arrImg;
-                $arrResponse = array('status' => true, 'data' => $arrData);
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
-            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-        }
             die();
         }
     }
@@ -165,42 +164,57 @@ class Lugares extends Controllers
     }
 
     public function delFile()
-	{
-		if ($_POST) {
-			if (empty($_POST['id_lugar']) || empty($_POST['file'])) {
-				$arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
-			} else {
-				//Eliminar de la DB
-				$idLugar = intval($_POST['id_lugar']);
-				$imgNombre  = strClean($_POST['file']);
-				$request_image = $this->model->deleteImage($idLugar, $imgNombre);
-
-				if ($request_image) {
-					$deleteFile =  deleteFile($imgNombre);
-					$arrResponse = array('status' => true, 'msg' => 'Archivo eliminado');
-				} else {
-					$arrResponse = array('status' => false, 'msg' => 'Error al eliminar');
-				}
-			}
-			echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-		}
-		die();
-	}
-
-    function delLugar(){
+    {
         if ($_POST) {
-			if ($_SESSION['permisosMod']['d']) {
-				$intIdLugar = intval($_POST['id_lugar']);
-				$requestDelete = $this->model->deleteLugar($intIdLugar);
-				if ($requestDelete) {
-					$arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el lugar');
-				} else {
-					$arrResponse = array('status' => false, 'msg' => 'Error al eliminar el lugar.');
-				}
-				echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
-			}
-		}
-		die();
+            if (empty($_POST['id_lugar']) || empty($_POST['file'])) {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            } else {
+                //Eliminar de la DB
+                $idLugar = intval($_POST['id_lugar']);
+                $imgNombre  = strClean($_POST['file']);
+                $request_image = $this->model->deleteImage($idLugar, $imgNombre);
+
+                if ($request_image) {
+                    $deleteFile =  deleteFile($imgNombre);
+                    $arrResponse = array('status' => true, 'msg' => 'Archivo eliminado');
+                } else {
+                    $arrResponse = array('status' => false, 'msg' => 'Error al eliminar');
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    function delLugar()
+    {
+        if ($_POST) {
+            if ($_SESSION['permisosMod']['d']) {
+                $intIdLugar = intval($_POST['id_lugar']);
+                $requestDelete = $this->model->deleteLugar($intIdLugar);
+                if ($requestDelete) {
+                    $arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el lugar');
+                } else {
+                    $arrResponse = array('status' => false, 'msg' => 'Error al eliminar el lugar.');
+                }
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
+        }
+        die();
+    }
+
+    public function getSelectLugares()
+    {
+        $htmlOptions = "";
+        $arrData = $this->model->selectLugares($htmlOptions);
+        if (count($arrData) > 0) {
+            for ($i = 0; $i < count($arrData); $i++) {
+                if ($arrData[$i]['status'] == 1) {
+                    $htmlOptions .= '<option value="' . $arrData[$i]['id_lugar'] . '">' . $arrData[$i]['nombre'] . '</option>';
+                }
+            }
+        }
+        echo $htmlOptions;
+        die();
     }
 }
-?>

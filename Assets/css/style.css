@@ -106,6 +106,10 @@ input:checked + .slider:before {
 #tableUsuarios th, #tableUsuarios td {
     white-space: nowrap;
 }
+
+.bootstrap-select > .dropdown-toggle{
+	border: 1px solid #CCC;
+}
 /* Diseño del svg de cargar */
 #divLoading{
     position: fixed;
@@ -131,6 +135,7 @@ input:checked + .slider:before {
     font-size: 13pt;
     font-weight: bold;
 }
+
 
 
 /* Upload fotos */
