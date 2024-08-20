@@ -2,9 +2,8 @@
 document.write(
   `<script src="${base_url}/Assets/js/plugins/JsBarcode.all.min.js"></script>`
 );
-
 let tablePlanes;
-let rowTable = "";
+let rowTable = ""; //Recargar la tabla
 
 // Cargar el script de SweetAlert solo si no está ya cargado
 if (!document.querySelector('script[src="https://cdn.jsdelivr.net/npm/sweetalert2@9"]')) {
@@ -20,7 +19,7 @@ $(document).on("focusin", function (e) {
   }
 });
 
-window.addEventListener('load', function () {
+
   // Configurar la tabla de planes
   tablePlanes = $('#tablePlanes').dataTable({
     "aProcessing": true,
@@ -54,7 +53,7 @@ window.addEventListener('load', function () {
         "titleAttr": "Copiar",
         "className": "btn btn-secondary",
         "exportOptions": {
-          "columns": [0, 1, 2, 3, 4, 5]
+          "columns": [0, 1, 2, 3, 4, 5] //Los campos a exportar
         }
       },
       {
@@ -90,7 +89,7 @@ window.addEventListener('load', function () {
     "iDisplayLength": 10,
     "order": [[0, "desc"]]
   });
-
+  window.addEventListener('load', function () {
   // Manejar el formulario de planes
   if (document.querySelector("#formPlanes")) {
     let formPlanes = document.querySelector("#formPlanes");
@@ -124,8 +123,11 @@ window.addEventListener('load', function () {
         if (request.readyState == 4 && request.status == 200) {
           let objData = JSON.parse(request.responseText);
           if(objData.status){
+
             Swal.fire("", objData.msg, "success");
             document.querySelector("#idPlanes").value = objData.idplan;
+            document.querySelector("#containerGallery").classList.remove("notblock");
+
             if(rowTable == ""){
               tablePlanes.api().ajax.reload();
             }else{
@@ -143,11 +145,10 @@ window.addEventListener('load', function () {
           
           }else{
             Swal.fire("Error", objData.msg, "error");
-          }
-
-         
+          }        
         }
         divLoading.style.display = "none";
+        return false;
       }
     }
   }
@@ -172,7 +173,8 @@ window.addEventListener('load', function () {
 
   // Inicializar funciones de categorías y lugares
   fntInputFile();
-  fntCategorias(); fntLugares();
+  fntCategorias();
+  fntLugares();
 }, false);
 
 // Manejar el evento onkeyup para el código de barras
@@ -187,8 +189,7 @@ if (document.querySelector("#txtCodigo")) {
     }
   };
 }
-
-// Inicializar TinyMCE
+// Inicializar TinyMCE //Editor de texto
 tinymce.init({
   selector: "#txtDescripcion",
   width: "100%",
@@ -273,6 +274,13 @@ function fntDelItem(element){
           {
               let itemRemove = document.querySelector(element);
               itemRemove.parentNode.removeChild(itemRemove);
+
+              Swal.fire({
+                title: "Imagen eliminada",
+                text: "La imagen ha sido eliminada correctamente",
+                icon: "success",
+                confirmButtonText: "OK"
+            });
           }else{
               Swal.fire("", objData.msg , "error");
           }
@@ -327,7 +335,6 @@ function fntViewInfo(idPlan){
 //Funcion para actualizar o editar un plan
 function fntEditInfo(element,idPlan){
   rowTable = element.parentNode.parentNode.parentNode;
-  console.log(rowTable);
   document.querySelector('#titleModal').innerHTML ="Actualizar Producto";
   document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
   document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
@@ -472,5 +479,13 @@ function openModal() {
   document.querySelector("#btnText").innerHTML = "Guardar";
   document.querySelector("#titleModal").innerHTML = "Nuevo Plan Turístico";
   document.querySelector("#formPlanes").reset();
-  $("#modalFormPlanes").modal("show");
+
+  document.querySelector("#divBarCode").classList.add("notblock");
+  document.querySelector("#containerGallery").classList.add("notblock");
+  document.querySelector("#containerImages").innerHTML = "";
+  $('#listCategoria').selectpicker('render');
+  $('#listLugar').selectpicker('render');
+  $('#modalFormPlanes').modal('show');
+
+
 }

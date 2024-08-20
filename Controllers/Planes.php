@@ -42,7 +42,8 @@ class Planes extends Controllers
                     $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
                 }
 
-                $arrData[$i]['precio'] = SMONEY.' '.formatMoney($arrData[$i]['precio']);
+                $arrData[$i]['precio'] = SMONEY . ' ' . formatMoney($arrData[$i]['precio']);
+                
 
                 if($_SESSION['permisosMod']['r']){
                     $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo('.$arrData[$i]['id_plan'].')" title="Ver Plan"><i class="far fa-eye"></i></button>';
@@ -61,23 +62,31 @@ class Planes extends Controllers
     }
 
     public function setPlanes() {
-        if($_POST) {
-            if(empty($_POST['txtNombre']) || empty($_POST['txtCodigo']) || empty($_POST['listCategoria']) || empty($_POST['listLugar']) || empty($_POST['txtPrecio']) || empty($_POST['listStatus'])) {
-                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
-            } else {
-                $idPlan = intval($_POST['idPlanes']);
-                $strNombre = strClean($_POST['txtNombre']);
-                $strDescripcion = strClean($_POST['txtDescripcion']);
-                $strCodigo = strClean($_POST['txtCodigo']);
-                $intIdCategoria = intval($_POST['listCategoria']);
-                $intIdLugar = intval($_POST['listLugar']);
-                $strPrecio = strClean($_POST['txtPrecio']);
-                $intStock = intval($_POST['txtStock']);
-                $intStatus = intval($_POST['listStatus']);
-    
-                if($idPlan == 0) {
-                    $option = 1;
-                    if($_SESSION['permisosMod']['w']) {
+    if($_POST) {
+        // Validar los datos enviados
+        if(empty($_POST['txtNombre']) || empty($_POST['txtCodigo']) || empty($_POST['listCategoria']) || empty($_POST['listLugar']) || empty($_POST['txtPrecio']) || empty($_POST['listStatus'])) {
+            $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+        } else {
+            $idPlan = intval($_POST['idPlanes']);
+            $strNombre = strClean($_POST['txtNombre']);
+            $strDescripcion = strClean($_POST['txtDescripcion']);
+            $strCodigo = strClean($_POST['txtCodigo']);
+            $intIdCategoria = intval($_POST['listCategoria']);
+            $intIdLugar = intval($_POST['listLugar']);
+            $strPrecio = strClean($_POST['txtPrecio']);
+            $intStock = intval($_POST['txtStock']);
+            $intStatus = intval($_POST['listStatus']);
+
+            // Verificar si se trata de una inserción o actualización
+            if($idPlan == 0) {
+                // Inserción
+                if($_SESSION['permisosMod']['w']) {
+                    // Verificar si el código ya existe
+                    $existingCode = $this->model->checkCodeExists($strCodigo);
+                    if($existingCode) {
+                        $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un producto con el Código Ingresado.');
+                    } else {
+                        // Inserción
                         $request_planes = $this->model->insertPlanes(
                             $strNombre, 
                             $strDescripcion, 
@@ -88,10 +97,22 @@ class Planes extends Controllers
                             $intStock, 
                             $intStatus
                         );
+                        if($request_planes > 0) {
+                            $arrResponse = array('status' => true, 'idplan' => $request_planes, 'msg' => 'Datos guardados correctamente.');
+                        } else {
+                            $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
+                        }
                     }
-                } else {
-                    $option = 2;
-                    if($_SESSION['permisosMod']['u']) {
+                }
+            } else {
+                // Actualización
+                if($_SESSION['permisosMod']['u']) {
+                    // Verificar si el código ya existe en otro plan
+                    $existingCode = $this->model->checkCodeExists($strCodigo, $idPlan);
+                    if($existingCode) {
+                        $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un producto con el Código Ingresado.');
+                    } else {
+                        // Actualización
                         $request_planes = $this->model->updatePlanes(
                             $idPlan,
                             $strNombre,
@@ -103,26 +124,20 @@ class Planes extends Controllers
                             $intStock, 
                             $intStatus
                         );
+                        if($request_planes > 0) {
+                            $arrResponse = array('status' => true, 'idplan' => $idPlan, 'msg' => 'Datos Actualizados correctamente.');
+                        } else {
+                            $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
+                        }
                     }
-                }
-              //Mirar error de la alerta de codigo ya existente  
-                if($request_planes > 0 )
-                {
-                    if($option == 1){
-                        $arrResponse = array('status' => true, 'idplan' => $request_planes, 'msg' => 'Datos guardados correctamente.');
-                    }else{
-                        $arrResponse = array('status' => true, 'idplan' => $idPlan, 'msg' => 'Datos Actualizados correctamente.');
-                    }
-                }else if($request_planes == 'exist'){
-                    $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un producto con el Código Ingresado.');		
-                }else{
-                    $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
                 }
             }
-            echo json_encode($arrResponse,JSON_UNESCAPED_UNICODE);
         }
-        die();
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
     }
+    die();
+}
+
     
 
     public function getPlan($idplan){

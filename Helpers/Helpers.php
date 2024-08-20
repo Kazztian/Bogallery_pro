@@ -12,7 +12,7 @@ function media()
 
     return BASE_URL . "/Assets";
 }
-//Funcines para que se muestren las partes completas del templete en cada seccion que hagamos
+//Funcines para que se muestren las partes completas del templateAdmin  en cada seccion que hagamos
 function headerAdmin($data = "")
 {
     $view_header = "Views/Template/header_admin.php";
@@ -25,6 +25,18 @@ function footerAdmin($data = "")
     require_once($view_footer);
 }
 
+//Funcines para que se muestren las partes completas del templeteTiedaBo en cada seccion que hagamos
+function headerTiendabo($data = "")
+{
+    $view_header = "Views/Template/header_tiendaBo.php";
+    require_once($view_header);
+}
+
+function footerTiendabo($data = "")
+{
+    $view_footer = "Views/Template/footer_tiendaBo.php";
+    require_once($view_footer);
+}
 
 //Muestra la informacion formateada o mas lejible
 function dep($data)

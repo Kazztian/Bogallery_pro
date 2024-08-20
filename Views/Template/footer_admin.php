@@ -1,6 +1,6 @@
 <script>
-  const base_url = "<?= base_url(); ?>";
-  const smony = "<?= SMONEY; ?>";
+const base_url = "<?= base_url(); ?>";
+const smony = "<?= SMONEY; ?>";
 </script>
 
 

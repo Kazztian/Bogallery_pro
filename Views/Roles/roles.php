@@ -7,7 +7,7 @@ getModal('modalRoles', $data);
 <main class="app-content">
   <div class="app-title">
     <div>
-      <h1><i class="bi bi-person-lines-fill"></i> <?= $data['page_title'] ?>
+      <h1><i class="bi bi-person-fill-exclamation"></i> <?= $data['page_title'] ?>
         <?php if ($_SESSION['permisosMod']['w']) { ?>
           <button class="btn btn-success" type="button" onclick="openModal();"><i class="bi bi-plus-circle"></i></i></i>Nuevo</button>
         <?php } ?>

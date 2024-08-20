@@ -14,8 +14,8 @@
     const DB_CHARSET = "charset=utf8";
 
     //Deliminadores decimal y millar
-    const SPD = ".";
-    const SPM = ",";
+    const SPD = "."; // Delimitador de decimales
+    const SPM = ","; // Delimitador de miles
 
   //Simbolo de la moneda
   const SMONEY = "$";
