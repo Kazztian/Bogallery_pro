@@ -17,11 +17,16 @@
     const SPD = "."; // Delimitador de decimales
     const SPM = ","; // Delimitador de miles
 
-  //Simbolo de la moneda
-  const SMONEY = "$";
+    //Simbolo de la moneda
+    const SMONEY = "$";
 
- //Datos envio correo
- const NOMBRE_REMITENTE = "BoGallery";
- const EMAIL_REMITENTE = "no-reply@estefa.com";
- const NOMBRE_EMPRESA ="BoGallery";
- const WEB_EMPRESA ="WWW.BoGallery.com";
+    //Datos envio correo
+    const NOMBRE_REMITENTE = "BoGallery";
+    const EMAIL_REMITENTE = "no-reply@estefa.com";
+    const NOMBRE_EMPRESA ="BoGallery";
+    const WEB_EMPRESA ="WWW.BoGallery.com";
+
+    //Aca se configura para extraer las categorias que se van a visualizar slider
+    const CAT_SLIDER = "1,2,3"; 
+   //Aca se configura para extraer las categorias que se van a visualisar en el Banner
+    const CAT_BANNER = "4,5,6,7";
