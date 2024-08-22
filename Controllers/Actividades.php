@@ -40,7 +40,7 @@ class Actividades extends Controllers
                 } else {
                     $arrData[$i]['status'] = '<span class="badge badge-danger">Inactivo</span>';
                 }
-                $arrData[$i]['valor'] = SMONEY.' '.formatMoney($arrData[$i]['valor']); 
+                $arrData[$i]['valor'] = SMONEY . ' ' . formatMoney($arrData[$i]['valor']);
 
                 if ($_SESSION['permisosMod']['r']) {
                     $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo(' . $arrData[$i]['id_actividad'] . ')" title="Ver Actividad"><i class="far fa-eye"></i></button>';
@@ -71,9 +71,9 @@ class Actividades extends Controllers
                 $strValor = strClean($_POST['txtValor']);
                 $intIdLugar = intval($_POST['listLugar']);
                 $intStatus = intval($_POST['listStatus']);
-    
+
                 $request_actividad = "";
-    
+
                 if ($idActividad == 0) {
                     $option = 1;
                     if ($_SESSION['permisosMod']['w']) {
@@ -90,7 +90,7 @@ class Actividades extends Controllers
                     $option = 2;
                     // Aquí podrías agregar la lógica de actualización si fuera necesario.
                 }
-    
+
                 if ($request_actividad > 0) {
                     if ($option == 1) {
                         $arrResponse = array('status' => true, 'id_actividad' => $request_actividad, 'msg' => 'Datos guardados correctamente.');
@@ -103,10 +103,34 @@ class Actividades extends Controllers
                     $arrResponse = array("status" => false, "msg" => 'No es posible almacenar los datos.');
                 }
             }
-    
+
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
         die();
     }
-    
+
+    public function setImage()
+    {
+        // dep($_POST);
+        //dep($_FILES);
+        if ($_POST) {
+            if (empty($_POST['id_actividad'])) {
+                $arrResponse = array('status' => false, 'msg' => 'Error carga.');
+            }else{
+                $idactividad = intval($_POST['id_actividad']);
+
+                $foto = $_FILES['foto'];
+                $imgNombre = 'pro' . md5(date('d-m-Y H:m:s')) . '.jpg';
+                $request_image = $this->model->insertImage($idactividad, $imgNombre);
+                if ($request_image) {
+                    $uploadImage = uploadImage($foto, $imgNombre);
+                    $arrResponse = array('status' => true, 'imgname' => $imgNombre, 'msg' => 'Archivo cargado.');
+                } else {
+                    $arrResponse = array('status' => false, 'msg' => 'Error carga.');
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
 }

@@ -8,6 +8,7 @@ class ActividadesModel extends mysql
     private $strValor;
     private $intIdLugar;
     private $intStatus;
+    private $strImagen;
 
     function __construct()
     {
@@ -70,5 +71,18 @@ class ActividadesModel extends mysql
 
         return $return;
     }
-
+    //Funcion para insertar las imagenes en la base de datos 
+    //Esta conectado con el controller en el public funccion set imagen
+    public function insertImage(int $idactividad, string $imagen)
+    {
+        $this->intIdActividad = $idactividad;
+        $this->strImagen = $imagen;
+        $query_insert = "INSERT INTO imagena(id_actividad,img) VALUES(?,?)";
+        $arrData = array(
+            $this->intIdActividad,
+            $this->strImagen
+        );
+        $request_insert = $this->insert($query_insert, $arrData);
+        return $request_insert;
+    }
 }
