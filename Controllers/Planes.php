@@ -174,7 +174,7 @@ class Planes extends Controllers
             }else{
                 $idPlan = intval($_POST['id_plan']);
                 $foto      = $_FILES['foto'];
-                $imgNombre = 'pro_'.md5(date('d-m-Y H:m:s')).'.jpg'; //Incriptamos con md5 y se coloca la hora para que el nombre de la img no se repita
+                $imgNombre = 'pro_'.md5(date('d-m-Y H:m:s')).'.jpg';//Incriptamos con md5 y se coloca la hora para que el nombre de la img no se repita importante ya que es la construccion de la ruta
                 $request_image = $this->model->insertImage($idPlan,$imgNombre);
                 if($request_image){ 
                     $uploadImage = uploadImage($foto,$imgNombre);

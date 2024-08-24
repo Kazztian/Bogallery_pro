@@ -256,37 +256,51 @@ function fntInputFile(){
 }
 //Funcion para Eliminar imagenes
 function fntDelItem(element){
-  let nameImg = document.querySelector(element+' .btnDeleteImage').getAttribute("imgname");
+  let nameImg = document.querySelector(element + ' .btnDeleteImage').getAttribute("imgname");
   let idPlan = document.querySelector("#idPlanes").value;
-  let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-  let ajaxUrl = base_url+'/Planes/delFile'; 
-//Formulario desde jSript
-  let formData = new FormData();
-  formData.append('idplan',idPlan);
-  formData.append("file",nameImg);
-  request.open("POST",ajaxUrl,true);
-  request.send(formData);
-  request.onreadystatechange = function(){
-      if(request.readyState != 4) return;
-      if(request.status == 200){
-          let objData = JSON.parse(request.responseText);
-          if(objData.status)
-          {
-              let itemRemove = document.querySelector(element);
-              itemRemove.parentNode.removeChild(itemRemove);
+  let ajaxUrl = base_url + '/Planes/delFile'; 
 
-              Swal.fire({
-                title: "Imagen eliminada",
-                text: "La imagen ha sido eliminada correctamente",
-                icon: "success",
-                confirmButtonText: "OK"
-            });
-          }else{
-              Swal.fire("", objData.msg , "error");
+  Swal.fire({
+      title: "¿Estás seguro?",
+      text: "¿Realmente quieres eliminar esta imagen? Esta acción no se puede deshacer.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+  }).then((result) => {
+      if (result.isConfirmed) {
+          let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+          let formData = new FormData();
+          formData.append('idplan', idPlan);
+          formData.append("file", nameImg);
+
+          request.open("POST", ajaxUrl, true);
+          request.send(formData);
+          request.onreadystatechange = function(){
+              if(request.readyState != 4) return;
+              if(request.status == 200){
+                  let objData = JSON.parse(request.responseText);
+                  if(objData.status) {
+                      let itemRemove = document.querySelector(element);
+                      itemRemove.parentNode.removeChild(itemRemove);
+
+                      Swal.fire({
+                          title: "Imagen eliminada",
+                          text: "La imagen ha sido eliminada correctamente",
+                          icon: "success",
+                          confirmButtonText: "OK"
+                      });
+                  } else {
+                      Swal.fire("", objData.msg , "error");
+                  }
+              }
           }
       }
-  }
+  });
 }
+
 
 
 function fntViewInfo(idPlan){
@@ -423,7 +437,7 @@ function fntDelInfo(idPlan) {
 }
 
 // Función para cargar categorías
-function fntCategorias() {
+async function fntCategorias() {
   if (document.querySelector('#listCategoria')) {
     let ajaxUrl = base_url + '/Categorias/getSelectCategorias';
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
@@ -439,7 +453,7 @@ function fntCategorias() {
 }
 
 // Función para cargar lugares  
-function fntLugares() {
+async function fntLugares() {
   if (document.querySelector('#listLugar')) {
     let ajaxUrl = base_url + '/Lugares/getSelectLugares';
     let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
