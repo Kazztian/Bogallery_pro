@@ -10,6 +10,7 @@ class PlanesModel extends mysql
     private $intIdCategoria;
     private $intIdLugar;
     private $intStatus;
+    private $strRuta;
     private $strImagen;
 
     function __construct()
@@ -39,7 +40,7 @@ class PlanesModel extends mysql
     }
 
     //Insertar los planes(Crear)
-    public function insertPlanes(string $nombre, string $descripcion, int $codigo, int $idcategoria, $idlugar, string $precio, int $stock, int $status)
+    public function insertPlanes(string $nombre, string $descripcion, int $codigo, int $idcategoria, $idlugar, string $precio, int $stock, string $ruta, int $status)
     {
         $this->strNombre = $nombre;
         $this->strDescripcion = $descripcion;
@@ -48,6 +49,7 @@ class PlanesModel extends mysql
         $this->intIdLugar = $idlugar;
         $this->strPrecio = $precio;
         $this->intStock = $stock;
+        $this->strRuta = $ruta;
         $this->intStatus = $status;
         $return = 0;
         $sql = "SELECT * FROM planes WHERE codigo = '{$this->intCodigo}'";
@@ -57,16 +59,19 @@ class PlanesModel extends mysql
                                                     descripcion,
                                                     precio,
                                                     codigo,                   
-                                                    stock,                                status,
+                                                    stock,  
+                                                    ruta,                  
+                                                    status,
                                                     id_categoria,
                                                     id_lugar) 
-                              VALUES(?,?,?,?,?,?,?,?)"; //Se deja la indicacion de los campos
+                              VALUES(?,?,?,?,?,?,?,?,?)"; //Se deja la indicacion de los campos
             $arrData = array(
                 $this->strNombre,
                 $this->strDescripcion,
                 $this->strPrecio,
                 $this->intCodigo,
                 $this->intStock,
+                $this->strRuta,
                 $this->intStatus,
                 $this->intIdCategoria,
                 $this->intIdLugar
@@ -89,7 +94,7 @@ class PlanesModel extends mysql
         $request = $this->select_all($sql);
         return !empty($request);
     }
-    public function updatePlanes(int $idplan, string $nombre, string $descripcion, int $codigo, int $idcategoria, int $idlugar, string $precio, int $stock, int $status)
+    public function updatePlanes(int $idplan, string $nombre, string $descripcion, int $codigo, int $idcategoria, int $idlugar, string $precio, int $stock, string $ruta, int $status)
     {
         $this->intIdPlan = $idplan;
         $this->strNombre = $nombre;
@@ -99,6 +104,7 @@ class PlanesModel extends mysql
         $this->intIdLugar = $idlugar;
         $this->strPrecio = $precio;
         $this->intStock = $stock;
+        $this->strRuta = $ruta;
         $this->intStatus = $status;
         $return = 0;
 
@@ -116,6 +122,7 @@ class PlanesModel extends mysql
                         descripcion = ?,
                         precio = ?,
                         stock = ?,
+                        ruta = ?,
                         status = ?
                     WHERE id_plan = $this->intIdPlan";
             $arrData = array(
@@ -126,6 +133,7 @@ class PlanesModel extends mysql
                 $this->strDescripcion,
                 $this->strPrecio,
                 $this->intStock,
+                $this->strRuta,
                 $this->intStatus
             );
 

@@ -76,6 +76,10 @@ class Planes extends Controllers
             $strPrecio = strClean($_POST['txtPrecio']);
             $intStock = intval($_POST['txtStock']);
             $intStatus = intval($_POST['listStatus']);
+            $request_planes = "";
+
+            $ruta = strtolower(clear_cadena($strNombre));//Obtenemos el normbre en nimisculas y sin tiles con la funcion
+            $ruta = str_replace(" ","-",$ruta);
 
             // Verificar si se trata de una inserción o actualización
             if($idPlan == 0) {
@@ -95,6 +99,7 @@ class Planes extends Controllers
                             $intIdLugar,
                             $strPrecio, 
                             $intStock, 
+                            $ruta,
                             $intStatus
                         );
                         if($request_planes > 0) {
@@ -122,6 +127,7 @@ class Planes extends Controllers
                             $intIdLugar,
                             $strPrecio, 
                             $intStock, 
+                            $ruta,
                             $intStatus
                         );
                         if($request_planes > 0) {

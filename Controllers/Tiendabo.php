@@ -26,11 +26,15 @@ class Tiendabo extends Controllers
         if (empty($params)) {
             header("Location:" . base_url());
         } else {
+            $arrParams = explode(",", $params);
+            $idCategoria = intval($arrParams[0]);
+            $ruta = strClean($arrParams[1]);
+            $infoCategoria = $this->getPlanesCategoriaT($idCategoria, $ruta);
             $categoria = strClean($params);
-            $data['page_tag'] = NOMBRE_EMPRESA . " - " . $categoria;
-            $data['page_title'] = $categoria;
+            $data['page_tag'] = NOMBRE_EMPRESA . " - " .  $infoCategoria['categoria'];
+            $data['page_title'] =  $infoCategoria['categoria'];
             $data['page_name'] = "categoria";
-            $data['planes'] = $this->getPlanesCategoriaT($categoria);
+            $data['planes'] = $infoCategoria['planes'];
             $this->views->getView($this, "categoria", $data); //vista Views
         }
     }
@@ -40,13 +44,19 @@ class Tiendabo extends Controllers
         if (empty($params)) {
             header("Location:" . base_url());
         } else {
-            $plan = strClean($params);
-            $arrPlan = $this->getPlanT($plan);
-            $data['page_tag'] = NOMBRE_EMPRESA . " - " . $plan;
-            $data['page_title'] = $plan;
+
+            $arrParams = explode(",", $params); //Explode funcion propia de php que combierte en un arry ese elemento
+            $idplan = intval($arrParams[0]);
+            $ruta = strClean($arrParams[1]);
+            $infoPlan = $this->getPlanT($idplan, $ruta);
+            if (empty($infoPlan)) {
+                header("Location:" . base_url());
+            }
+            $data['page_tag'] = NOMBRE_EMPRESA . " - " . $infoPlan['nombre'];
+            $data['page_title'] = $infoPlan['nombre'];
             $data['page_name'] = "plan";
-            $data['plan'] = $arrPlan;
-            $data['planes'] = $this->getPlanesRandom($arrPlan['id_categoria'], 8, "r"); //Se pone 8 para que se pongan cada que se oprime la letra, y se pone "r" para que se extraigan los planes de forma aleatoria se puede "a" y "d"
+            $data['plan'] = $infoPlan;
+            $data['planes'] = $this->getPlanesRandom($infoPlan['id_categoria'], 8, "r"); //Se pone 8 para que se pongan cada que se oprime la letra, y se pone "r" para que se extraigan los planes de forma aleatoria se puede "a" y "d"
             $this->views->getView($this, "plan", $data); //vista Views llamado
         }
     }

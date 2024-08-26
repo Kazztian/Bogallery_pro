@@ -7,9 +7,11 @@ trait TPlan
     private $con;
     private $strCategoria;
     private $intIdcategoria;
+    private $intIdplan;
     private $strPlan;
     private $cant;
     private $option;
+    private $strRuta;
 
     public function getPlanesT()
     {
@@ -21,13 +23,14 @@ trait TPlan
                         p.id_categoria,
                         c.nombre AS categoria,
                         p.precio,
+                        p.ruta,
                         p.stock,     
                         p.id_lugar,
                         l.nombre AS lugar
                  FROM planes p 
                  INNER JOIN categorias c ON p.id_categoria = c.id_categoria
                  INNER JOIN lugares l ON p.id_lugar = l.id_lugar
-                 WHERE p.status != 0";
+                 WHERE p.status != 0 ORDER BY p.id_plan DESC";
 
         $request = $this->con->select_all($sql); //El select_all Ya que extraemos todos los registros
 
@@ -55,14 +58,15 @@ trait TPlan
         return $request;
     }
 
-    public function getPlanesCategoriaT(string $categoria)
+    public function getPlanesCategoriaT(int $idcategoria, string $ruta,)
     {
-        $this->strCategoria = $categoria;
+        $this->intIdcategoria = $idcategoria;
+        $this->strRuta = $ruta;
         $this->con = new Mysql();
-        $sql_cat = "SELECT id_categoria FROM  categorias WHERE nombre ='{$this->strCategoria}'";
+        $sql_cat = "SELECT id_categoria, nombre FROM  categorias WHERE id_categoria ='{$this->intIdcategoria}'";
         $request = $this->con->select($sql_cat);
         if (!empty($request)) {
-            $this->intIdcategoria = $request['id_categoria'];
+            $this->strCategoria = $request['nombre'];
             $sql = "SELECT p.id_plan,
                             p.codigo,
                             p.nombre,
@@ -70,13 +74,14 @@ trait TPlan
                             p.id_categoria,
                             c.nombre AS categoria,
                             p.precio,
+                            p.ruta,
                             p.stock,     
                             p.id_lugar,
                             l.nombre AS lugar
                      FROM planes p 
                      INNER JOIN categorias c ON p.id_categoria = c.id_categoria
                      INNER JOIN lugares l ON p.id_lugar = l.id_lugar
-                     WHERE p.status != 0 AND p.id_categoria = $this->intIdcategoria";
+                     WHERE p.status != 0 AND p.id_categoria = $this->intIdcategoria AND c.ruta = '{$this->strRuta}'";
 
             $request = $this->con->select_all($sql);
 
@@ -100,15 +105,21 @@ trait TPlan
                     $request[$c]['images'] = $arrImg;
                 }
             }
+            $request = array(
+                'id_categoria' => $this->intIdcategoria,
+                'categoria' => $this->strCategoria,
+                'planes' => $request
+            );
         }
 
         return $request;
     }
 
-    public function getPlanT(string $plan)
+    public function getPlanT(int $idplan, string $ruta)
     {
         $this->con = new Mysql();
-        $this->strPlan = $plan; //Este tipo de propiedades se debe crear y poner arriba
+        $this->intIdplan = $idplan;
+        $this->strRuta = $ruta; //Este tipo de propiedades se debe crear y poner arriba
         $sql = "SELECT p.id_plan,
                         p.codigo,
                         p.nombre,
@@ -116,13 +127,14 @@ trait TPlan
                         p.id_categoria,
                         c.nombre AS categoria,
                         p.precio,
+                        p.ruta,
                         p.stock,     
                         p.id_lugar,
                         l.nombre AS lugar
                  FROM planes p 
                  INNER JOIN categorias c ON p.id_categoria = c.id_categoria
                  INNER JOIN lugares l ON p.id_lugar = l.id_lugar
-                 WHERE p.status != 0 AND p.nombre = '{$this->strPlan}'";
+                 WHERE p.status != 0 AND p.id_plan = '{$this->intIdplan}' AND p.ruta = '{$this->strRuta}'";
 
         $request = $this->con->select($sql); //Para que extraiga un resgistro
         if (!empty($request)) { //Si no esta vacio el array Se realiza todo lo demas
@@ -137,6 +149,8 @@ trait TPlan
                 for ($i = 0; $i < count($arrImg); $i++) {
                     $arrImg[$i]['url_image'] = media() . '/images/uploads/' . $arrImg[$i]['img'];
                 }
+            } else {
+                $arrImg[0]['url_image'] = media() . '/images/uploads/portada_categorias.jpg';
             }
             $request['images'] = $arrImg;
         }
@@ -167,6 +181,7 @@ trait TPlan
                                 p.id_categoria,
                                 c.nombre AS categoria,
                                 p.precio,
+                                p.ruta,
                                 p.stock,     
                                 p.id_lugar,
                                 l.nombre AS lugar
