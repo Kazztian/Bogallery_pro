@@ -7,7 +7,7 @@ class Actividades extends Controllers
     {
         parent::__construct();
         session_Start();
-        session_regenerate_id(true);
+        //session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
         }
@@ -20,7 +20,7 @@ class Actividades extends Controllers
             header("Location:" . base_url() . '/dashboard');
         }
         $data['page_tag'] = "Actividades";
-        $data['page_title'] = "Actividades <small>BoGallery</small>";
+        $data['page_title'] = "ACTIVIDADES <small>BoGallery</small>";
         $data['page_name'] = "actividades";
         $data['page_functions_js'] = "functions_actividades.js";
         $this->views->getView($this, "actividades", $data);
@@ -58,7 +58,7 @@ class Actividades extends Controllers
         die();
     }
 
-    public function setActividades()
+    public function setActividad()
     {
         if ($_POST) {
             if (empty($_POST['txtNombre']) || empty($_POST['txtJornada']) || empty($_POST['txtValor']) || empty($_POST['listLugar']) || empty($_POST['listStatus'])) {
@@ -72,7 +72,7 @@ class Actividades extends Controllers
                 $intIdLugar = intval($_POST['listLugar']);
                 $intStatus = intval($_POST['listStatus']);
 
-                $request_actividad = "";
+                //$request_actividad = "";
 
                 if ($idActividad == 0) {
                     $option = 1;
@@ -89,13 +89,24 @@ class Actividades extends Controllers
                 } else {
                     $option = 2;
                     // Aquí podrías agregar la lógica de actualización si fuera necesario.
+                    $request_actividad = $this->model->updateActividad(
+                        $idActividad,
+                        $strNombre,
+                        $strDescripcion,
+                        $strJornada,
+                        $strValor,
+                        $intIdLugar,
+                        $intStatus
+                    );
                 }
 
                 if ($request_actividad > 0) {
                     if ($option == 1) {
                         $arrResponse = array('status' => true, 'id_actividad' => $request_actividad, 'msg' => 'Datos guardados correctamente.');
                     } else {
-                        $arrResponse = array('status' => true, 'id_actividad' => $idActividad, 'msg' => 'Datos actualizados correctamente.');
+                        // $arrResponse = array('status' => true, 'id_actividad' => $idActividad, 'msg' => 'Datos actualizados correctamente.');
+                         $arrResponse = array('status' => true, 'id_actividad' => $idActividad, 'msg' => 'Datos Actualizados correctamente.');
+                    
                     }
                 } else if ($request_actividad == 'exist') {
                     $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un lugar con ese nombre.');
@@ -108,20 +119,45 @@ class Actividades extends Controllers
         }
         die();
     }
+    public function getActividad($idActividad)
+    {
+        if ($_SESSION['permisosMod']['r']) {
+            $idActividad = intval($idActividad);
+            if ($idActividad > 0) {
+                $arrData = $this->model->selectActividad($idActividad);
+                if (empty($arrData)) {
+                    $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados.');
+                } else {
+                    $arrImg = $this->model->selectImages($idActividad);
+                    if (count($arrImg) > 0) {
+                        for ($i = 0; $i < count($arrImg); $i++) {
+                            $arrImg[$i]['url_image'] = media() . '/images/uploads/' . $arrImg[$i]['img'];
+                        }
+                    }
+                    $arrData['images'] = $arrImg;
+                    $arrResponse = array('status' => true, 'data' => $arrData);
+                
+                }
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
+    }
+
 
     public function setImage()
     {
-        // dep($_POST);
+        //dep($_POST);
         //dep($_FILES);
+
         if ($_POST) {
             if (empty($_POST['id_actividad'])) {
                 $arrResponse = array('status' => false, 'msg' => 'Error carga.');
-            }else{
-                $idactividad = intval($_POST['id_actividad']);
-
-                $foto = $_FILES['foto'];
-                $imgNombre = 'pro' . md5(date('d-m-Y H:m:s')) . '.jpg';
-                $request_image = $this->model->insertImage($idactividad, $imgNombre);
+            } else {
+                $idActividad = intval($_POST['id_actividad']);
+                $foto    = $_FILES['foto'];
+                $imgNombre = 'pro_' . md5(date('d-m-Y H:m:s')) . '.jpg';
+                $request_image = $this->model->insertImage($idActividad, $imgNombre);
                 if ($request_image) {
                     $uploadImage = uploadImage($foto, $imgNombre);
                     $arrResponse = array('status' => true, 'imgname' => $imgNombre, 'msg' => 'Archivo cargado.');

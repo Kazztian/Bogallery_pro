@@ -36,7 +36,7 @@
                             <br></br>
                             <div class="form-group">
                                 <label class="control-label">Valor<span class="required">*</span></label>
-                                <input type="text" class="form-control" id="txtValor" name="txtValor" required="">
+                                <input type="text" class="form-control" id="txtValor" name="txtValor" type="text" required="">
                             </div>
                             <br></br>
                             <div class="form-group">
@@ -63,7 +63,7 @@
                             <div id="containerImages">
                              <!--   <div id="div24">
                                     <div class="prevImage">
-                                        <img src="<?= media(); ?>/images/uploads/MONSERRATE.jpg" alt="">
+                                        <img src="<?= media(); ?>/images/uploads/MONSERRATE.jpg">
                                     </div>
                                     <input type="file" name="foto" id="img1" class="inputUploadfile">
                                     <label for="img1" class="btnUploadfile"><i class="fas fa-upload "></i></label>
@@ -71,7 +71,7 @@
                                 </div>
                                 <div id="div24">
                                     <div class="prevImage">
-                                        <img class="loading" src="<?= media(); ?>/images/loading.svg" alt="">
+                                        <img class="loading" src="<?= media(); ?>/images/loading.svg">
                                     </div>
                                     <input type="file" name="foto" id="img1" class="inputUploadfile">
                                     <label for="img1" class="btnUploadfile"><i class="fas fa-upload "></i></label>
@@ -88,11 +88,11 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="modalViewLugar" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalViewActividad" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header header-primary">
-                <h5 class="modal-title" id="titleModal">Datos del lugar</h5>
+                <h5 class="modal-title" id="titleModal">Datos del la actividad</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -105,27 +105,27 @@
                             <td id="celId"></td>
                         </tr>
                         <tr>
-                            <td>Nombre Lugar:</td>
+                            <td>Nombre Actividad:</td>
                             <td id="celNombre"></td>
                         </tr>
                         <tr>
-                            <td>Localidad:</td>
-                            <td id="celLocalidad"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Dirección:</td>
-                            <td id="celDirección"></td>
-                        </tr>
-
-                        <tr>
-                            <td>Tipo Lugar:</td>
-                            <td id="celTipo"></td>
-                        </tr>
-
-                        <tr>
                             <td>Descripción:</td>
                             <td id="celDescripcion"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Jornada:</td>
+                            <td id="celJornada"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Valor:</td>
+                            <td id="celValor"></td>
+                        </tr>
+
+                        <tr>
+                            <td>Lugar:</td>
+                            <td id="celLugar"></td>
                         </tr>
 
                         <tr>

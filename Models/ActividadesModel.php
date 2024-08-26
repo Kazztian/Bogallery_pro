@@ -71,6 +71,76 @@ class ActividadesModel extends mysql
 
         return $return;
     }
+
+    public function updateActividad(
+        int $idactividad,
+        string $nombre,
+        string $descripcion,
+        string $jornada,
+        string $valor,
+        int $lugar,
+        int $status
+    ) {
+        $this->intIdActividad = $idactividad;
+        $this->strNombre = $nombre;
+        $this->strDescripcion = $descripcion;
+        $this->strJornada = $jornada;
+        $this->strValor = $valor;
+        $this->intIdLugar = $lugar;
+        $this->intStatus = $status;
+    
+        // Usar declaraciones preparadas para evitar inyección SQL
+        $sql = "SELECT * FROM actividades WHERE nombre = ? AND id_actividad != ?";
+        $request = $this->select_all($sql, array($this->strNombre, $this->intIdActividad));
+    
+        if (empty($request)) {
+            $sql = "UPDATE actividades
+                    SET id_lugar = ?,
+                        nombre = ?,
+                        descripcion = ?,
+                        jornada = ?,
+                        valor = ?,
+                        status = ?
+                    WHERE id_actividad = ?";
+            $arrData = array(
+                $this->intIdLugar,
+                $this->strNombre,
+                $this->strDescripcion,
+                $this->strJornada,
+                $this->strValor,
+                $this->intStatus,
+                $this->intIdActividad
+            );
+            $request = $this->update($sql, $arrData);
+            return $request;
+        } else {
+            return "exist";
+        }
+        return $return;
+    }
+    
+
+
+
+    public function selectActividad(int $idactividad)
+    {
+        $this->intIdActividad = $idactividad;
+        $sql = "SELECT a.id_actividad,
+    a.nombre,
+    a.descripcion,
+    a.jornada,
+    a.valor,
+  a.id_lugar,
+  l.nombre as lugares,
+  a.status
+  FROM actividades a
+  INNER JOIN  lugares l
+  ON a.id_lugar = l.id_lugar
+  WHERE id_actividad = $this->intIdActividad";
+        $request = $this->select($sql);
+        return $request;
+    }
+
     //Funcion para insertar las imagenes en la base de datos 
     //Esta conectado con el controller en el public funccion set imagen
     public function insertImage(int $idactividad, string $imagen)
@@ -84,5 +154,15 @@ class ActividadesModel extends mysql
         );
         $request_insert = $this->insert($query_insert, $arrData);
         return $request_insert;
+    }
+
+    public function selectImages(int $idactividad)
+    {
+        $this->intIdActividad = $idactividad;
+        $sql = "SELECT id_actividad,img
+        FROM imagena
+        WHERE id_actividad = $this->intIdActividad";
+        $request = $this->select_all($sql);
+        return $request;
     }
 }

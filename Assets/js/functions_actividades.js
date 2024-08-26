@@ -16,14 +16,14 @@ $(document).on("focusin", function (e) {
 });
 
 window.addEventListener('load', function () {
-      tableLugares = $("#tableActividades").DataTable({
+      tableActividades = $("#tableActividades").DataTable({
           aProcessing: true,
           aServerSide: true,
           language: {
               url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
           },
           ajax: {
-              url: base_url + "/Actividades/getActividades",
+              url:" "+base_url+"/Actividades/getActividades",
               dataSrc: ''
           },
           columns: [
@@ -31,7 +31,6 @@ window.addEventListener('load', function () {
             { data: "nombre" },
             { data: "jornada" },
             { data: "valor" },
-            //{ data: "lugares" },
             { data: "status" },
             { data: "options" },
           ],
@@ -85,10 +84,9 @@ window.addEventListener('load', function () {
           order: [[0, "desc"]],
       });
 
-      if(this.document.querySelector("#formActividades")){
-        let formActividades = this.document.querySelector("#formActividades");
+      if(document.querySelector("#formActividades")){
+        let formActividades = document.querySelector("#formActividades");
         formActividades.onsubmit = function(e){
-
           e.preventDefault();
           let strNombre = document.querySelector('#txtNombre').value;
           let strJornada = document.querySelector("#txtJornada").value;
@@ -104,21 +102,22 @@ window.addEventListener('load', function () {
             //divLoading.setHTMLUnsafe.display = "flex";
             tinyMCE.triggerSave();
 
-                let request =(window.XMLHttpRequest)?
+                let request = (window.XMLHttpRequest) ?
                 new XMLHttpRequest() :
                 new ActiveXObject('Microsoft.XMLHTTP');
-    let ajaxUrl = base_url+'/Actividades/setActividades';
+    let ajaxUrl = base_url+'/Actividades/setActividad';
     let formData = new FormData(formActividades);
     request.open("POST",ajaxUrl,true);
     request.send(formData);
     request.onreadystatechange = function(){
       if (request.readyState == 4 && request.status == 200) {
+       
         let objData = JSON.parse(request.responseText);
         if(objData.status){
           Swal.fire("Actividades", objData.msg, "success");
           document.querySelector("#id_actividad").value = objData.id_actividad;
                    
-          tableLugares.ajax.reload();
+          tableActividades.ajax.reload();
         }else{
           Swal.fire("Error", objData.msg, "error");
         }
@@ -147,21 +146,13 @@ if(document.querySelector(".btnAddImage")){
   }
 }
   fntInputFile();
+  fntLugares();
 
     }, false);
   
   
- // Manejar la propagación del evento focusin en los diálogos de TinyMCE
-  $(document).on("focusin", function (e) {
-    if ($(e.target).closest(".tox-dialog").length) {
-      e.stopImmediatePropagation();
-    }
-  });
-   
-  //
-  window.addEventListener('load', function(){
-    fntLugares();
-  }, false);
+
+ 
 
  tinymce.init({
     selector: '#txtDescripcion',
@@ -226,6 +217,111 @@ function fntInputFile(){
       }
   });
   });
+}
+
+
+function fntViewInfo(id_actividad){
+  let request = (window.XMLHttpRequest) ?
+          new XMLHttpRequest() :
+          new ActiveXObject('Microsoft.XMLHTTP');
+  let ajaxUrl = base_url+'/Actividades/getActividad/'+id_actividad;
+  request.open("GET",ajaxUrl,true);
+  request.send();
+  request.onreadystatechange = function(){
+      if(request.readyState == 4 && request.status == 200){
+          let objData = JSON.parse(request.responseText);
+          if(objData.status){
+              let htmlImage = "";
+              let objActividad = objData.data;
+              let estadoActividad = objActividad.status == 1?
+              '<span class="me-1 badge bg-success" style="display: inline-block; font-size: 0.9rem;">Activo</span>' :
+              '<span class="me-1 badge bg-danger" style="display: inline-block; font-size: 0.9rem;">Inactivo</span>';
+              document.querySelector("#celId").innerHTML = objActividad.id_actividad;
+              document.querySelector("#celNombre").innerHTML = objActividad.nombre;
+              document.querySelector("#celDescripcion").innerHTML = objActividad.descripcion;
+              document.querySelector("#celJornada").innerHTML = objActividad.jornada;
+              document.querySelector("#celValor").innerHTML = objActividad.valor;
+              document.querySelector("#celLugar").innerHTML = objActividad.lugares;
+              document.querySelector("#celStatus").innerHTML = estadoActividad;
+
+              if(objActividad.images.length > 0){
+                  let objActividades = objActividad.images;
+                  for (let l = 0; l < objActividades.length; l++){
+                      htmlImage +=`<img src="${objActividades[l].url_image}"></img>`
+                  }
+              }
+              document.querySelector("#celFotos").innerHTML = htmlImage;
+              $('#modalViewActividad').modal('show');
+              
+
+              
+          }else{
+              Swal.fire("Error", objData.msg, "error");
+          }
+
+
+  }
+}
+
+}
+
+function fntEditInfo(element, id_actividad){
+  rowTable = element.parentNode.parentNode.parentNode;
+
+  document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
+  document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
+  document.querySelector('#btnText').innerHTML = 'Actualizar';
+  document.querySelector('#titleModal').innerHTML = "Actualizar Actividad";
+
+  let request = (window.XMLHttpRequest) ?
+  new XMLHttpRequest() :
+  new ActiveXObject('Microsoft.XMLHTTP');
+let ajaxUrl = base_url+'/Actividades/getActividad/'+id_actividad;
+request.open("GET",ajaxUrl,true);
+request.send();
+request.onreadystatechange = function(){
+if(request.readyState == 4 && request.status == 200){
+  let objData = JSON.parse(request.responseText);
+  if(objData.status){
+    let htmlImage = "";
+      let objActividad = objData.data;
+
+      document.querySelector("#id_actividad").value = objActividad.id_actividad;
+      document.querySelector("#txtNombre").value = objActividad.nombre;
+      document.querySelector("#txtDescripcion").value = objActividad.descripcion;
+      document.querySelector("#txtJornada").value = objActividad.jornada;
+      document.querySelector("#txtValor").value = objActividad.valor;
+      document.querySelector("#listLugar").value = objActividad.id_lugar;
+      document.querySelector("#listStatus").value = objActividad.status;
+
+      tinymce.activeEditor.setContent(objActividad.descripcion);
+     $('#listStatus').selectpicker('render');
+      $('#listLugar').selectpicker('render');
+    
+      if(objActividad.images.length > 0){
+        let objActividades = objActividad.images;
+        for (let l = 0; l < objActividades.length; l++) {
+            let key = Date.now()+l;
+            htmlImage +=`<div id="div${key}">
+                <div class="prevImage">
+                <img src="${objActividades[l].url_image}"></img>
+                </div>
+                <button type="button" class="btnDeleteImage" onclick="fntDelItem('#div${key}')" imgname="${objActividades[l].img}">
+                <i class="fas fa-trash-alt"></i></button></div>`;
+        }
+    }
+    document.querySelector("#containerImages").innerHTML = htmlImage; 
+      $('#modalFormActividades').modal('show');
+
+      
+  }else{
+      Swal.fire("Error", objData.msg, "error");
+  }
+
+
+}
+}
+
 }
 
  function fntLugares(){
