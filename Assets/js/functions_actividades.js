@@ -1,5 +1,5 @@
  let tableActividades;
- 
+ let rowTable = "";
  
  // Cargar el script de SweetAlert solo si no está ya cargado
 if (!document.querySelector('script[src="https://cdn.jsdelivr.net/npm/sweetalert2@9"]')) {
@@ -90,9 +90,9 @@ window.addEventListener('load', function () {
           e.preventDefault();
           let strNombre = document.querySelector('#txtNombre').value;
           let strJornada = document.querySelector("#txtJornada").value;
-          let intValor = document.querySelector("#txtValor").value;
-
-          if(strNombre == '' || strJornada == '' || intValor == '')
+          let strValor = document.querySelector("#txtValor").value;
+          let intStatus = document.querySelector('#listStatus').value;
+          if(strNombre == '' || strJornada == '' || strValor == '')
             {
                 Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
                 return false;
@@ -116,8 +116,22 @@ window.addEventListener('load', function () {
         if(objData.status){
           Swal.fire("Actividades", objData.msg, "success");
           document.querySelector("#id_actividad").value = objData.id_actividad;
-                   
-          tableActividades.ajax.reload();
+          document.querySelector("#containerGallery").classList.remove("notblock");
+                    
+               if(rowTable == ""){
+                tableActividades.ajax.reload(null, false); 
+               }else{
+                htmlStatus = intStatus == 1 ? 
+                '<span class="badge badge-success">Activo</span>' : 
+                '<span class="badge badge-danger">Inactivo</span>';
+                rowTable.cells[1].textContent = strNombre;
+                rowTable.cells[2].textContent =  strJornada;
+                rowTable.cells[3].textContent =  smony+strValor;
+                rowTable.cells[4].innerHTML = htmlStatus;
+                rowTable = "";
+               }
+              // $('#modalFormActividades').modal('hide');
+         
         }else{
           Swal.fire("Error", objData.msg, "error");
         }
@@ -219,6 +233,54 @@ function fntInputFile(){
   });
 }
 
+function fntDelItem(element) {
+  let nameImg = document.querySelector(element + ' .btnDeleteImage').getAttribute("imgname");
+  let id_actividad = document.querySelector("#id_actividad").value;
+
+  Swal.fire({
+      title: "¿Eliminar imagen?",
+      text: "¿Estás seguro de que deseas eliminar esta imagen?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí",
+      cancelButtonText: "No",
+      confirmButtonColor: "#28a745",  // Color verde para el botón de "Sí"
+      cancelButtonColor: "#ff8c00"  // Color naranja para el botón de "No"
+  }).then((result) => {
+      if (result.isConfirmed) {
+          let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+          let ajaxUrl = base_url + '/Actividades/delFile';
+
+          let formData = new FormData();
+          formData.append('id_actividad', id_actividad);
+          formData.append("file", nameImg);
+
+          request.open("POST", ajaxUrl, true);
+          request.send(formData);
+
+          request.onreadystatechange = function () {
+              if (request.readyState != 4) return;
+              if (request.status == 200) {
+                  let objData = JSON.parse(request.responseText);
+                  if (objData.status) {
+                      let itemRemove = document.querySelector(element);
+                      itemRemove.parentNode.removeChild(itemRemove);
+
+                      Swal.fire({
+                          title: "Imagen eliminada",
+                          text: "La imagen ha sido eliminada correctamente.",
+                          icon: "success",
+                          confirmButtonText: "OK",
+                          confirmButtonColor: "#28a745"
+                      });
+                  } else {
+                      Swal.fire("", objData.msg, "error");
+                  }
+              }
+          }
+      }
+  });
+}
 
 function fntViewInfo(id_actividad){
   let request = (window.XMLHttpRequest) ?
@@ -324,6 +386,39 @@ if(request.readyState == 4 && request.status == 200){
 
 }
 
+function fntDelInfo(id_actividad){
+  Swal.fire({
+      title: "Eliminar Actividad",
+      text: "¿Realmente quiere eliminar la actividad?",
+      icon: "warning",  // Cambiado de "type" a "icon"
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar!",
+      cancelButtonText: "No, cancelar!",
+  }).then((result) => {
+      if (result.isConfirmed) {
+          let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+          let ajaxUrl = base_url+'/Actividades/delActividad';
+          let strData = "id_actividad="+id_actividad;
+          request.open("POST", ajaxUrl, true);
+          request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+          request.send(strData);
+
+          request.onreadystatechange = function(){
+              if(request.readyState == 4 && request.status == 200){
+                  let objData = JSON.parse(request.responseText);
+                  if(objData.status){
+                      Swal.fire("Eliminado!", objData.msg , "success");
+                      tableActividades.ajax.reload();
+                  } else {
+                      Swal.fire("Atención!", objData.msg , "error");
+                  }
+              }
+          }
+      }
+  });
+}
+
+
  function fntLugares(){
     if(document.querySelector('#listLugar')){
         let ajaxUrl = base_url+'/Lugares/getSelectLugares';
@@ -351,7 +446,7 @@ request.onreadystatechange = function(){
         document.querySelector('#titleModal').innerHTML = "Nueva actividad";
         document.querySelector("#formActividades").reset();
 
-       // document.querySelector("#containerGallery").classList.add("notblock");
-       // document.querySelector("#containerImages").innerHTML = "";
+        document.querySelector("#containerGallery").classList.add("notblock");
+        document.querySelector("#containerImages").innerHTML = "";
         $('#modalFormActividades').modal('show');
     };

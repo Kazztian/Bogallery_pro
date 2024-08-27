@@ -165,4 +165,22 @@ class ActividadesModel extends mysql
         $request = $this->select_all($sql);
         return $request;
     }
+
+    public function deleteImage(int $idactividad, string $imagen){
+        $this->intIdActividad = $idactividad;
+        $this->strImagen = $imagen;
+        $query  = "DELETE FROM imagena 
+                    WHERE id_actividad = $this->intIdActividad 
+                    AND img = '{$this->strImagen}'";
+        $request_delete = $this->delete($query);
+        return $request_delete;
+    }
+
+    public function deleteActividad(int $idactividad){
+        $this->intIdActividad = $idactividad;
+        $sql = "UPDATE actividades SET status = ? WHERE id_actividad = $this->intIdActividad ";
+        $arrData = array(0);
+        $request = $this->update($sql,$arrData);
+        return $request;
+    }
 }

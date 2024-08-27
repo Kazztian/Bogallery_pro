@@ -72,7 +72,7 @@ class Actividades extends Controllers
                 $intIdLugar = intval($_POST['listLugar']);
                 $intStatus = intval($_POST['listStatus']);
 
-                //$request_actividad = "";
+                $request_actividad = "";
 
                 if ($idActividad == 0) {
                     $option = 1;
@@ -89,6 +89,7 @@ class Actividades extends Controllers
                 } else {
                     $option = 2;
                     // Aquí podrías agregar la lógica de actualización si fuera necesario.
+                    if ($_SESSION['permisosMod']['u']) {
                     $request_actividad = $this->model->updateActividad(
                         $idActividad,
                         $strNombre,
@@ -99,6 +100,7 @@ class Actividades extends Controllers
                         $intStatus
                     );
                 }
+            }
 
                 if ($request_actividad > 0) {
                     if ($option == 1) {
@@ -166,6 +168,46 @@ class Actividades extends Controllers
                 }
             }
             echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    public function delFile()
+    {
+        if ($_POST) {
+            if (empty($_POST['id_actividad']) || empty($_POST['file'])) {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            } else {
+                //Eliminar de la DB
+                $idActividad = intval($_POST['id_actividad']);
+                $imgNombre  = strClean($_POST['file']);
+                $request_image = $this->model->deleteImage($idActividad, $imgNombre);
+
+                if ($request_image) {
+                    $deleteFile =  deleteFile($imgNombre);
+                    $arrResponse = array('status' => true, 'msg' => 'Archivo eliminado');
+                } else {
+                    $arrResponse = array('status' => false, 'msg' => 'Error al eliminar');
+                }
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    function delActividad()
+    {
+        if ($_POST) {
+            if ($_SESSION['permisosMod']['d']) {
+                $intIdActividad = intval($_POST['id_actividad']);
+                $requestDelete = $this->model->deleteActividad($intIdActividad);
+                if ($requestDelete) {
+                    $arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el lugar');
+                } else {
+                    $arrResponse = array('status' => false, 'msg' => 'Error al eliminar el lugar.');
+                }
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
         }
         die();
     }
