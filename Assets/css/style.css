@@ -1,3 +1,5 @@
+/* un . es una clase y # es un id */
+
 .headerRegister,
 .header-primary {
   background: #009688;
@@ -8,9 +10,6 @@
   color: #fff;
 }
 
-.textcenter{
-  text-align:center;
-}
 /* Borde de las listas  */
 .bootstrap-select > .dropdown-toggle{
   border: 1px solid #ccc;
@@ -205,4 +204,53 @@ input:checked + .slider:before {
     width: 200px;
     margin: auto;
 
+}
+/* Upload fotos diseño galeria planes */
+#containerImages {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+#containerImages > div {
+  margin-right: 10px;
+  margin-bottom: 8px;
+}
+
+.prevImage {
+  border: 1px solid #CCC;
+  width: 120px;
+  height: 148px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.prevImage img {
+  width: 100%;
+}
+.inputUploadfile{
+  display: none;
+}
+.btnUploadfile, .btnDeleteImage{
+  border: 0;
+  background-color: #009688;
+  text-align: center;
+  padding: 2px 3px;
+  color:#FFF;
+  font-size: 9pt;
+  cursor: pointer;
+  width: 100%;
+   
+}
+.btnDeleteImage{
+  background-color: #cc0000;
+}
+.prevImage .loading{
+  width: 40px;
+  height: 40px;
+}
+#celFotos img{
+  width: 150px;
+  margin: 10px;
 }

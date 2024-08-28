@@ -1,4 +1,14 @@
 <?php
+
+//Libreria e implementacion de envio de correo de forma local
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
+
+require 'Libraries/phpmailer/Exception.php';
+require 'Libraries/phpmailer/PHPMailer.php';
+require 'Libraries/phpmailer/SMTP.php';
+
 //Retorna la URL del proyecto
 function base_url()
 {
@@ -12,7 +22,7 @@ function media()
 
     return BASE_URL . "/Assets";
 }
-//Funcines para que se muestren las partes completas del templete en cada seccion que hagamos
+//Funcines para que se muestren las partes completas del templateAdmin  en cada seccion que hagamos
 function headerAdmin($data = "")
 {
     $view_header = "Views/Template/header_admin.php";
@@ -25,6 +35,18 @@ function footerAdmin($data = "")
     require_once($view_footer);
 }
 
+//Funcines para que se muestren las partes completas del templeteTiedaBo en cada seccion que hagamos
+function headerTiendabo($data = "")
+{
+    $view_header = "Views/Template/header_tiendaBo.php";
+    require_once($view_header);
+}
+
+function footerTiendabo($data = "")
+{
+    $view_footer = "Views/Template/footer_tiendaBo.php";
+    require_once($view_footer);
+}
 
 //Muestra la informacion formateada o mas lejible
 function dep($data)
@@ -47,20 +69,102 @@ function getModal(string $nameModal, $data)
 //Envio de correos
 function sendEmail($data, $template)
 {
+    if (ENVIRONMENT == 1) {
     $asunto = $data['asunto'];
     $emailDestino = $data['email'];
     $empresa = NOMBRE_REMITENTE;
     $remitente = EMAIL_REMITENTE;
+        $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
 
     //ENVIO DE CORREO
     $de = "MIME-Version: 1.0 \r\n";
     $de .= "Content-type:text/html; charset=UTF-8\r\n";
     $de .= "From: {$empresa}<{$remitente}>\r\n";
+        $de .= "Bcc: $emailCopia\r\n";
     ob_start();
-    require_once("Views/Template/Email/{$template}.php");
+        require_once("Views/Template/Email/" . $template . ".php");
     $mensaje = ob_get_clean();
     $send = mail($emailDestino, $asunto, $mensaje, $de);
     return $send;
+    } else {
+
+        //Create an instance; passing `true` enables exceptions
+        $mail = new PHPMailer(true);
+        ob_start();
+        require_once("Views/Template/Email/" . $template . ".php");
+        $mensaje = ob_get_clean();
+
+        try {
+            //Server settings
+            $mail->SMTPDebug = 0;                                   //Enable verbose debug output
+            $mail->isSMTP();                                            //Send using SMTP
+            $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+            $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $mail->Username   = 'bogallerygaes@gmail.com';                     //SMTP username
+            $mail->Password   = 'ncicbxovdjczlhyc';                               //SMTP password
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+            $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            //Recipients
+            $mail->setFrom('bogallerygaes@gmail.com', 'Servidor Local');
+            $mail->addAddress($data['email']);     //Add a recipient 
+            if (!empty($data['emailCopia'])) {
+                $mail->addBCC($data['emailCopia']);
+            }
+
+
+
+            //Content
+            $mail->isHTML(true);                                  //Set email format to HTML
+            $mail->Subject = $data['asunto'];
+            $mail->Body    = $mensaje;
+
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+}
+
+function sendMailLocal($data, $template)
+{
+    //Create an instance; passing `true` enables exceptions
+    $mail = new PHPMailer(true);
+    ob_start();
+    require_once("Views/Template/Email/" . $template . ".php");
+    $mensaje = ob_get_clean();
+
+    try {
+        //Server settings
+        $mail->SMTPDebug = 1;                                   //Enable verbose debug output
+        $mail->isSMTP();                                            //Send using SMTP
+        $mail->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
+        $mail->Username   = 'bogallerygaes@gmail.com';                     //SMTP username
+        $mail->Password   = 'ncicbxovdjczlhyc';                               //SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
+        $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+        //Recipients
+        $mail->setFrom('bogallerygaes@gmail.com', 'Servidor Local');
+        $mail->addAddress($data['email']);     //Add a recipient 
+        if (!empty($data['emailCopia'])) {
+            $mail->addBCC($data['emailCopia']);
+        }
+
+
+
+        //Content
+        $mail->isHTML(true);                                  //Set email format to HTML
+        $mail->Subject = $data['asunto'];
+        $mail->Body    = $mensaje;
+
+        $mail->send();
+        echo 'Mensaje enviado correctamente';
+    } catch (Exception $e) {
+        echo "Error en el envio del mensaje: {$mail->ErrorInfo}";
+    }
 }
 
 function getPermisos(int $id_modulo)
@@ -102,14 +206,16 @@ function sessionStart()
     }
 }
 
-function uploadImage(array $data, string $name){
+function uploadImage(array $data, string $name)
+{
     $url_temp = $data['tmp_name'];
     $destino = 'Assets/images/uploads/'.$name;
     $move = move_uploaded_file($url_temp, $destino);
     return $move;   
 }
 
-function deleteFile(string $name){
+function deleteFile(string $name)
+{
 unlink('Assets/images/uploads/'.$name);
 }
 
@@ -150,7 +256,51 @@ function strClean($strCadena)
     return $string;
 }
 
+function clear_cadena(string $cadena)
+{
+    //Reemplazamos la A y a
+    $cadena = str_replace(
+        array('Á', 'À', 'Â', 'Ä', 'á', 'à', 'ä', 'â', 'ª'),
+        array('A', 'A', 'A', 'A', 'a', 'a', 'a', 'a', 'a'),
+        $cadena
+    );
 
+    //Reemplazamos la E y e
+    $cadena = str_replace(
+        array('É', 'È', 'Ê', 'Ë', 'é', 'è', 'ë', 'ê'),
+        array('E', 'E', 'E', 'E', 'e', 'e', 'e', 'e'),
+        $cadena
+    );
+
+    //Reemplazamos la I y i
+    $cadena = str_replace(
+        array('Í', 'Ì', 'Ï', 'Î', 'í', 'ì', 'ï', 'î'),
+        array('I', 'I', 'I', 'I', 'i', 'i', 'i', 'i'),
+        $cadena
+    );
+
+    //Reemplazamos la O y o
+    $cadena = str_replace(
+        array('Ó', 'Ò', 'Ö', 'Ô', 'ó', 'ò', 'ö', 'ô'),
+        array('O', 'O', 'O', 'O', 'o', 'o', 'o', 'o'),
+        $cadena
+    );
+
+    //Reemplazamos la U y u
+    $cadena = str_replace(
+        array('Ú', 'Ù', 'Û', 'Ü', 'ú', 'ù', 'ü', 'û'),
+        array('U', 'U', 'U', 'U', 'u', 'u', 'u', 'u'),
+        $cadena
+    );
+
+    //Reemplazamos la N, n, C y c
+    $cadena = str_replace(
+        array('Ñ', 'ñ', 'Ç', 'ç', ',', '.', ';', ':'),
+        array('N', 'n', 'C', 'c', '', '', '', ''),
+        $cadena
+    );
+    return $cadena;
+}
 //Genera una contraseña de 10 caracteres
 function passGenerator($length = 10)
 {
