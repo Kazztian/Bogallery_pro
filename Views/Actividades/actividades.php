@@ -1,14 +1,14 @@
 <?php
 headerAdmin($data);
 if ($_SESSION['permisosMod']['r']) {
-getModal('modalLugares', $data);
+    getModal('modalActividades', $data);
 }
 ?>
 <!-- <div id="contentAjax"></div> -->
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="bi bi-pin-map-fill"></i> <?= $data['page_title'] ?>
+            <h1><i class="bi bi-calendar"></i> <?= $data['page_title'] ?>
                 <?php if ($_SESSION['permisosMod']['w']) { ?>
                     <button class="btn btn-success" type="button" onclick="openModal();"><i class="bi bi-plus-circle"></i></i></i>Nuevo</button>
                 <?php } ?>
@@ -16,7 +16,7 @@ getModal('modalLugares', $data);
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="bi bi-house-door fs-6"></i></li>
-            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/lugares"><?= $data['page_title'] ?></a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url(); ?>/actividades"><?= $data['page_title'] ?></a></li>
         </ul>
     </div>
     </div>
@@ -26,14 +26,14 @@ getModal('modalLugares', $data);
             <div class="tile">
                 <div class="tile-body">
                     <div class="table-responsive">
-                        <table class="table table-hover table-bordered" id="tableLugares">
+                        <table class="table table-hover table-bordered" id="tableActividades">
                             <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Nombre</th>
-                                    <th>Localidad</th>
-                                    <th>direccion</th>
-                                    <th>Tipo Lugar</th>
+                                    <th>Creacion</th>
+                                    <th>Valor</th>
+
                                     <th>Estado</th>
                                     <th>Acciones</th>
                                 </tr>

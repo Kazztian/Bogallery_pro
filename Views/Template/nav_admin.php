@@ -42,7 +42,7 @@
       </li>
     <?php } ?>
     <!--  -->
-    <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][6]['r'])) { ?>
+    <?php if (!empty($_SESSION['permisos'][4]['r']) || !empty($_SESSION['permisos'][6]['r']) || !empty($_SESSION['permisos'][7]['r'])) { ?>
       <li class="treeview">
         <a class="app-menu__item" href="#" data-toggle="treeview">
           <i class="app-menu__icon bi bi-signpost-split-fill"></i>
@@ -50,7 +50,7 @@
           <i class="treeview-indicator bi bi-chevron-right"></i>
         </a>
         <ul class="treeview-menu">
-          <?php if (!empty($_SESSION['permisos'][4]['r'])) { ?>
+          <?php if (!empty($_SESSION['permisos'][7]['r'])) { ?>
             <li><a class="treeview-item" href="<?= base_url(); ?>/planes"><i class="icon bi bi-circle-fill"></i>Planes</a></li>
           <?php } ?>
           <?php if (!empty($_SESSION['permisos'][6]['r'])) { ?>
@@ -62,7 +62,7 @@
       </li>
     <?php } ?>
     <!--  -->
-    <?php if (!empty($_SESSION['permisos'][5]['r'])) { ?>
+    <?php if (!empty($_SESSION['permisos'][5]['r']) || !empty($_SESSION['permisos'][8]['r']) || !empty($_SESSION['permisos'][9]['r']) ) { ?>
       <li class="treeview">
         <a class="app-menu__item" href="#" data-toggle="treeview">
           <i class="app-menu__icon bi bi-journal-richtext"></i>
@@ -70,8 +70,12 @@
           <i class="treeview-indicator bi bi-chevron-right"></i>
         </a>
         <ul class="treeview-menu">
+        <?php if (!empty($_SESSION['permisos'][8]['r'])) { ?>
           <li><a class="treeview-item" href="<?= base_url(); ?>/lugares"><i class="icon bi bi-circle-fill"></i>Lugar</a></li>
+          <?php } ?>
+          <?php if (!empty($_SESSION['permisos'][9]['r'])) { ?>
           <li><a class="treeview-item" href="<?= base_url(); ?>/actividades"><i class="icon bi bi-circle-fill"></i>Actividades</a></li>
+          <?php } ?>
           <li><a class="treeview-item" href="<?= base_url(); ?>/audiorelatos"><i class="icon bi bi-circle-fill"></i>Audio-Relato</a></li>
         </ul>
       </li>
