@@ -5,10 +5,10 @@ class Clientes extends Controllers
     public function __construct()
 
     {
-        //sessionStart();
+        sessionStart();
         // codigo que permite que funcione correctamente si no esta logiado
         parent::__construct();
-        session_start();
+        //session_start();
         //session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
@@ -107,14 +107,14 @@ class Clientes extends Controllers
                     if ($option == 1) {
                         $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
 
-                        /*$nombreUsuario = $strNombre .''. $strApellido;
+                        $nombreUsuario = $strNombre .''. $strApellido;
                     
                         $dataUsuario = array('nombreUsuario' => $nombreUsuario,
                             'email' => $strEmail,
                             'password' => $strPassword,
                             'asunto' => 'Bienvenido a BoGallery',
                         );
-                        sendEmail($dataUsuario, 'email_bienvenida');*/
+                        sendEmail($dataUsuario, 'email_bienvenida');
                     } else {
                         $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
 
