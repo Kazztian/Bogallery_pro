@@ -65,9 +65,9 @@
             line-height: 40px;
             text-transform: uppercase;
             font-family: Arial Black, Arial Bold, Gadget, sans-serif;
-        }
-        .x_link_blue {
-            background-color: #307cf4;
+            background-image: linear-gradient(to right, yellow, orange, red); /* Degradado */
+            border: none;
+            border-radius: 5px;
         }
         .x_textwhite {
             background-color: rgb(50, 67, 128);
@@ -96,12 +96,12 @@
                     <p>Solicitud de acceso para el usuario: <strong><?= $data['email']; ?></strong></p>
                     <p>Has solicitado los datos de tu usuario, accede al enlace de abajo para confirmar tu contraseña. </p>
                     <p class="x_text_white">
-                        <a href="<?= $data['url_recovery']; ?>" target="_blank" class="x_button_link x_link_blue">Confirmar datos</a>
+                        <a href="<?= $data['url_recovery']; ?>" target="_blank" class="x_button_link">Confirmar datos</a>
                     </p>
                     <br>
                     <p>Si no te funciona el botón puedes copiar y pegar la siguiente dirección en tu navegador.</p>
                     <p><?= $data['url_recovery']; ?></p>
-                    <p class="x_title_gray"><a href="<?= WEB_EMPRESA; ?>" target="_blank"><?= WEB_EMPRESA; ?></a></p>
+                    <p class="x_title_gray"><a href="<?= BASE_URL; ?>" target="_blank"><?= WEB_EMPRESA; ?></a></p>
                 </td>
             </tr>
         </tbody>

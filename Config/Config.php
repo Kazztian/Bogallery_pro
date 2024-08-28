@@ -12,6 +12,8 @@
     const DB_USER = "root";
     const DB_PASSWORD = "";
     const DB_CHARSET = "charset=utf8";
+// para envio del correo
+    const ENVIRONMENT = 0; //Local:0, produccion: 1;
 
     //Deliminadores decimal y millar
     const SPD = "."; // Delimitador de decimales
@@ -24,7 +26,7 @@
     const NOMBRE_REMITENTE = "BoGallery";
     const EMAIL_REMITENTE = "no-reply@estefa.com";
     const NOMBRE_EMPRESA ="BoGallery";
-    const WEB_EMPRESA ="WWW.BoGallery.com";
+    const WEB_EMPRESA ="www.BoGallery.com";
 
     //Aca se configura para extraer las categorias que se van a visualizar slider
     const CAT_SLIDER = "1,2,3"; 

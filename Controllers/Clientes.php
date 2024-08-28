@@ -107,14 +107,14 @@ class Clientes extends Controllers
                     if ($option == 1) {
                         $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
 
-                        /*$nombreUsuario = $strNombre .''. $strApellido;
+                        $nombreUsuario = $strNombre .''. $strApellido;
                     
                         $dataUsuario = array('nombreUsuario' => $nombreUsuario,
                             'email' => $strEmail,
                             'password' => $strPassword,
                             'asunto' => 'Bienvenido a BoGallery',
                         );
-                        sendEmail($dataUsuario, 'email_bienvenida');*/
+                        sendEmail($dataUsuario, 'email_bienvenida');
                     } else {
                         $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
 

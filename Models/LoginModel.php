@@ -7,7 +7,7 @@ class LoginModel extends mysql
     private $strToken;
 
     function __construct()
-    {
+    { 
         parent::__construct();
     }
 
