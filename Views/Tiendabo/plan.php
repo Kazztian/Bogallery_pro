@@ -149,7 +149,7 @@ $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
                                     <img src="<?= $portada ?>" alt=" <?= $arrPlanes[$p]['nombre'] ?>">
 
                                     <a href="<?= base_url() . '/tiendabo/plan/' . $arrPlanes[$p]['id_plan'] . '/' . $ruta; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
-                                        Ver Producto
+                                        Ver Planes
                                     </a>
                                 </div>
 
