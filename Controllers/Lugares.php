@@ -217,9 +217,6 @@ class Lugares extends Controllers
         echo $htmlOptions;
         die();
     }
-}
+
     
-
-
-
-
+}
