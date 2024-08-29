@@ -11,6 +11,7 @@ class ActividadesModel extends mysql
     private $strImagen;
 
     function __construct()
+    
     {
         parent::__construct();
     }

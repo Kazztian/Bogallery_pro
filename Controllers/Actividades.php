@@ -210,5 +210,6 @@ class Actividades extends Controllers
             }
         }
         die();
+        
     }
 }
