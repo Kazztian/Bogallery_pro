@@ -349,7 +349,7 @@ function fntViewInfo(idPlan){
 //Funcion para actualizar o editar un plan
 function fntEditInfo(element,idPlan){
   rowTable = element.parentNode.parentNode.parentNode;
-  document.querySelector('#titleModal').innerHTML ="Actualizar Producto";
+  document.querySelector('#titleModal').innerHTML ="Actualizar Planes";
   document.querySelector('.modal-header').classList.replace("headerRegister", "headerUpdate");
   document.querySelector('#btnActionForm').classList.replace("btn-primary", "btn-info");
   document.querySelector('#btnText').innerHTML ="Actualizar";

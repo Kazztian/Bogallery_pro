@@ -4,10 +4,9 @@
         <div class="modal-content">
             <div class="modal-header headerRegister">
                 <h5 class="modal-title" id="titleModal">Nuevo Plan Turístico</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                <button type="button" class="custom-close-btn" data-dismiss="modal" aria-label="Close">
                 </button>
-            </div>
+            </div> 
             <div class="modal-body">
                 <form id="formPlanes" name="formPlanes" class="form-horizontal">
                     <input type="hidden" id="idPlanes" name="idPlanes" value="">

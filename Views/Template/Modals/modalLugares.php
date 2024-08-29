@@ -5,7 +5,7 @@
       <div class="modal-header headerRegister">
         <h5 class="modal-title" id="titleModal">Nuevos Lugares</h5>
         <button type="button" class="custom-close-btn" data-dismiss="modal" aria-label="Close"></button>
-      </div>
+      </div> 
       <div class="modal-body">
         <form id="formLugares" name="formLugares" class="form-horizontal">
           <input type="hidden" id="id_lugar" name="id_lugar" value="">
