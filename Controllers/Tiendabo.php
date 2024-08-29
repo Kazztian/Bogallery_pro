@@ -9,6 +9,7 @@ class Tiendabo extends Controllers
     public function __construct()
     {
         parent::__construct();
+        session_start();
     }
     // esto extre todo los planes cuando se diriga a planes
     public function tiendabo()

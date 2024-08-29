@@ -5,13 +5,13 @@ class Clientes extends Controllers
     public function __construct()
 
     {
-        sessionStart();
         // codigo que permite que funcione correctamente si no esta logiado
         parent::__construct();
-        //session_start();
+        session_start();
         //session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
+            die();
         }
         getPermisos(3);
     }

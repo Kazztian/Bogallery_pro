@@ -7,9 +7,10 @@ class Lugares extends Controllers
     {
         parent::__construct();
         session_Start();
-        session_regenerate_id(true);
+        // session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
+            die();
         }
         getPermisos(8);
     }
@@ -206,17 +207,16 @@ class Lugares extends Controllers
     public function getSelectLugares()
     {
         $htmlOptions = "";
-        $arrData = $this->model->selectLugares($htmlOptions);
+        $arrData = $this->model->selectLugares();
         if (count($arrData) > 0) {
             for ($i = 0; $i < count($arrData); $i++) {
-                if ($arrData[$i]['status'] == 1) {
                     $htmlOptions .= '<option value="'.$arrData[$i]['id_lugar'].'">'.$arrData[$i]['nombre'].'</option>';
                 }
             }
-        }
+        
         echo $htmlOptions;
         die();
     }
 
     
-}
+}   

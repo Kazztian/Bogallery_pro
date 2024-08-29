@@ -8,6 +8,7 @@ class Login extends Controllers
         if(isset($_SESSION['login']))
         {
             header('Location: '.base_url().'/dashboard');
+            die();
         }
         parent::__construct();
     }
