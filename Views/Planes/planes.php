@@ -6,7 +6,7 @@ getModal('modalPlanes', $data);
 <main class="app-content">
   <div class="app-title">
     <div>
-      <h1><i class="bi bi-pin-map-fill"></i> <?= $data['page_title'] ?>
+      <h1><i class="bi bi-calendar4-week"></i> <?= $data['page_title'] ?>
         <?php if ($_SESSION['permisosMod']['w']) { ?>
           <button class="btn btn-success" type="button" onclick="openModal();"><i class="bi bi-plus-circle"></i></i></i>Nuevo</button>
         <?php } ?>
@@ -36,7 +36,7 @@ getModal('modalPlanes', $data);
                   <th>Acciones</th>
                 </tr>
               </thead>
-              <tbody>
+                <tbody>
               </tbody>
             </table>
           </div>

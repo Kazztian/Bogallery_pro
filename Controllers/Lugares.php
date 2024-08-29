@@ -218,3 +218,8 @@ class Lugares extends Controllers
         die();
     }
 }
+    
+
+
+
+

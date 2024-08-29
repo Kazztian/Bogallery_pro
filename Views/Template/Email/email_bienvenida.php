@@ -75,10 +75,15 @@
             line-height: 40px;
             text-transform: uppercase;
             font-family: Arial Black, Arial Bold, Gadget, sans-serif;
+            background-image: linear-gradient(to right, yellow, orange, red);
+            border: none;
+            border-radius: 5px;
+            text-align: center;
         }
 
         .x_link_blue {
             background-color: #307cf4;
+            color: #FFF; /* Cambia el color del texto a blanco */
         }
 
         .x_textwhite {
@@ -107,13 +112,13 @@
                         <p>Hola <?= $data['nombreUsuario']; ?></p>
                     </div>
                     <p>Bienvenido a BoGallery.</p>
-					<p>Ahora puedes ralizar tus compras en línea sin salir de casa.</p>
-					<p>Accede a tu cuenta con tus credenciales:</p>
-					<p>Usuario: <strong><?= $data['email']; ?></strong></p>
-					<p>Contraseña: <strong><?= $data['password']; ?></strong></p>
-					<a href="<?= BASE_URL; ?>" target="_blank" class="x_button_link x_link_blue">Comprar ahora</a>
-					
-                    <p class="x_title_gray"><a href="<?= WEB_EMPRESA; ?>" target="_blank"><?= WEB_EMPRESA; ?></a></p>
+                    <p>Ahora puedes realizar tus compras en línea sin salir de casa.</p>
+                    <p>Accede a tu cuenta con tus credenciales:</p>
+                    <p>Usuario: <strong><?= $data['email']; ?></strong></p>
+                    <p>Contraseña: <strong><?= $data['password']; ?></strong></p>
+                    <a href="<?= BASE_URL; ?>" target="_blank" class="x_button_link x_link_blue">Comprar ahora</a>
+
+                    <p class="x_title_gray"><a href="<?= BASE_URL; ?>" target="_blank"><?= WEB_EMPRESA; ?></a></p>
                 </td>
             </tr>
         </tbody>

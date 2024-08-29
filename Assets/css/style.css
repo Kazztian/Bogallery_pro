@@ -1,3 +1,5 @@
+/* un . es una clase y # es un id */
+
 .headerRegister,
 .header-primary {
   background: #009688;
@@ -16,7 +18,6 @@
 .textleft{
 	text-align: left;
 }
-
 
 /* Borde de las listas  */
 .bootstrap-select > .dropdown-toggle{
@@ -216,10 +217,7 @@ input:checked + .slider:before {
     margin: auto;
 
 }
-
-
-
-/* Upload fotos */
+/* Upload fotos diseño galeria planes */
 #containerImages {
     display: flex;
     justify-content: flex-start;
@@ -230,10 +228,11 @@ input:checked + .slider:before {
     margin-right:  10px;
     margin-bottom: 8px;
 }
+
 .prevImage {
-    border: 1px solid #CCC;
-    width:  180px;
-    height: 130px;
+  border: 1px solid #CCC;
+  width: 120px;
+  height: 148px;
     display: flex;
     justify-content: center;
     align-items: center;

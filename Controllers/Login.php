@@ -55,7 +55,7 @@ class Login extends Controllers
         die();
     }
     
-    public function resetPass()
+    public function resetPass()  
     {
         if ($_POST) {
             error_reporting(0);
@@ -81,9 +81,9 @@ class Login extends Controllers
                                           'asunto'=>'Recuperar Cuenta-'.NOMBRE_REMITENTE,
                                           'url_recovery'=>$url_recovery);
 
-                    if ($requestUpdate) {
-                                              
+                    if ($requestUpdate) {                 
                         $sendEmail= sendEmail($dataUsuario,'email_cambioPassword');
+                        
                         if($sendEmail){
                             $arrResponse = array('status' => true, 'msg' => 'Se ha enviado un correo electrónico a tu cuenta para restablecer tu contraseña.');
 

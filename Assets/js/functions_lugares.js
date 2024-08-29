@@ -231,6 +231,7 @@ if(document.querySelector(".btnAddImage")){
         });
     }
 
+<<<<<<< HEAD
     function fntDelItem(element) {
         let nameImg = document.querySelector(element + ' .btnDeleteImage').getAttribute("imgname");
         let id_lugar = document.querySelector("#id_lugar").value;
@@ -319,6 +320,8 @@ if(document.querySelector(".btnAddImage")){
 
     }
 */
+=======
+>>>>>>> origin/feature/carrito_compras
     function fntViewInfo(id_lugar){
         let request = (window.XMLHttpRequest) ?
                 new XMLHttpRequest() :
@@ -361,6 +364,7 @@ if(document.querySelector(".btnAddImage")){
     }
 
     }
+<<<<<<< HEAD
 
     function fntEditInfo(element, id_lugar){
         rowTable = element.parentNode.parentNode.parentNode;
@@ -454,6 +458,8 @@ if(document.querySelector(".btnAddImage")){
     
     
     
+=======
+>>>>>>> origin/feature/carrito_compras
     function openModal() {
         rowTable = "";
         document.querySelector('#id_lugar').value = "";
