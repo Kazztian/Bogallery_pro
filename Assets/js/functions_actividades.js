@@ -15,6 +15,7 @@ $(document).on("focusin", function (e) {
   }
 });
 
+
 window.addEventListener('load', function () {
       tableActividades = $("#tableActividades").DataTable({
           aProcessing: true,

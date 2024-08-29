@@ -47,6 +47,7 @@ if ($_SESSION['permisosMod']['r']) {
         </div>
     </div>
 
+    
 </main>
 
 <?php footerAdmin($data); ?>
