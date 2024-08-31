@@ -79,11 +79,9 @@
 							<li class="active-menu">
 								<a href="<?= base_url(); ?>">Inicio</a>
 
-								<!-- <ul class="sub-menu"> Tener en cuenta
-									<li><a href="index.html">Homepage 1</a></li>
-									<li><a href="home-02.html">Homepage 2</a></li>
-									<li><a href="home-03.html">Homepage 3</a></li>
-								</ul> -->
+							</li>
+							<li>
+								<a href="<?= base_url(); ?>/tiendalu">Lugares</a>
 							</li>
 
 							<li>
@@ -190,12 +188,12 @@
 				</li>
 
 				<li>
-					<a href="<?= base_url(); ?>/tiendaplanes">Planes</a>
+					<a href="<?= base_url(); ?>/tiendabo">Planes</a>
 				</li>
 
-				<!-- <li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
-				</li> -->
+				<li>
+					<a href="<?= base_url(); ?>/tiendalu">Lugares</a>
+				</li>
 
 				<li>
 					<a href="<?= base_url(); ?>/nosotros">Nosotros</a>
