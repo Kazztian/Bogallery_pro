@@ -1,6 +1,6 @@
 <?php
 headerTiendabo($data);
-getModal('modalCarrito', $data); 
+getModal('modalCarrito', $data);
 $arrLugares = $data['lugares']; // Asegúrate de que el controlador pase los lugares a la vista.
 ?>
 <br><br><br>
@@ -20,8 +20,8 @@ $arrLugares = $data['lugares']; // Asegúrate de que el controlador pase los lug
 
         <div class="row isotope-grid">
             <?php
-            if(!empty($arrLugares)){
-            for ($l = 0; $l< count($arrLugares); $l++) {
+            for ($l = 0; $l < count($arrLugares); $l++) {
+                $ruta = $arrLugares[$l]['ruta'];
                 if (count($arrLugares[$l]['images']) > 0) {
                     $portada = $arrLugares[$l]['images'][0]['url_image'];
                 } else {
@@ -34,14 +34,14 @@ $arrLugares = $data['lugares']; // Asegúrate de que el controlador pase los lug
                         <div class="block2-pic hov-img0">
                             <img src="<?= $portada ?>" alt="<?= $arrLugares[$l]['nombre'] ?>">
 
-                            <a href="<?= base_url() . '/Tiendabo/detallelu/' . $arrLugares[$l]['nombre']?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
+                            <a href="<?= base_url() . '/tiendalu/detallelu/' . $arrLugares[$l]['id_lugar'] . '/' . $ruta; ?>" class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04">
                                 Ver lugar
                             </a>
                         </div>
 
                         <div class="block2-txt flex-w flex-t p-t-14">
                             <div class="block2-txt-child1 flex-col-l ">
-                                <a href="<?= base_url() . '/Tiendabo/detallelu/'  . $arrLugares[$l]['nombre'] ?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
+                                <a href="<?= base_url() . '/tiendalu/detallelu/' . $arrLugares[$l]['id_lugar'] . '/' . $ruta; ?>" class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
                                     <?= $arrLugares[$l]['nombre'] ?>
                                 </a>
                             </div>
@@ -50,16 +50,13 @@ $arrLugares = $data['lugares']; // Asegúrate de que el controlador pase los lug
                 </div>
             <?php
             }
-        }else{
-            echo "No hay Lugares para mostrar";
-        }
             ?>
         </div>
 
         <!-- Load more -->
         <div class="flex-c-m flex-w w-full p-t-45">
             <a href="#" class="flex-c-m stext-101 cl5 size-103 bg2 bor1 hov-btn1 p-lr-15 trans-04">
-               Cargar más
+                Cargar más
             </a>
         </div>
     </div>

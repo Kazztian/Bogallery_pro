@@ -126,6 +126,7 @@ trait TPlan
                         p.descripcion,
                         p.id_categoria,
                         c.nombre AS categoria,
+                        c.ruta AS ruta_categoria,
                         p.precio,
                         p.ruta,
                         p.stock,     

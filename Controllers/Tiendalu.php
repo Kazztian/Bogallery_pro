@@ -22,14 +22,20 @@ class Tiendalu extends Controllers
     
     public function detallelu($params){
         if (empty($params)) {
-            header("Location:" . base_url());
+            header("Location:" . base_url());   
         } else {
-            $lugar = strClean($params);
-            $data['page_tag'] = NOMBRE_EMPRESA . " - " . $lugar;
-            $data['page_title'] =  $lugar;
+            $arrParams = explode(",",$params);
+            $idlugar = intval($arrParams[0]);
+            $ruta = strClean($arrParams[1]);
+            $infoLugar = $this->getLugarT($idlugar,$ruta);
+            if(empty($infoLugar)){
+                header("Location:".base_url());
+            }
+            $data['page_tag'] = NOMBRE_EMPRESA . " - " . $infoLugar['nombre'];
+            $data['page_title'] = $infoLugar['nombre'];
             $data['page_name'] = "lugar";
-            //$data['lugar'] = "";
-            //$data['lugares'] = $this->getLugaresT(); 
+            $data['lugar'] = $infoLugar;
+            $data['lugares'] = $this->getLugaresRandom(8, "r");
             $this->views->getView($this, "detallelu", $data); //vista Views llamado
         }
     }

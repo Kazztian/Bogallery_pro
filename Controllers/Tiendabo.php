@@ -1,4 +1,3 @@
-<!-- Controlador -->
 <?php
 // Requerir los archivos trie donde se extrae la info 
 require_once("Models/TCategoria.php");
@@ -35,7 +34,8 @@ class Tiendabo extends Controllers
             $data['page_title'] =  $infoCategoria['categoria'];
             $data['page_name'] = "categoria";
             $data['planes'] = $infoCategoria['planes'];
-            $this->views->getView($this, "categoria", $data); //vista Views
+            $this->views->getView($this, "categoria", $data); 
+            //vista Views
         }
     }
 

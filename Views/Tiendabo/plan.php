@@ -4,6 +4,7 @@ getModal('modalCarrito', $data); // LLama al modal del carrito
 $arrPlan = $data['plan']; //Extraer la info del plan (Son variables, que extraen de los array)
 $arrPlanes = $data['planes']; //Extraer la info de los planes
 $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
+$rutacategoria = $arrPlan['id_categoria'].'/'. $arrPlan['ruta_categoria'];
 
 ?>
 
@@ -17,7 +18,7 @@ $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
 
-        <a href="<?= base_url() . '/tiendabo/categoria/' . $arrPlan['categoria']; ?>" class="stext-109 cl8 hov-cl1 trans-04">
+        <a href="<?= base_url() . '/tiendabo/categoria/' . $rutacategoria; ?>" class="stext-109 cl8 hov-cl1 trans-04">
             <?= $arrPlan['categoria'] ?>
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>

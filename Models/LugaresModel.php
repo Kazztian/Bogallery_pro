@@ -7,6 +7,7 @@ class LugaresModel extends mysql
     private $strLocalidad;
     private $strDireccion;
     private $strTipoLugar;
+    private $strRuta;
     private $intStatus;
     private $strImagen;
 
@@ -36,6 +37,7 @@ class LugaresModel extends mysql
         string $localidad,
         string $direccion,
         string $tipolugar,
+        string $ruta,
         int $status
     ) {
         $this->strNombre = $nombre;
@@ -43,6 +45,7 @@ class LugaresModel extends mysql
         $this->strLocalidad = $localidad;
         $this->strDireccion = $direccion;
         $this->strTipoLugar = $tipolugar;
+        $this->strRuta = $ruta;
         $this->intStatus = $status;
         $return = 0;
 
@@ -51,14 +54,15 @@ class LugaresModel extends mysql
         $request = $this->select_all($sql, array($this->strNombre));
 
         if (empty($request)) {
-            $query_insert = "INSERT INTO lugares(nombre, descripcion, localidad, direccion, tipo_lugar, status)
-                             VALUES(?, ?, ?, ?, ?, ?)";
+            $query_insert = "INSERT INTO lugares(nombre, descripcion, localidad, direccion, tipo_lugar,ruta, status)
+                             VALUES(?, ?, ?, ?, ?, ?,?)";
             $arrData = array(
                 $this->strNombre,
                 $this->strDescripcion,
                 $this->strLocalidad,
                 $this->strDireccion,
                 $this->strTipoLugar,
+                $this->strRuta,
                 $this->intStatus
             );
             $request_insert = $this->insert($query_insert, $arrData);
@@ -77,6 +81,7 @@ class LugaresModel extends mysql
         string $localidad,
         string $direccion,
         string $tipolugar,
+        string $ruta,
         int $status
     ) {
         $this->intIdLugar = $idlugar;
@@ -85,6 +90,7 @@ class LugaresModel extends mysql
         $this->strLocalidad = $localidad;
         $this->strDireccion = $direccion;
         $this->strTipoLugar = $tipolugar;
+        $this->strRuta = $ruta;
         $this->intStatus = $status;
         $return = 0;
 
@@ -99,6 +105,7 @@ class LugaresModel extends mysql
                         localidad=?,
                         direccion=?,
                         tipo_lugar=?,
+                        ruta=?,
                         status=?
                     WHERE id_lugar = ?";
             $arrData = array(
@@ -107,6 +114,7 @@ class LugaresModel extends mysql
                 $this->strLocalidad,
                 $this->strDireccion,
                 $this->strTipoLugar,
+                $this->strRuta,
                 $this->intStatus,
                 $this->intIdLugar // Añadido el id_lugar como parte de los parámetros
             );
@@ -136,7 +144,7 @@ class LugaresModel extends mysql
         return $request;
     }
 
-    
+
     public function insertImage(int $idlugar, string $imagen)
     {
         $this->intIdLugar = $idlugar;
@@ -160,7 +168,8 @@ class LugaresModel extends mysql
         return $request;
     }
 
-    public function deleteImage(int $idlugar, string $imagen){
+    public function deleteImage(int $idlugar, string $imagen)
+    {
         $this->intIdLugar = $idlugar;
         $this->strImagen = $imagen;
         $query  = "DELETE FROM imagen 
@@ -170,11 +179,12 @@ class LugaresModel extends mysql
         return $request_delete;
     }
 
-    public function deleteLugar(int $idlugar){
+    public function deleteLugar(int $idlugar)
+    {
         $this->intIdLugar = $idlugar;
         $sql = "UPDATE lugares SET status = ? WHERE id_lugar = $this->intIdLugar ";
         $arrData = array(0);
-        $request = $this->update($sql,$arrData);
+        $request = $this->update($sql, $arrData);
         return $request;
     }
 }
