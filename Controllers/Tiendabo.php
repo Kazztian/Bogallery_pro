@@ -1,4 +1,4 @@
-<!-- Controlador -->
+
 <?php
 // Requerir los archivos trie donde se extrae la info 
 require_once("Models/TCategoria.php");
@@ -45,8 +45,7 @@ class Tiendabo extends Controllers
         if (empty($params)) {
             header("Location:" . base_url());
         } else {
-
-            $arrParams = explode(",", $params); //Explode funcion propia de php que combierte en un arry ese elemento
+            $arrParams = explode(",", $params);
             $idplan = intval($arrParams[0]);
             $ruta = strClean($arrParams[1]);
             $infoPlan = $this->getPlanT($idplan, $ruta);
@@ -57,10 +56,157 @@ class Tiendabo extends Controllers
             $data['page_title'] = $infoPlan['nombre'];
             $data['page_name'] = "plan";
             $data['plan'] = $infoPlan;
-            $data['planes'] = $this->getPlanesRandom($infoPlan['id_categoria'], 8, "r"); //Se pone 8 para que se pongan cada que se oprime la letra, y se pone "r" para que se extraigan los planes de forma aleatoria se puede "a" y "d"
-            $this->views->getView($this, "plan", $data); //vista Views llamado
+            $data['planes'] = $this->getPlanesRandom($infoPlan['id_categoria'], 8, "r");
+            $this->views->getView($this, "plan", $data);
         }
     }
+
+    public function addCarrito()
+    {
+        if ($_POST) {
+            //  unset($_SESSION['arrCarrito']); exit;
+            $arrCarrito = array();
+            $cantCarrito = 0;
+            $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
+            $cantidad = $_POST['cant'];
+            if (is_numeric($idplan) and is_numeric($cantidad)) {
+                $arrInfoPlan = $this->getPlanIDT($idplan);
+                if (!empty($arrInfoPlan)) {
+                    $arrPlan = array(
+                        'id_plan' => $idplan,
+                        'plan' => $arrInfoPlan['nombre'],
+                        'cantidad' => $cantidad,
+                        'precio' => $arrInfoPlan['precio'],
+                        'imagen' => $arrInfoPlan['images'][0]['url_image']
+                    );
+                    if (isset($_SESSION['arrCarrito'])) {
+                        $on = true;
+                        $arrCarrito = $_SESSION['arrCarrito'];
+                        for ($pl = 0; $pl < count($arrCarrito); $pl++) {
+                            if ($arrCarrito[$pl]['id_plan'] == $idplan) {
+                                $arrCarrito[$pl]['cantidad'] += $cantidad;
+                                $on = false;
+                            }
+                        }
+                        if ($on) {
+                            array_push($arrCarrito, $arrPlan);
+                        }
+                        $_SESSION['arrCarrito'] = $arrCarrito;
+                    } else {
+                        array_push($arrCarrito, $arrPlan);
+                        $_SESSION['arrCarrito'] = $arrCarrito;
+                    }
+                    foreach ($_SESSION['arrCarrito'] as $pla) {
+                        $cantCarrito += $pla['cantidad'];
+                    }
+                    $htmlCarrito = getFile('Template/Modals/modalCarrito', $_SESSION['arrCarrito']);
+                    $arrResponse = array(
+                        "status" => true,
+                        "msg" => '¡Se agrego al carrito!',
+                        "cantCarrito" => $cantCarrito,
+                        "htmlCarrito" => $htmlCarrito
+                    );
+                } else {
+                    $arrResponse = array("status" => false, "msg" => 'Plan no encontrado.');
+                }
+            } else {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+    public function delCarrito()
+    {
+        if ($_POST) {
+            $arrCarrito = array();
+            $cantCarrito = 0;
+            $subtotal = 0;
+            $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
+            $option = $_POST['option'];
+            if (is_numeric($idplan) and ($option == 1 or $option == 2)) {
+                $arrCarrito = $_SESSION['arrCarrito'];
+                for ($pl = 0; $pl < count($arrCarrito); $pl++) {
+                    if ($arrCarrito[$pl]['id_plan'] == $idplan) {
+                        unset($arrCarrito[$pl]);
+                    }
+                }
+
+                sort($arrCarrito);
+                $_SESSION['arrCarrito'] = $arrCarrito;
+                foreach ($_SESSION['arrCarrito'] as $pla) {
+                    $cantCarrito += $pla['cantidad'];
+                    $subtotal += $pla['cantidad'] * $pla['precio'];
+                }
+                $htmlCarrito = "";
+                if ($option == 1) {
+                    $htmlCarrito = getFile('Template/Modals/modalCarrito', $_SESSION['arrCarrito']);
+                }
+                $arrResponse = array(
+                    "status" => true,
+                    "msg" => '¡Se elimino el plan!',
+                    "cantCarrito" => $cantCarrito,
+                    "htmlCarrito" => $htmlCarrito,
+                    "subTotal" => SMONEY.formatMoney($subtotal),
+                    "total" => SMONEY.formatMoney($subtotal + COSTOENVIO)
+                );
+            } else {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            }
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        }
+        die();
+    }
+
+
+    public function updCarrito()
+{
+    if ($_POST) {
+        $arrCarrito = array();
+        $totalPlan = 0;
+        $subtotal = 0;
+        $total = 0;           
+        $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
+        $cantidad = intval($_POST['cantidad']);
+        
+        if (is_numeric($idplan) && $cantidad > 0) {
+            $arrCarrito = $_SESSION['arrCarrito'];
+            
+            // Actualización del plan en el carrito
+            for ($p = 0; $p < count($arrCarrito); $p++) {
+                if ($arrCarrito[$p]['id_plan'] == $idplan) {
+                    $arrCarrito[$p]['cantidad'] = $cantidad;
+                    $totalPlan = $arrCarrito[$p]['precio'] * $cantidad; // Corregido el cálculo
+                    break;
+                }
+            }
+
+            $_SESSION['arrCarrito'] = $arrCarrito;
+
+            // Cálculo del subtotal
+            foreach ($_SESSION['arrCarrito'] as $pla) {
+                $subtotal += $pla['cantidad'] * $pla['precio'];
+            }
+
+            // Formateo de los valores de precios (evitar errores con SMONEY y formatMoney)
+            $arrResponse = array(
+                "status" => true,
+                "msg" => '¡Plan Actualizado!',
+                "totalPlan" => SMONEY . formatMoney($totalPlan), // Asegúrate que SMONEY y formatMoney estén bien
+                "subTotal" => SMONEY . formatMoney($subtotal),
+                "total" => SMONEY . formatMoney($subtotal + COSTOENVIO) 
+            );
+
+        } else {
+            $arrResponse = array("status" => false, "msg" => 'Datos incorrectos');
+        }
+
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+    }
+    die();
+}
+
 }
 
 ?>

@@ -78,6 +78,26 @@ function fntValidEmail(){
 	});
 }
 
+function validateAge() {
+    let ageInput = document.getElementById('txtEdad');
+    let ageValue = parseInt(ageInput.value);
+
+    if (isNaN(ageValue) || ageValue < 18 || ageValue > 99) {
+        ageInput.classList.add('is-invalid');
+        ageInput.value = ''; // Limpia el campo si no es válido
+        Swal.fire({
+            icon: 'warning',
+            title: 'Edad inválida',
+            text: 'Por favor, ingrese una edad válida entre 18 y 99.',
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: "#ff8c00"
+        });
+    } else {
+        ageInput.classList.remove('is-invalid');
+    }
+}
+
+
 window.addEventListener('load', function() {
 	fntValidText();
 	fntValidEmail(); 

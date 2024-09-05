@@ -1,10 +1,10 @@
 <?php
 headerTiendabo($data);
-getModal('modalCarrito', $data); // LLama al modal del carrito 
 $arrPlan = $data['plan']; //Extraer la info del plan (Son variables, que extraen de los array)
 $arrPlanes = $data['planes']; //Extraer la info de los planes
 $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
 
+$rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
 ?>
 
 <br><br><br>
@@ -17,7 +17,7 @@ $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
 
-        <a href="<?= base_url() . '/tiendabo/categoria/' . $arrPlan['categoria']; ?>" class="stext-109 cl8 hov-cl1 trans-04">
+        <a href="<?= base_url() . '/tiendabo/categoria/' .$rutacategoria; ?>" class="stext-109 cl8 hov-cl1 trans-04">
             <?= $arrPlan['categoria'] ?>
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
@@ -80,14 +80,14 @@ $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
                                     <i class="fs-16 zmdi zmdi-minus"></i>
                                 </div>
 
-                                <input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1">
+                                <input id="cant-product" class="mtext-104 cl3 txt-center num-product" type="number" name="num-product" value="1" min="1">
 
                                 <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m">
                                     <i class="fs-16 zmdi zmdi-plus"></i>
                                 </div>
                             </div>
                             <!-- Agregar al carrito -->
-                            <button class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
+                            <button id="<?= openssl_encrypt($arrPlan['id_plan'], METHODENCRIPT, KEY); ?>" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                                 Agrega al carrito
                             </button>
                         </div>
@@ -119,7 +119,7 @@ $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
     </div>
     <!--  -->
     <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
-        <h3 class="ltext-106 cl5 txt-center">> Planes Relacionados <</h3>
+        <h3 class="ltext-106 cl5 txt-center">> Planes Relacionados << /h3>
     </div>
 </section>
 

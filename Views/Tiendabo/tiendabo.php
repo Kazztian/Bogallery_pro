@@ -1,6 +1,5 @@
 <?php
 headerTiendabo($data);
-getModal('modalCarrito', $data); // LLama al modal del carrito  
 $arrPlanes = $data['planes'];
 
 ?>

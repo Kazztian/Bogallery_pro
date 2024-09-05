@@ -63,7 +63,13 @@ function getModal(string $nameModal, $data)
     $view_modal = "Views/Template/Modals/{$nameModal}.php";
     require_once $view_modal;
 }
-
+//Funcion obtener las rutas del carrito
+function getFile(string $url, $data){
+    ob_start();
+    require_once("Views/{$url}.php");
+    $file = ob_get_clean();
+    return $file;
+}
 //Envio de correos
 function sendEmail($data, $template)
 {

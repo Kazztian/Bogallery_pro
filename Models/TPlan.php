@@ -126,6 +126,7 @@ trait TPlan
                         p.descripcion,
                         p.id_categoria,
                         c.nombre AS categoria,
+                        c.ruta AS ruta_categoria,
                         p.precio,
                         p.ruta,
                         p.stock,     
@@ -210,6 +211,48 @@ trait TPlan
 
                 $request[$c]['images'] = $arrImg;
             }
+        }
+
+        return $request;
+    }
+
+    public function getPlanIDT(int $idplan)
+    {
+        $this->con = new Mysql();
+        $this->intIdplan = $idplan;
+        $sql = "SELECT p.id_plan,
+                        p.codigo,
+                        p.nombre,
+                        p.descripcion,
+                        p.id_categoria,
+                        c.nombre AS categoria,
+                        p.precio,
+                        p.ruta,
+                        p.stock,     
+                        p.id_lugar,
+                        l.nombre AS lugar
+                 FROM planes p 
+                 INNER JOIN categorias c ON p.id_categoria = c.id_categoria
+                 INNER JOIN lugares l ON p.id_lugar = l.id_lugar
+                 WHERE p.status != 0 AND p.id_plan = '{$this->intIdplan}'";
+
+        $request = $this->con->select($sql); //Para que extraiga un resgistro
+        if (!empty($request)) { //Si no esta vacio el array Se realiza todo lo demas
+            // Asignar el valor de id_plan a una variable local
+            $intIdPlan = $request['id_plan'];
+            // Corregir el uso de la variable $intIdPlan en la consulta SQL
+            $sqlImg = "SELECT img
+                            FROM imagenp
+                            WHERE id_plan = $intIdPlan";
+            $arrImg = $this->con->select_all($sqlImg);
+            if (count($arrImg) > 0) {
+                for ($i = 0; $i < count($arrImg); $i++) {
+                    $arrImg[$i]['url_image'] = media() . '/images/uploads/' . $arrImg[$i]['img'];
+                }
+            } else {
+                $arrImg[0]['url_image'] = media() . '/images/uploads/portada_categorias.jpg';
+            }
+            $request['images'] = $arrImg;
         }
 
         return $request;

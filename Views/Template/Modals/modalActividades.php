@@ -36,7 +36,7 @@
                             <br></br>
                             <div class="form-group">
                                 <label class="control-label">Valor<span class="required">*</span></label>
-                                <input type="text" class="form-control" id="txtValor" name="txtValor" type="text" required="">
+                                <input type="text" class="form-control  validNumber" id="txtValor" name="txtValor" type="text" required=""  onkeypress="return controlTag(event);">
                             </div>
                             <br></br>
                             <div class="form-group">

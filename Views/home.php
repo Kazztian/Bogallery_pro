@@ -1,7 +1,6 @@
 <!-- Principal Donde se llama al header y footer tiendabo -->
 <?php
 headerTiendabo($data);
-getModal('modalCarrito', $data); // LLama al modal del carrito
 // Hace el llamado de las images de sliden y banner
 $arrSlider = $data['slider'];
 $arrBanner = $data['banner'];
