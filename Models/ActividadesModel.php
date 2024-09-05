@@ -7,11 +7,12 @@ class ActividadesModel extends mysql
     private $strJornada;
     private $strValor;
     private $intIdLugar;
+    private $strRuta;
     private $intStatus;
     private $strImagen;
 
     function __construct()
-    
+
     {
         parent::__construct();
     }
@@ -39,6 +40,7 @@ class ActividadesModel extends mysql
         string $jornada,
         string $valor,
         int $lugar,
+        string $ruta,
         int $status
     ) {
         $this->strNombre = $nombre;
@@ -46,6 +48,7 @@ class ActividadesModel extends mysql
         $this->strJornada = $jornada;
         $this->strValor = $valor;
         $this->intIdLugar = $lugar;
+        $this->strRuta = $ruta;
         $this->intStatus = $status;
         $return = 0;
 
@@ -54,14 +57,15 @@ class ActividadesModel extends mysql
         $request = $this->select_all($sql, array($this->strNombre));
 
         if (empty($request)) {
-            $query_insert = "INSERT INTO actividades(nombre, descripcion, jornada, valor, id_lugar , status)
-                             VALUES(?, ?, ?, ?, ?, ?)";
+            $query_insert = "INSERT INTO actividades(nombre, descripcion, jornada, valor, id_lugar , ruta, status)
+                             VALUES(?, ?, ?, ?, ?, ?,?)";
             $arrData = array(
                 $this->strNombre,
                 $this->strDescripcion,
                 $this->strJornada,
                 $this->strValor,
                 $this->intIdLugar,
+                $this->strRuta,
                 $this->intStatus
             );
             $request_insert = $this->insert($query_insert, $arrData);
@@ -80,6 +84,7 @@ class ActividadesModel extends mysql
         string $jornada,
         string $valor,
         int $lugar,
+        string $ruta,
         int $status
     ) {
         $this->intIdActividad = $idactividad;
@@ -88,12 +93,13 @@ class ActividadesModel extends mysql
         $this->strJornada = $jornada;
         $this->strValor = $valor;
         $this->intIdLugar = $lugar;
+        $this->strRuta = $ruta;
         $this->intStatus = $status;
-    
+
         // Usar declaraciones preparadas para evitar inyección SQL
         $sql = "SELECT * FROM actividades WHERE nombre = ? AND id_actividad != ?";
         $request = $this->select_all($sql, array($this->strNombre, $this->intIdActividad));
-    
+
         if (empty($request)) {
             $sql = "UPDATE actividades
                     SET id_lugar = ?,
@@ -101,6 +107,7 @@ class ActividadesModel extends mysql
                         descripcion = ?,
                         jornada = ?,
                         valor = ?,
+                        ruta = ?,
                         status = ?
                     WHERE id_actividad = ?";
             $arrData = array(
@@ -109,6 +116,7 @@ class ActividadesModel extends mysql
                 $this->strDescripcion,
                 $this->strJornada,
                 $this->strValor,
+                $this->strRuta,
                 $this->intStatus,
                 $this->intIdActividad
             );
@@ -119,7 +127,7 @@ class ActividadesModel extends mysql
         }
         return $return;
     }
-    
+
 
 
 
@@ -127,17 +135,17 @@ class ActividadesModel extends mysql
     {
         $this->intIdActividad = $idactividad;
         $sql = "SELECT a.id_actividad,
-    a.nombre,
-    a.descripcion,
-    a.jornada,
-    a.valor,
-  a.id_lugar,
-  l.nombre as lugares,
-  a.status
-  FROM actividades a
-  INNER JOIN  lugares l
-  ON a.id_lugar = l.id_lugar
-  WHERE id_actividad = $this->intIdActividad";
+                a.nombre,
+                a.descripcion,
+                a.jornada,
+                a.valor,
+            a.id_lugar,
+            l.nombre as lugares,
+            a.status
+            FROM actividades a
+            INNER JOIN  lugares l
+            ON a.id_lugar = l.id_lugar
+            WHERE id_actividad = $this->intIdActividad";
         $request = $this->select($sql);
         return $request;
     }
@@ -167,7 +175,8 @@ class ActividadesModel extends mysql
         return $request;
     }
 
-    public function deleteImage(int $idactividad, string $imagen){
+    public function deleteImage(int $idactividad, string $imagen)
+    {
         $this->intIdActividad = $idactividad;
         $this->strImagen = $imagen;
         $query  = "DELETE FROM imagena 
@@ -177,11 +186,12 @@ class ActividadesModel extends mysql
         return $request_delete;
     }
 
-    public function deleteActividad(int $idactividad){
+    public function deleteActividad(int $idactividad)
+    {
         $this->intIdActividad = $idactividad;
         $sql = "UPDATE actividades SET status = ? WHERE id_actividad = $this->intIdActividad ";
         $arrData = array(0);
-        $request = $this->update($sql,$arrData);
+        $request = $this->update($sql, $arrData);
         return $request;
     }
 }

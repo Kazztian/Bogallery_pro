@@ -81,12 +81,16 @@
 
 							</li>
 							<li>
-								<a href="<?= base_url(); ?>/tiendalu">Lugares</a>
-							</li>
-
-							<li>
 								<a href="<?= base_url(); ?>/tiendabo">Planes</a>
 							</li>
+							<li>
+								<a href="<?= base_url(); ?>/tiendalu">Lugares</a>
+							</li>	
+							<li>
+								<a href="<?= base_url(); ?>/tiendati">Actividades</a>
+							</li>
+
+							
 
 							<!-- <li class="label1" data-label1="hot">
 								<a href="shoping-cart.html">Features</a>

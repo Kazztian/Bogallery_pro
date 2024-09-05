@@ -5,6 +5,7 @@ $arrPlan = $data['plan']; //Extraer la info del plan (Son variables, que extraen
 $arrPlanes = $data['planes']; //Extraer la info de los planes
 $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
 $rutacategoria = $arrPlan['id_categoria'].'/'. $arrPlan['ruta_categoria'];
+$rutalugar = $arrPlan['id_lugar'].'/'.$arrPlan['ruta_lugar'];
 
 ?>
 
@@ -18,10 +19,16 @@ $rutacategoria = $arrPlan['id_categoria'].'/'. $arrPlan['ruta_categoria'];
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
 
+        <a href="<?= base_url() . '/tiendalu/detallelu/' . $rutalugar; ?>" class="stext-109 cl8 hov-cl1 trans-04">
+            <?= $arrPlan['lugar'] ?>
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        
         <a href="<?= base_url() . '/tiendabo/categoria/' . $rutacategoria; ?>" class="stext-109 cl8 hov-cl1 trans-04">
             <?= $arrPlan['categoria'] ?>
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
+
 
         <span class="stext-109 cl4">
             <?= $arrPlan['nombre'] ?>
