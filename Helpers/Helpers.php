@@ -175,6 +175,7 @@ function getPermisos(int $id_modulo)
 {
     require_once("Models/PermisosModel.php");
     $objPermisos = new PermisosModel();
+    if(!empty($_SESSION['userData'])){
     $idrol = $_SESSION['userData']['id_rol'];
     $arrPermisos = $objPermisos->permisosModulo($idrol);
     $permisos = '';
@@ -187,6 +188,7 @@ function getPermisos(int $id_modulo)
 
     $_SESSION['permisos'] = $permisos;
     $_SESSION['permisosMod'] = $permisosMod;
+}
 }
 
 function sessionUser(int $idusuario)

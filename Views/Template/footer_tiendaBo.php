@@ -155,6 +155,8 @@
 
 <!--===============================================================================================-->
 <script src="<?= media() ?>/tiendaBo/js/main.js"></script>
+<script src="<?= media() ?>/js/functions_admin.js"></script>
+<script src="<?= media() ?>/js/functions_login.js"></script>
 <script src="<?= media() ?>/tiendaBo/js/functions.js"></script>
 
 </body>

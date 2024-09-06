@@ -76,7 +76,7 @@ $('.js-addcart-detail').each(function(){
               cants.forEach(element => {
                 element.setAttribute("data-notify", objData.cantCarrito)
               });
-              swal(nameProduct, "Se ha agregado al carrito!", "success");
+              Swal.fire(nameProduct, "Se ha agregado al carrito!", "success");
               }else{
                 swal("", objData.msg , "error");
               }
@@ -140,7 +140,70 @@ if(document.querySelector(".num-product")){
 	});
 }
 
+if(document.querySelector("#formRegister")){
+    let formRegister = document.querySelector("#formRegister");
+    formRegister.onsubmit = function(e) {
+        e.preventDefault();
+        // Captura de datos del formulario de usuarios 
+        let strNombre = document.querySelector('#txtNombre').value;
+        let strApellido = document.querySelector('#txtApellido').value;
+        let strEmail = document.querySelector('#txtEmailCliente').value;
+        let intTelefono = document.querySelector('#txtTelefono').value;
+        let intEdad = document.querySelector('#txtEdad').value;
+        let strPrimerI = document.querySelector('#txtPrimerI').value;
 
+        
+        // Validación para los datos vacíos
+        if (strNombre === '' || strApellido === '' || strEmail === '' || intTelefono === '' || intEdad === ''|| strPrimerI === '' ) {
+            Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
+            return false;
+        }
+
+        let elementsValid = document.getElementsByClassName("valid");
+        for (let i = 0; i < elementsValid.length; i++) { 
+            if(elementsValid[i].classList.contains('is-invalid')) { 
+                Swal.fire("Atención", "Por favor verifique los campos en rojo." , "error");
+                return false;
+            } 
+        } 
+
+        divLoading.style.display = "flex";
+        let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+        let ajaxUrl = base_url + '/Tiendabo/registro'; 
+        let formData = new FormData(formRegister);
+        request.open("POST", ajaxUrl, true);
+        request.send(formData);
+
+        request.onreadystatechange = function() {
+            if (request.readyState === 4 && request.status === 200) {
+                let objData = JSON.parse(request.responseText);
+                if (objData.status) {
+                   window.location.reload(false);
+                } else {
+                    Swal.fire("Error", objData.msg, "error");
+                }
+            }
+            divLoading.style.display = "none";
+            return false;
+        }
+    };
+}
+
+if(document.querySelector(".methodpago")){
+
+	let optmetodo = document.querySelectorAll(".methodpago");
+    optmetodo.forEach(function(optmetodo) {
+        optmetodo.addEventListener('click', function(){
+        	if(this.value == "Paypal"){
+        		document.querySelector("#msgpaypal").classList.remove("notblock");
+        		document.querySelector("#divtipopago").classList.add("notblock");
+        	}else{
+        		document.querySelector("#msgpaypal").classList.add("notblock");
+        		document.querySelector("#divtipopago").classList.remove("notblock");
+        	}
+        });
+    });
+}
 function fntdelItem(element){
     console.log(element);
 	//Option 1 = Modal

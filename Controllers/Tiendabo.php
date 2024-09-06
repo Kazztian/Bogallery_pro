@@ -3,13 +3,17 @@
 // Requerir los archivos trie donde se extrae la info 
 require_once("Models/TCategoria.php");
 require_once("Models/TPlan.php");
+require_once("Models/TCliente.php");
+require_once("Models/LoginModel.php");
 class Tiendabo extends Controllers
 {
-    use TCategoria, TPlan; //Usar los trait
+    use TCategoria, TPlan, TCliente; //Usar los trait
+    public $login;
     public function __construct()
     {
         parent::__construct();
         session_start();
+        $this->login = new LoginModel;
     }
     // esto extre todo los planes cuando se diriga a planes
     public function tiendabo()
@@ -206,6 +210,66 @@ class Tiendabo extends Controllers
     }
     die();
 }
+
+public function registro()
+    {
+        if ($_POST) {
+
+            if (
+                empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmailCliente']) ||
+                empty($_POST['txtEdad']) || empty($_POST['txtPrimerI']) )
+                 {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
+            } else {
+      
+                $strNombre = ucwords(strClean($_POST['txtNombre']));
+                $strApellido = ucwords(strClean($_POST['txtApellido']));
+                $intTelefono = intval(strClean($_POST['txtTelefono']));
+                $strEmail = strtolower(strClean($_POST['txtEmailCliente']));
+                $intEdad = intval(strClean($_POST['txtEdad']));
+                $srtPrimerI = ucwords(strClean($_POST['txtPrimerI']));
+                $intTipoId = 2;
+
+                $request_user = "exist";
+                $strPassword =  passGenerator();
+                $srtPasswordEncript =  hash("SHA256", $strPassword);
+                $request_user = $this->insertCliente($strNombre,
+                        $strApellido,
+                        $intTelefono,
+                        $strEmail,
+                        $srtPasswordEncript, // Faltaba este argumento
+                        $intEdad,
+                        $srtPrimerI,
+                        $intTipoId);
+                
+                // Ajuste en la lógica de los condicionales para manejar las comparaciones correctamente
+                if ($request_user  != "exist")
+                 {
+                    $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
+                    $nombreUsuario = $strNombre .''. $strApellido;
+                    $dataUsuario = array('nombreUsuario' => $nombreUsuario,
+                            'email' => $strEmail,
+                            'password' => $strPassword,
+                            'asunto' => 'Bienvenido a BoGallery',
+                        );
+                        $_SESSION['idUser'] = $request_user;
+                        $_SESSION['login'] = true;
+                        $this->login->sessionLogin($request_user);
+                       // sendEmail($dataUsuario, 'email_bienvenida');
+                    
+                } elseif ($request_user === "exist") {
+                    $arrResponse = array('status' => false, 'msg' => '¡ATENCIÓN! El email ya existe.');
+                } else {
+                    $arrResponse = array('status' => true, 'msg' => 'Datos actualizados correctamente.');
+
+                    // $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
+                }
+
+                echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            }
+            die();
+        }
+    }
 
 }
 

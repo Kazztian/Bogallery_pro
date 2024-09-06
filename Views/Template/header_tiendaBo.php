@@ -49,7 +49,11 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 </head>
 
 <body class="animsition">
-
+<div id="divLoading">
+    <div>
+      <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+    </div>
+  </div>
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->

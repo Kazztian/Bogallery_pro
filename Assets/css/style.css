@@ -268,3 +268,13 @@ input:checked + .slider:before {
     width: 150px;
     margin: 10px;
 }
+
+/*Tienda Carrito*/
+
+.divmetodpago label{
+	width: 100%;
+	display: flex;
+}
+.divmetodpago label input{
+	margin-right: 15px;
+}
