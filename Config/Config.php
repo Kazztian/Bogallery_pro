@@ -31,4 +31,4 @@
     //Aca se configura para extraer las categorias que se van a visualizar slider
     const CAT_SLIDER = "1,2,3"; 
    //Aca se configura para extraer las categorias que se van a visualisar en el Banner
-    const CAT_BANNER = "4,5,6,7";
+    const CAT_BANNER = "4,5,6,7,8,9";
