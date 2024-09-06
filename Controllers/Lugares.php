@@ -72,6 +72,9 @@ class Lugares extends Controllers
                 $intStatus = intval($_POST['listStatus']);
                 $request_lugar = "";
 
+                $ruta = strtolower(clear_cadena($strNombre));
+                $ruta = str_replace(" ","-",$ruta);
+
                 if ($idLugar == 0) {
                     $option = 1;
                     if ($_SESSION['permisosMod']['w']) {
@@ -81,6 +84,7 @@ class Lugares extends Controllers
                             $strLocalidad,
                             $strDireccion,
                             $strTipoLugar,
+                            $ruta,
                             $intStatus
                         );
                     }
@@ -94,6 +98,7 @@ class Lugares extends Controllers
                             $strLocalidad,
                             $strDireccion,
                             $strTipoLugar,
+                            $ruta,
                             $intStatus
                         );
                     }

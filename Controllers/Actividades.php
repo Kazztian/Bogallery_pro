@@ -72,8 +72,10 @@ class Actividades extends Controllers
                 $strValor = strClean($_POST['txtValor']);
                 $intIdLugar = intval($_POST['listLugar']);
                 $intStatus = intval($_POST['listStatus']);
-
                 $request_actividad = "";
+
+                $ruta = strtolower(clear_cadena($strNombre));
+                $ruta = str_replace(" ","-",$ruta);
 
                 if ($idActividad == 0) {
                     $option = 1;
@@ -84,6 +86,7 @@ class Actividades extends Controllers
                             $strJornada,
                             $strValor,
                             $intIdLugar,
+                            $ruta,
                             $intStatus
                         );
                     }
@@ -98,6 +101,7 @@ class Actividades extends Controllers
                         $strJornada,
                         $strValor,
                         $intIdLugar,
+                        $ruta,
                         $intStatus
                     );
                 }

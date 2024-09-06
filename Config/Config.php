@@ -3,7 +3,7 @@
   //define("BASE_URL", "http://localhost:8080/Bogallery_pro");
   //define("BASE_URL", "http://localhost/bogallery_pro");
 
-  const BASE_URL = "http://localhost/bogallery_pro";
+  const BASE_URL = "http://localhost:8080/Bogallery_pro";
   //Zona horaria
   date_default_timezone_set('America/Bogota');
 
@@ -31,7 +31,7 @@
   //Aca se configura para extraer las categorias que se van a visualizar slider
   const CAT_SLIDER = "1,2,3";
   //Aca se configura para extraer las categorias que se van a visualisar en el Banner
-  const CAT_BANNER = "4,5,6,7";
+  const CAT_BANNER = "4,5,6,7,8,9";
 
   // Constante para encriptar 
   const KEY ='bogobogo';
@@ -39,3 +39,4 @@
 
   //Envio o valor adiccional
   const COSTOENVIO = 0;
+    

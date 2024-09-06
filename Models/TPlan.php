@@ -131,7 +131,8 @@ trait TPlan
                         p.ruta,
                         p.stock,     
                         p.id_lugar,
-                        l.nombre AS lugar
+                        l.nombre AS lugar,
+                        l.ruta AS ruta_lugar
                  FROM planes p 
                  INNER JOIN categorias c ON p.id_categoria = c.id_categoria
                  INNER JOIN lugares l ON p.id_lugar = l.id_lugar
