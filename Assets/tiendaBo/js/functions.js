@@ -139,7 +139,7 @@ if(document.querySelector(".num-product")){
 		});
 	});
 }
-
+  
 if(document.querySelector("#formRegister")){
     let formRegister = document.querySelector("#formRegister");
     formRegister.onsubmit = function(e) {
@@ -150,11 +150,13 @@ if(document.querySelector("#formRegister")){
         let strEmail = document.querySelector('#txtEmailCliente').value;
         let intTelefono = document.querySelector('#txtTelefono').value;
         let intEdad = document.querySelector('#txtEdad').value;
+        let strDireccion = document.querySelector('#txtDireccion').value;
         let strPrimerI = document.querySelector('#txtPrimerI').value;
+        let strSegundoI = document.querySelector('#txtSegundoI').value;
 
         
         // Validación para los datos vacíos
-        if (strNombre === '' || strApellido === '' || strEmail === '' || intTelefono === '' || intEdad === ''|| strPrimerI === '' ) {
+        if (strNombre === '' || strApellido === '' || strEmail === '' || intTelefono === '' || intEdad === ''|| strDireccion === ''|| strPrimerI  === ''|| strSegundoI  === '' ) {
             Swal.fire("Atención", "Todos los campos son obligatorios.", "error");
             return false;
         }
