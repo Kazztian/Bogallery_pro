@@ -213,42 +213,42 @@ class Tiendabo extends Controllers
     public function registro()
     {
         if ($_POST) {
-
             if (
-                empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmailCliente']) ||
+                empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || 
+                empty($_POST['txtDireccion']) || empty($_POST['txtSegundoI']) || empty($_POST['txtEmailCliente']) || 
                 empty($_POST['txtEdad']) || empty($_POST['txtPrimerI'])
             ) {
                 $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
             } else {
-
                 $strNombre = ucwords(strClean($_POST['txtNombre']));
                 $strApellido = ucwords(strClean($_POST['txtApellido']));
                 $intTelefono = intval(strClean($_POST['txtTelefono']));
+                $strDireccion = strtolower(strClean($_POST['txtDireccion']));
+                $strSegundoI = ucwords(strClean($_POST['txtSegundoI']));
                 $strEmail = strtolower(strClean($_POST['txtEmailCliente']));
-                $intEdad = intval(strClean($_POST['txtEdad']));
-                $srtPrimerI = ucwords(strClean($_POST['txtPrimerI']));
+                $intEdad = intval(strClean($_POST['txtEdad']));  // Asegurarse de que $intEdad sea un entero
+                $strPrimerI = ucwords(strClean($_POST['txtPrimerI']));
                 $intTipoId = 2;
-
+    
                 $request_user = "exist";
-                $strPassword =  passGenerator();
-                $srtPasswordEncript =  hash("SHA256", $strPassword);
+                $strPassword = passGenerator();
+                $strPasswordEncript = hash("SHA256", $strPassword);
                 $request_user = $this->insertCliente(
                     $strNombre,
                     $strApellido,
                     $intTelefono,
                     $strEmail,
-                    $srtPasswordEncript, // Faltaba este argumento
-                    $intEdad,
-                    $srtPrimerI,
+                    $strPasswordEncript,
+                    $intEdad,  // Asegurarse de pasar un entero aquí
+                    $strDireccion,
+                    $strPrimerI,
+                    $strSegundoI,
                     $intTipoId
                 );
-                //Probando
-
-
-                // Ajuste en la lógica de los condicionales para manejar las comparaciones correctamente
-                if ($request_user  != "exist") {
+    
+                if ($request_user != "exist") {
                     $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
-                    $nombreUsuario = $strNombre . '' . $strApellido;
+                    $nombreUsuario = $strNombre . ' ' . $strApellido;
                     $dataUsuario = array(
                         'nombreUsuario' => $nombreUsuario,
                         'email' => $strEmail,
@@ -258,23 +258,19 @@ class Tiendabo extends Controllers
                     $_SESSION['idUser'] = $request_user;
                     $_SESSION['login'] = true;
                     $this->login->sessionLogin($request_user);
-                    // sendEmail($dataUsuario, 'email_bienvenida');
-
+                    sendEmail($dataUsuario, 'email_bienvenida');
                 } elseif ($request_user === "exist") {
                     $arrResponse = array('status' => false, 'msg' => '¡ATENCIÓN! El email ya existe.');
                 } else {
                     $arrResponse = array('status' => true, 'msg' => 'Datos actualizados correctamente.');
-
-                    // $arrResponse = array('status' => false, 'msg' => 'No es posible almacenar los datos.');
                 }
-
+    
                 echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }
-
-            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+            die();
         }
-        die();
     }
+    
     public function procesarVenta()
     {
         if ($_POST) {
