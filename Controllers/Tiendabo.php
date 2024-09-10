@@ -242,6 +242,8 @@ class Tiendabo extends Controllers
                     $srtPrimerI,
                     $intTipoId
                 );
+                //Probando
+
 
                 // Ajuste en la lógica de los condicionales para manejar las comparaciones correctamente
                 if ($request_user  != "exist") {
