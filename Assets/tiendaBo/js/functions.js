@@ -195,10 +195,10 @@ if(document.querySelector(".methodpago")){
     optmetodo.forEach(function(optmetodo) {
         optmetodo.addEventListener('click', function(){
         	if(this.value == "Paypal"){
-        		document.querySelector("#msgpaypal").classList.remove("notblock");
+        		document.querySelector("#divpaypal").classList.remove("notblock");
         		document.querySelector("#divtipopago").classList.add("notblock");
         	}else{
-        		document.querySelector("#msgpaypal").classList.add("notblock");
+        		document.querySelector("#divpaypal").classList.add("notblock");
         		document.querySelector("#divtipopago").classList.remove("notblock");
         	}
         });
@@ -277,4 +277,32 @@ function fntUpdateCant(pla,cant){
         }
     }
     return false;
+}
+
+
+if(document.querySelector("#txtDireccionC")){
+	let direccion = document.querySelector("#txtDireccionC");
+    direccion.addEventListener('keyup', function(){
+			let dir = this.value;
+		    fntViewPago();
+		});
+}
+
+if(document.querySelector("#txtCiudad")){
+	let ciudad = document.querySelector("#txtCiudad");
+    ciudad.addEventListener('keyup', function(){
+			let c = this.value;
+		    fntViewPago();
+		});
+}
+
+function fntViewPago(){
+    let direccion = document.querySelector("#txtDireccionC").value;
+    let ciudad = document.querySelector("#txtCiudad").value;
+    if(direccion == "" || ciudad == ""){
+        document.querySelector('#divMetodoPago').classList.add("notblock");
+    }else{
+        document.querySelector('#divMetodoPago').classList.remove("notblock");
+    }
+
 }

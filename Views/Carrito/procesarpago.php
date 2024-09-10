@@ -8,8 +8,59 @@ foreach ($_SESSION['arrCarrito'] as $plan) {
 $total = $subtotal + COSTOENVIO;
 
 ?>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=<?= IDCLIENTE ?>&currency=<?= CURRENCY ?>">
+</script>
+<script>
+    paypal.Buttons({
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: <?= $total; ?>
+                    },
+                    description: "Compra de planes en <?= NOMBRE_EMPRESA ?>  por <?= SMONEY . $total ?> ",
+
+                }]
+            });
+        },
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(detail) {
+                let base_url = "<?= base_url(); ?>";
+                let dir = document.querySelector("#txtDireccionC").value;
+                let ciudad = document.querySelector("#txtCiudad").value;
+                let inttipopago = 1;
+                let request = (window.XMLHttpRequest) ?
+                    new XMLHttpRequest() :
+                    new ActiveXObject('Microsoft.XMLHTTP');
+                let ajaxUrl = base_url + '/Tiendabo/procesarVenta';
+                let formData = new FormData();
+                formData.append('direccion', dir);
+                formData.append('ciudad', ciudad);
+                formData.append('inttipopago', inttipopago);
+                formData.append('datapay', JSON.stringify(detail));
+                request.open("POST", ajaxUrl, true);
+                request.send(formData);
+                request.onreadystatechange = function() {
+                    if (request.readyState != 4) return;
+                    if (request.status == 200) {
+                        let objData = JSON.parse(request.responseText);
+                        if (objData.status) {
+                            window.location = base_url + "/tienda/confirmarpedido/";
+                        } else {
+                            Swal.fire("", objData.msg, "error");
+                        }
+                    }
+                }
+            });
+        }
+    }).render('#paypal-btn-container');
+</script>
+
+
 <br><br><br>
 <br>
+
 
 <div class="container">
     <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
@@ -32,9 +83,9 @@ $total = $subtotal + COSTOENVIO;
                     <?php if (isset($_SESSION['login'])) {
                     ?>
                         <div>
-                            <label for="tipopago">Direccion de envio</label>
+                            <label for="tipopago">Direccion</label>
                             <div class="bor8 bg0 m-b-12">
-                                <input id="txtDireccion" class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="Dirección de envío">
+                                <input id="txtDireccionC" class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="state" placeholder="Dirección">
                             </div>
                             <div class="bor8 bg0 m-b-22">
                                 <input id="txtCiudad" class="stext-111 cl8 plh3 size-111 p-lr-15" type="text" name="postcode" placeholder="Ciudad / Estado">
@@ -91,7 +142,7 @@ $total = $subtotal + COSTOENVIO;
                                     <div class="row">
                                         <div class="col col-md-6 form-group">
                                             <label for="txtEdad">Edad</label>
-                                            <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);">
+                                            <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);" onblur="validateAge();">
                                         </div>
                                         <div class="col col-md-6 form-group">
                                             <label for="txtPrimerI">Primer Idioma</label>
@@ -160,50 +211,55 @@ $total = $subtotal + COSTOENVIO;
 
                 <?php if (isset($_SESSION['login'])) {
                 ?>
-
-                    <h4 class="mtext-109 cl2 p-b-30">
-                        Método de pago
-                    </h4>
-
-                    <div class="divmetodpago">
-                        <div>
-                            <label for="paypal">
-                                <input type="radio" id="paypal" class="methodpago" name="payment-method" checked="" value="Paypal">
-                                <img src="<?= media() ?>/images/img-paypal.jpg" alt="Icono de PayPal" class="ml-space-sm" width="74" height="20">
-                            </label>
-                        </div>
-                        <div>
-                            <label for="contraentrega">
-                                <input type="radio" id="contraentrega" class="methodpago" name="payment-method" value="CT">
-                                <span>Contra Entrega</span>
-                            </label>
-                        </div>
-                        <div id="divtipopago" class="notblock">
-                            <label for="listtipopago">Tipo de pago</label>
-                            <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                <select id="listtipopago" class="js-select2" name="listtipopago">
-                                    <?php
-                                    if (count($data['tiposPago']) > 0) {
-                                        foreach ($data['tiposPago'] as $tipopago) {
-                                            if ($tipopago['idtipopago'] != 1) {
-                                    ?>
-                                                <option value="<?= $tipopago['idtipopago'] ?>"><?= $tipopago['tipopago'] ?></option>
-                                    <?php
-                                            }
-                                        }
-                                    } ?>
-                                </select>
-                                <div class="dropDownSelect2"></div>
+                    <div id="divMetodoPago" class="notblock">
+                        <h4 class="mtext-109 cl2 p-b-30">
+                            Método de pago
+                        </h4>
+                        <div class="divmetodpago">
+                            <div>
+                                <label for="paypal">
+                                    <input type="radio" id="paypal" class="methodpago" name="payment-method" checked="" value="Paypal">
+                                    <img src="<?= media() ?>/images/img-paypal.jpg" alt="Icono de PayPal" class="ml-space-sm" width="74" height="20">
+                                </label>
                             </div>
-                        </div>
-                        <div id="msgpaypal">
-                            <p>Para completar la transacción, te enviaremos a los servidores seguros de PayPal.</p>
+                            <div>
+                                <label for="contraentrega">
+                                    <input type="radio" id="contraentrega" class="methodpago" name="payment-method" value="CT">
+                                    <span>Contra Entrega</span>
+                                </label>
+                            </div>
+                            <div id="divtipopago" class="notblock">
+                                <label for="listtipopago">Tipo de pago</label>
+                                <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+                                    <select id="listtipopago" class="js-select2" name="listtipopago">
+                                        <?php
+                                        if (count($data['tiposPago']) > 0) {
+                                            foreach ($data['tiposPago'] as $tipopago) {
+                                                if ($tipopago['idtipopago'] != 1) {
+                                        ?>
+                                                    <option value="<?= $tipopago['idtipopago'] ?>"><?= $tipopago['tipopago'] ?></option>
+                                        <?php
+                                                }
+                                            }
+                                        } ?>
+                                    </select>
+                                    <div class="dropDownSelect2"></div>
+                                </div>
+                                <br>
+                                <button type="submit" id="btnComprar" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                                    Procesar pedido
+                                </button>
+                            </div>
+                            <div id="divpaypal">
+                                <div>
+                                    <p>Para completar la transacción, te enviaremos a los servidores seguros de PayPal.</p>
+                                </div>
+                                <br>
+                                <div id="paypal-btn-container"></div>
+                            </div>
                         </div>
                     </div>
 
-                    <button type="submit" id="btnComprar" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-                        Pagar
-                    </button>
                 <?php } ?>
             </div>
         </div>

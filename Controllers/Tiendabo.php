@@ -39,7 +39,7 @@ class Tiendabo extends Controllers
             $data['page_title'] =  $infoCategoria['categoria'];
             $data['page_name'] = "categoria";
             $data['planes'] = $infoCategoria['planes'];
-            $this->views->getView($this, "categoria", $data); 
+            $this->views->getView($this, "categoria", $data);
             //vista Views
         }
     }
@@ -152,8 +152,8 @@ class Tiendabo extends Controllers
                     "msg" => '¡Se elimino el plan!',
                     "cantCarrito" => $cantCarrito,
                     "htmlCarrito" => $htmlCarrito,
-                    "subTotal" => SMONEY.formatMoney($subtotal),
-                    "total" => SMONEY.formatMoney($subtotal + COSTOENVIO)
+                    "subTotal" => SMONEY . formatMoney($subtotal),
+                    "total" => SMONEY . formatMoney($subtotal + COSTOENVIO)
                 );
             } else {
                 $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
@@ -165,63 +165,62 @@ class Tiendabo extends Controllers
 
 
     public function updCarrito()
-{
-    if ($_POST) {
-        $arrCarrito = array();
-        $totalPlan = 0;
-        $subtotal = 0;
-        $total = 0;           
-        $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
-        $cantidad = intval($_POST['cantidad']);
-        
-        if (is_numeric($idplan) && $cantidad > 0) {
-            $arrCarrito = $_SESSION['arrCarrito'];
-            
-            // Actualización del plan en el carrito
-            for ($p = 0; $p < count($arrCarrito); $p++) {
-                if ($arrCarrito[$p]['id_plan'] == $idplan) {
-                    $arrCarrito[$p]['cantidad'] = $cantidad;
-                    $totalPlan = $arrCarrito[$p]['precio'] * $cantidad; // Corregido el cálculo
-                    break;
+    {
+        if ($_POST) {
+            $arrCarrito = array();
+            $totalPlan = 0;
+            $subtotal = 0;
+            $total = 0;
+            $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
+            $cantidad = intval($_POST['cantidad']);
+
+            if (is_numeric($idplan) && $cantidad > 0) {
+                $arrCarrito = $_SESSION['arrCarrito'];
+
+                // Actualización del plan en el carrito
+                for ($p = 0; $p < count($arrCarrito); $p++) {
+                    if ($arrCarrito[$p]['id_plan'] == $idplan) {
+                        $arrCarrito[$p]['cantidad'] = $cantidad;
+                        $totalPlan = $arrCarrito[$p]['precio'] * $cantidad; // Corregido el cálculo
+                        break;
+                    }
                 }
+
+                $_SESSION['arrCarrito'] = $arrCarrito;
+
+                // Cálculo del subtotal
+                foreach ($_SESSION['arrCarrito'] as $pla) {
+                    $subtotal += $pla['cantidad'] * $pla['precio'];
+                }
+
+                // Formateo de los valores de precios (evitar errores con SMONEY y formatMoney)
+                $arrResponse = array(
+                    "status" => true,
+                    "msg" => '¡Plan Actualizado!',
+                    "totalPlan" => SMONEY . formatMoney($totalPlan), // Asegúrate que SMONEY y formatMoney estén bien
+                    "subTotal" => SMONEY . formatMoney($subtotal),
+                    "total" => SMONEY . formatMoney($subtotal + COSTOENVIO)
+                );
+            } else {
+                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos');
             }
 
-            $_SESSION['arrCarrito'] = $arrCarrito;
-
-            // Cálculo del subtotal
-            foreach ($_SESSION['arrCarrito'] as $pla) {
-                $subtotal += $pla['cantidad'] * $pla['precio'];
-            }
-
-            // Formateo de los valores de precios (evitar errores con SMONEY y formatMoney)
-            $arrResponse = array(
-                "status" => true,
-                "msg" => '¡Plan Actualizado!',
-                "totalPlan" => SMONEY . formatMoney($totalPlan), // Asegúrate que SMONEY y formatMoney estén bien
-                "subTotal" => SMONEY . formatMoney($subtotal),
-                "total" => SMONEY . formatMoney($subtotal + COSTOENVIO) 
-            );
-
-        } else {
-            $arrResponse = array("status" => false, "msg" => 'Datos incorrectos');
+            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         }
-
-        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        die();
     }
-    die();
-}
 
-public function registro()
+    public function registro()
     {
         if ($_POST) {
 
             if (
                 empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtTelefono']) || empty($_POST['txtEmailCliente']) ||
-                empty($_POST['txtEdad']) || empty($_POST['txtPrimerI']) )
-                 {
+                empty($_POST['txtEdad']) || empty($_POST['txtPrimerI'])
+            ) {
                 $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
             } else {
-      
+
                 $strNombre = ucwords(strClean($_POST['txtNombre']));
                 $strApellido = ucwords(strClean($_POST['txtApellido']));
                 $intTelefono = intval(strClean($_POST['txtTelefono']));
@@ -233,30 +232,32 @@ public function registro()
                 $request_user = "exist";
                 $strPassword =  passGenerator();
                 $srtPasswordEncript =  hash("SHA256", $strPassword);
-                $request_user = $this->insertCliente($strNombre,
-                        $strApellido,
-                        $intTelefono,
-                        $strEmail,
-                        $srtPasswordEncript, // Faltaba este argumento
-                        $intEdad,
-                        $srtPrimerI,
-                        $intTipoId);
-                
+                $request_user = $this->insertCliente(
+                    $strNombre,
+                    $strApellido,
+                    $intTelefono,
+                    $strEmail,
+                    $srtPasswordEncript, // Faltaba este argumento
+                    $intEdad,
+                    $srtPrimerI,
+                    $intTipoId
+                );
+
                 // Ajuste en la lógica de los condicionales para manejar las comparaciones correctamente
-                if ($request_user  != "exist")
-                 {
+                if ($request_user  != "exist") {
                     $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
-                    $nombreUsuario = $strNombre .''. $strApellido;
-                    $dataUsuario = array('nombreUsuario' => $nombreUsuario,
-                            'email' => $strEmail,
-                            'password' => $strPassword,
-                            'asunto' => 'Bienvenido a BoGallery',
-                        );
-                        $_SESSION['idUser'] = $request_user;
-                        $_SESSION['login'] = true;
-                        $this->login->sessionLogin($request_user);
-                       // sendEmail($dataUsuario, 'email_bienvenida');
-                    
+                    $nombreUsuario = $strNombre . '' . $strApellido;
+                    $dataUsuario = array(
+                        'nombreUsuario' => $nombreUsuario,
+                        'email' => $strEmail,
+                        'password' => $strPassword,
+                        'asunto' => 'Bienvenido a BoGallery',
+                    );
+                    $_SESSION['idUser'] = $request_user;
+                    $_SESSION['login'] = true;
+                    $this->login->sessionLogin($request_user);
+                    // sendEmail($dataUsuario, 'email_bienvenida');
+
                 } elseif ($request_user === "exist") {
                     $arrResponse = array('status' => false, 'msg' => '¡ATENCIÓN! El email ya existe.');
                 } else {
@@ -270,7 +271,22 @@ public function registro()
             die();
         }
     }
+    public function procesarVenta()
+    {
+        if ($_POST) {
+                $idtransaccionpaypal = NULL;
+				$datospaypal = NULL;
+				$idusuario = $_SESSION['idUser'];
+				$monto = 0;
+				$tipopagoid = intval($_POST['inttipopago']);
+				$direccionenvio = strClean($_POST['direccion']).', '.strClean($_POST['ciudad']);
+				$status = "Pendiente";
+				$subtotal = 0;
 
+        } else {
+            $arrResponse = array("status" => false, "msg" => 'No es posible procesar el plan');
+        }
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        die();
+    }
 }
-
-?>

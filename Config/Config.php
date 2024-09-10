@@ -8,7 +8,7 @@
   date_default_timezone_set('America/Bogota');
 
   const DB_HOST = "localhost";
-  const DB_NAME = "bogallery_pro";
+  const DB_NAME = "pro_bogallery";
   const DB_USER = "root";
   const DB_PASSWORD = "";
   const DB_CHARSET = "charset=utf8";
@@ -21,6 +21,13 @@
 
   //Simbolo de la moneda
   const SMONEY = "$";
+  const CURRENCY = "USD";
+
+ //API paypal
+ //SAMBOX PAYPAL
+  const IDCLIENTE ="AfPh5BBTzI2gEjDYDDxo4EM4dgRcA4mm1c8r_HQTfzBQEUHvcsEHjVtrBaLBaxQNKfTAqGEpt64tKMIV";
+  //vERCION DE PRODUCCION CAMBIAR EL ID 
+  //const IDCLIENTE ="AfPh5BBTzI2gEjDYDDxo4EM4dgRcA4mm1c8r_HQTfzBQEUHvcsEHjVtrBaLBaxQNKfTAqGEpt64tKMIV";
 
   //Datos envio correo
   const NOMBRE_REMITENTE = "BoGallery";
