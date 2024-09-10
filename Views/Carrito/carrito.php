@@ -154,7 +154,7 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 	<br>
 	<div class="container">
 		<p>
-			No hay planes en el carrito <a href="<?= base_url() ?>/tienda">Ver Planes</a>
+			No hay planes en el carrito <a href="<?= base_url() ?>/Tiendabo/plan">Ver Planes</a>
 		</p>
 	</div>
 

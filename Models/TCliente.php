@@ -12,7 +12,9 @@ trait TCliente
     private    $strEmail;
     private    $strPassword;
     private    $intEdad;
+    private   $strDireccion;
     private    $strPrimerI;
+    private    $strSegundoI;
     private     $strToken;
     private     $intTipoId;
     private  $intIdTransaccion;
@@ -24,8 +26,10 @@ trait TCliente
         string $email,
         string $password,
         int $edad,
+        string $direccion,
         string $primeri,
-        int $tipoid
+        string $segundoi,
+        int $tipoid,
 
     ) {
         //Se asignan los valores declarados en la parte superior 
@@ -36,7 +40,9 @@ trait TCliente
         $this->strEmail = $email;
         $this->strPassword = $password;
         $this->intEdad = $edad;
+        $this->strDireccion = $direccion;
         $this->strPrimerI = $primeri;
+        $this->strSegundoI = $segundoi;
         $this->intTipoId = $tipoid;
         $return = 0;
         //Validacion para el email y saber si ya existe ese email
@@ -47,8 +53,8 @@ trait TCliente
 deja registrar los datos del usuario  */
         if (empty($request)) {
             $query_insert = "INSERT INTO usuarios(
-             nombres, apellidos, edad, telefono, email_user, password, primer_idioma, id_rol)  
-              VALUES(?,?,?,?,?,?,?,?)";
+             nombres, apellidos, edad, telefono, email_user, password, direccion, primer_idioma, segundo_idioma, id_rol)  
+              VALUES(?,?,?,?,?,?,?,?,?,?)";
 
             $arrData = array(
                 $this->strNombre,
@@ -57,8 +63,10 @@ deja registrar los datos del usuario  */
                 $this->intTelefono,
                 $this->strEmail,
                 $this->strPassword,
+                $this->strDireccion,
                 $this->strPrimerI,
-                $this->intTipoId,
+                $this->strSegundoI,
+                $this->intTipoId
             );
             $request_insert = $this->con->insert($query_insert, $arrData);
             $request = $request_insert;

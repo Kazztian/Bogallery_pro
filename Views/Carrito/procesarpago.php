@@ -141,6 +141,16 @@ $total = $subtotal + COSTOENVIO;
                                     </div>
                                     <div class="row">
                                         <div class="col col-md-6 form-group">
+                                            <label for="txtDireccion">direccion</label>
+                                            <input type="text" class="form-control valid valid validText" id="txtDireccion" name="txtDireccion" required="">
+                                        </div>
+                                        <div class="col col-md-6 form-group">
+                                            <label for="txtSegundoI">segundo idioma</label>
+                                            <input type="text" class="form-control valid valid validText" id="txtSegundoI" name="txtSegundoI" required="">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col col-md-6 form-group">
                                             <label for="txtEdad">Edad</label>
                                             <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);" onblur="validateAge();">
                                         </div>

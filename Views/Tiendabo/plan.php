@@ -127,7 +127,7 @@ $rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
     </div>
     <!--  -->
     <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
-        <h3 class="ltext-106 cl5 txt-center">> Planes Relacionados << /h3>
+        <h3 class="ltext-106 cl5 txt-center">> Planes Relacionados <</h3>
     </div>
 </section>
 
