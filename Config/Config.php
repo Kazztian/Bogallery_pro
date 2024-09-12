@@ -44,9 +44,6 @@
   const EMAIL_PLANES = "Bogallerygaes.com";
   const EMAIL_SUSCRIPCION = "Bogallerygaes.com";
 
-
-
-
   // Constante para encriptar 
   const KEY ='bogobogo';
   const METHODENCRIPT = "AES-128-ECB";
