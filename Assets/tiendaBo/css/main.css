@@ -3152,12 +3152,15 @@ input.num-product::-webkit-inner-spin-button {
   color: #717fe0;
   border-color: #717fe0;
 }
-
+.linkFooter{
+  color: #54c28f !important;
+}
 
 /*---------------------------------------------*/
 .hov-ovelay1 {
   position: relative;
 }
+
 
 .hov-ovelay1::after {
   content: "";

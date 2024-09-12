@@ -3,8 +3,6 @@ headerTiendabo($data);
 $arrPlanes = $data['planes'];
 
 ?>
-<br><br><br>
-<br>
 <!-- Planes -->
 <div class="bg0 m-t-23 p-b-140">
     <div class="container">
