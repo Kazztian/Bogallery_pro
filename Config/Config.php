@@ -40,6 +40,17 @@
   //Aca se configura para extraer las categorias que se van a visualisar en el Banner
   const CAT_BANNER = "4,5,6,7,8,9";
 
+  //Redes Sociales
+  const FACEBOOK = "https://www.facebook.com/share/K5dG67fxCTEWuVs1/?mibextid=qi2Omg";
+  const INSTAGRAM = "https://www.instagram.com/bogalleryexplore?igsh=MTgxOTh5OXZxN2p3Mg==";
+
+  //Datos empresa
+  const DIRECCION = "Cra 8 N° 10-65,Bogota";
+  const TELEMPRESA = "+(057)3112724639";
+  const WHATASPP = "+0573112724639";
+  const EMAIL_PLANES = "Bogallerygaes.com";
+  const EMAIL_SUSCRIPCION = "Bogallerygaes.com";
+
   // Constante para encriptar 
   const KEY ='bogobogo';
   const METHODENCRIPT = "AES-128-ECB";

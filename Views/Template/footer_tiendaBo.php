@@ -48,28 +48,33 @@
 					</li>
 				</ul>
 			</div>
-			<!-- Contacto -->
+			<!-- Contactoooo -->
 			<div class="col-sm-6 col-lg-4 p-b-50">
 				<h4 class="stext-301 cl0 p-b-30">
 					CONTACTO
 				</h4>
 
 				<p class="stext-107 cl7 size-201">
-					Carrera. 13 #65-10 Barrio Chapinero Bogotá D.C
+					<?= DIRECCION?>
 					<br>
-					Tel:(+54) 311272639
+					Tel: <a class="linkFooter" href="tel:<?=TELEMPRESA?>"><?=TELEMPRESA?></a><br>
+					Email: <a class="linkFooter" href="mailo:<?=EMAIL_PLANES?>"><?=EMAIL_PLANES?></a>
 				</p>
 				<!-- Redes sociales -->
 				<div class="p-t-27">
 					<!-- El target blanck sirve para que se abra en una nueva pestaña -->
-					<a href="https://facebook.com/bogallery" target="_blanck" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+					<a href="<?=FACEBOOK?>" target="_blanck" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 						<i class="fa fa-facebook"></i>
 					</a>
 
-					<a href="https://instagram.com/bogallery" target="_blanck" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+					<a href="<?=INSTAGRAM?>" target="_blanck" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
 						<i class="fa fa-instagram"></i>
 					</a>
-				</div>
+					<a href="https://wa.me/<?=WHATASPP?>" target="_blanck" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<i class="fa fa-whatsapp"></i>
+					</a>
+					
+				</div> 
 			</div>
 			<!-- Subscripcion -->
 			<div class="col-sm-6 col-lg-4 p-b-50">
