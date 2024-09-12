@@ -308,3 +308,41 @@ function fntViewPago(){
     }
 
 }
+
+if(document.querySelector("#btnComprar")){
+	let btnPago = document.querySelector("#btnComprar");
+	btnPago.addEventListener('click',function() { 
+        let dir = document.querySelector("#txtDireccionC").value;
+        let ciudad = document.querySelector("#txtCiudad").value;
+	    let inttipopago = document.querySelector("#listtipopago").value;
+         if(txtDireccionC == "" || txtCiudad =="" || inttipopago == ""){
+            Swal.fire("", "Complete los datos de la compra", "error");
+            return;
+         }else{
+            divLoading.style.display = "flex";
+            let request = (window.XMLHttpRequest) ?
+                        new XMLHttpRequest() :
+                        new ActiveXObject('Microsoft.XMLHTTP');
+            let ajaxUrl = base_url + '/Tiendabo/procesarVenta';
+                let formData = new FormData();
+                formData.append('direccion', dir);
+                formData.append('ciudad', ciudad);
+                formData.append('inttipopago', inttipopago);
+                request.open("POST", ajaxUrl, true);
+                request.send(formData);
+                request.onreadystatechange = function() {
+                    if (request.readyState != 4) return;
+                    if (request.status == 200) {
+                        let objData = JSON.parse(request.responseText);
+                        if (objData.status) {
+                            window.location = base_url + "/tiendabo/confirmarplan/";
+                        } else {
+                            Swal.fire("", objData.msg, "error");
+                        }
+                    }
+                    divLoading.style.display = "none";
+            	return false;
+                }
+         }
+    },false);
+}

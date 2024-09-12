@@ -57,6 +57,7 @@ deja registrar los datos del usuario  */
               VALUES(?,?,?,?,?,?,?,?,?,?)";
 
             $arrData = array(
+
                 $this->strNombre,
                 $this->strApellido,
                 $this->intEdad,
@@ -75,6 +76,40 @@ deja registrar los datos del usuario  */
         }
         return $return;
     }
+
+    public function insertPedido(string $idtransaccionpaypal = NULL, string $datospaypal = NULL, int $idusuario, string $monto, int $idtipopago, string $direccionenvio, string $status){
+        $this->con = new Mysql();
+        $query_insert = "INSERT INTO inscripciones(idtransaccionpaypal, datospaypal, id_usuario, monto, idtipopago,direccion_envio, status  )
+                          VALUE(?,?,?,?,?,?,?)";
+        
+        $arrData = array($idtransaccionpaypal,
+                          $datospaypal,
+                          $idusuario,
+                          $monto,
+                          $idtipopago,
+                          $direccionenvio,
+                          $status);
+        $request_insert = $this->con->insert($query_insert, $arrData);
+        $return = $request_insert;
+        return $return;
+
+    }
+
+    public function insertDetalle(int $idpedido, int $idplan, float $precio, int $cantidad){
+        $this->con = new Mysql();
+        $query_insert = "INSERT INTO novedades(id_inscripcion,id_plan, precio, cantidad)
+                         VALUE(?,?,?,?)";
+        $arrData = array($idpedido, 
+                         $idplan,
+                         $precio,
+                         $cantidad);
+        $request_insert = $this->con->insert($query_insert, $arrData);
+        $return = $request_insert;
+        return $return;
+    }
+
+
+
     public function insertDetalleTemp(array $pedido)
     {
         $this->intIdUsuario = $pedido['idcliente'];

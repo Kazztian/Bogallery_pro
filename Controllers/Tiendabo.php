@@ -278,15 +278,136 @@ class Tiendabo extends Controllers
 				$datospaypal = NULL;
 				$idusuario = $_SESSION['idUser'];
 				$monto = 0;
-				$tipopagoid = intval($_POST['inttipopago']);
+            $idtipopago = intval($_POST['inttipopago']);
 				$direccionenvio = strClean($_POST['direccion']).', '.strClean($_POST['ciudad']);
 				$status = "Pendiente";
 				$subtotal = 0;
+
+            if (!empty($_SESSION['arrCarrito'])) {
+                foreach($_SESSION['arrCarrito'] as $pla){
+                    $subtotal += $pla['cantidad'] * $pla['precio'];
+                }
+                $monto = formatMoney($subtotal + COSTOENVIO);
+
+                if(empty($_POST['datapay'])){
+                    $request_pedido = $this->insertPedido($idtransaccionpaypal,
+                    $datospaypal,    
+                    $idusuario,
+                     $monto,
+                     $idtipopago,
+                     $direccionenvio,
+                     $status
+                      );
+
+                        if($request_pedido > 0){
+                        //Insertamos detalle
+                        foreach ($_SESSION['arrCarrito'] as $plan) {
+                        $idplan = $plan['id_plan'];
+                        $precio = $plan['precio'];
+                        $cantidad = $plan['cantidad'];
+                        $this->insertDetalle($request_pedido,$idplan,$precio,$cantidad);
+                        }
+                        $orden = openssl_encrypt($request_pedido, METHODENCRIPT, KEY);
+                        $transaccion = openssl_encrypt($idtransaccionpaypal, METHODENCRIPT, KEY);
+                        $arrResponse = array("status" => true,
+                        "orden" => $orden,
+                        "transaccion" => $transaccion,
+                        "msg" => 'Plan realizado');	
+                        $_SESSION['dataorden'] = $arrResponse;
+                        //destruccion de la bariable de seccion carrito
+                        unset($_SESSION['arrCarrito']);
+                        session_regenerate_id(true);
+                    }
+
+                }else{
+                    $jsonPaypal = $_POST['datapay'];
+                    $objPaypal = json_decode($jsonPaypal);
+                    $status = "Aprobado";
+
+                    if(is_object($objPaypal)){
+                        $datospaypal = $jsonPaypal;
+                        $idtransaccionpaypal = $objPaypal->purchase_units[0]->payments->captures[0]->id;
+
+                        if($objPaypal->status == "COMPLETED"){
+                            $totalPaypal = formatMoney($objPaypal->purchase_units[0]->amount->value);
+                            if($monto == $totalPaypal){
+                                $status = "Completo";
+                            }
+                            $request_pedido = $this->insertPedido($idtransaccionpaypal,
+                                                                   $datospaypal,    
+                                                                   $idusuario,
+                                                                    $monto,
+                                                                    $idtipopago,
+                                                                    $direccionenvio,
+                                                                    $status
+                                                                     );
+
+                            if($request_pedido > 0){
+                                	//Insertamos detalle
+							foreach ($_SESSION['arrCarrito'] as $plan) {
+								$idplan = $plan['id_plan'];
+								$precio = $plan['precio'];
+								$cantidad = $plan['cantidad'];
+								$this->insertDetalle($request_pedido,$idplan,$precio,$cantidad);
+							}
+                            $orden = openssl_encrypt($request_pedido, METHODENCRIPT, KEY);
+							$transaccion = openssl_encrypt($idtransaccionpaypal, METHODENCRIPT, KEY);
+							$arrResponse = array("status" => true,
+                                          "orden" => $orden,
+                                           "transaccion" => $transaccion,
+                                            "msg" => 'Plan realizado');	
+                            $_SESSION['dataorden'] = $arrResponse;
+                            //destruccion de la bariable de seccion carrito
+                            unset($_SESSION['arrCarrito']);
+							session_regenerate_id(true);
+                                
+                            }else{
+                                $arrResponse = array("status" => false, "msg" => 'No es posible procesar el plan');
+        
+                            }
+
+                        }else{
+                            $arrResponse = array("status" => false, "msg" => 'No se ha podido completar el pago');
+        
+                        }
+
+
+                    }else {
+                        $arrResponse = array("status" => false, "msg" => 'Hubo un error en el proceso de pago');
+        
+                    }
+
+                }
+
+            }else{
+                $arrResponse = array("status" => false, "msg" => 'No es posible procesar el plan');
+        
+            }
+
 
         } else {
             $arrResponse = array("status" => false, "msg" => 'No es posible procesar el plan');
         }
         echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
         die();
+    }
+
+    public function confirmarplan(){
+        if(empty($_SESSION['dataorden'])){
+            header("Location: ".base_url());
+        }else{
+            $dataorden = $_SESSION['dataorden'];
+            $idpedido = openssl_decrypt($dataorden['orden'], METHODENCRIPT, KEY);
+            $transaccion = openssl_encrypt($dataorden['transaccion'], METHODENCRIPT, KEY);
+            $data['page_tag'] = "Confirmar Plan";
+			$data['page_title'] = "Confirmar Plan";
+			$data['page_name'] = "confirmarplan";
+            $data['orden'] = $idpedido;
+            $data['transaccion'] = $transaccion;
+            $this->views->getView($this, "confirmarplan", $data);
+
+        }
+        //destruir variable de seccion
+        unset($_SESSION['dataorden']);
     }
 }
