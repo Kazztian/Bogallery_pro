@@ -46,7 +46,7 @@ $total = $subtotal + COSTOENVIO;
                     if (request.status == 200) {
                         let objData = JSON.parse(request.responseText);
                         if (objData.status) {
-                            window.location = base_url + "/tienda/confirmarpedido/";
+                            window.location = base_url + "/tiendabo/confirmarplan/";
                         } else {
                             Swal.fire("", objData.msg, "error");
                         }
@@ -225,7 +225,7 @@ $total = $subtotal + COSTOENVIO;
                             <div>
                                 <label for="contraentrega">
                                     <input type="radio" id="contraentrega" class="methodpago" name="payment-method" value="CT">
-                                    <span>Contra Entrega</span>
+                                    <span>Otros</span>
                                 </label>
                             </div>
                             <div id="divtipopago" class="notblock">
