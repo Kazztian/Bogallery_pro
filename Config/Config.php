@@ -8,7 +8,7 @@
   date_default_timezone_set('America/Bogota');
 
   const DB_HOST = "localhost";
-  const DB_NAME = "bogallery_pro";
+  const DB_NAME = "pro_bogallery";
   const DB_USER = "root";
   const DB_PASSWORD = "";
   const DB_CHARSET = "charset=utf8";
