@@ -41,7 +41,7 @@ class Login extends Controllers
                        
                         // Almacena los datos (mejor experiencia para el usuario)
                         $arrData = $this->model->sessionLogin($_SESSION['idUser']);
-                       sessionUser($_SESSION['idUser']);
+                        sessionUser($_SESSION['idUser']);
                         //$_SESSION['userData'] = $arrData;
 
                         $arrResponse = array('status' => true, 'msg' => 'ok');

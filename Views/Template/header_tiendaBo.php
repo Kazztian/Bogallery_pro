@@ -50,11 +50,11 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 </head>
 
 <body class="animsition">
-<div id="divLoading">
-    <div>
-      <img src="<?= media(); ?>/images/loading.svg" alt="Loading">
-    </div>
-  </div>
+	<div id="divLoading">
+		<div>
+			<img src="<?= media(); ?>/images/loading.svg" alt="Loading">
+		</div>
+	</div>
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
@@ -101,20 +101,11 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 							</li>
 							<li>
 								<a href="<?= base_url(); ?>/tiendalu">Lugares</a>
-							</li>	
+							</li>
 							<li>
 								<a href="<?= base_url(); ?>/tiendati">Actividades</a>
 							</li>
 
-							
-
-							<!-- <li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
-							</li> -->
-
-							<!-- <li> mirar si se puede meter
-								<a href="blog.html">Blog</a>
-							</li> -->
 
 							<li>
 								<a href="<?= base_url(); ?>/carrito">Carrito</a>
@@ -135,7 +126,7 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 js-show-modal-search">
 							<i class="zmdi zmdi-search"></i>
 						</div>
-						<?php if ($data['page_name'] != "carrito") { ?>
+						<?php if ($data['page_name'] != "carrito" and $data['page_name'] != "procesarpago") { ?>
 							<div class="cantCarrito icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="<?= $canCarrito; ?>">
 								<i class="zmdi zmdi-shopping-cart"></i>
 							</div>
@@ -157,7 +148,7 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 js-show-modal-search">
 					<i class="zmdi zmdi-search"></i>
 				</div>
-				<?php if ($data['page_name'] != "carrito") { ?>
+				<?php if ($data['page_name'] != "carrito" and $data['page_name'] != "procesarpago") { ?>
 					<div class="cantCarrito icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="<?= $canCarrito; ?>">
 						<i class="zmdi zmdi-shopping-cart"></i>
 					</div>
@@ -219,6 +210,9 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 				</li>
 				<li>
 					<a href="<?= base_url(); ?>/tiendalu">Lugares</a>
+				</li>
+				<li>
+					<a href="<?= base_url(); ?>/tiendati">Actividades</a>
 				</li>
 
 				<li>

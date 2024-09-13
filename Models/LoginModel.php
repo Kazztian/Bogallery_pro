@@ -37,7 +37,7 @@ class LoginModel extends mysql
 					   u.nombrefiscal,
 					   u.direccionfiscal,
                        u.direccion,
-                       u.primer_idioma ,
+                       u.primer_idioma,
                        u.segundo_idioma,
                        r.id_rol, r.nombrerol,
                        u.status

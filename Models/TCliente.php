@@ -77,14 +77,15 @@ deja registrar los datos del usuario  */
         return $return;
     }
 
-    public function insertPedido(string $idtransaccionpaypal = NULL, string $datospaypal = NULL, int $idusuario, string $monto, int $idtipopago, string $direccionenvio, string $status){
+    public function insertPedido(string $idtransaccionpaypal = NULL, string $datospaypal = NULL, int $idusuario, float $costo_iva, string $monto,  int $idtipopago, string $direccionenvio, string $status){
         $this->con = new Mysql();
-        $query_insert = "INSERT INTO inscripciones(idtransaccionpaypal, datospaypal, id_usuario, monto, idtipopago,direccion_envio, status  )
-                          VALUE(?,?,?,?,?,?,?)";
+        $query_insert = "INSERT INTO inscripciones(idtransaccionpaypal, datospaypal, id_usuario, costo_iva, monto, idtipopago,direccion_envio, status)
+                          VALUE(?,?,?,?,?,?,?,?)";
         
         $arrData = array($idtransaccionpaypal,
                           $datospaypal,
                           $idusuario,
+                          $costo_iva,
                           $monto,
                           $idtipopago,
                           $direccionenvio,
@@ -115,6 +116,7 @@ deja registrar los datos del usuario  */
         $this->intIdUsuario = $pedido['idcliente'];
         $this->intIdTransaccion = $pedido['idtransaccion'];
         $planes = $pedido['planes'];
+
         $this->con = new Mysql();
         $sql = "SELECT * FROM datalles_temp WHERE
         idtransaccion = '{$this->intIdTransaccion}' AND
@@ -152,5 +154,43 @@ deja registrar los datos del usuario  */
             }
         }
 
+    }
+
+    public function getPedidio(int $idpedido){
+
+        $this->con = new Mysql();
+        $request = array();
+        $sql = "SELECT i.id_inscripcion,
+                        i.referenciacobro,
+                        i.idtransaccionpaypal,
+                        i.id_usuario,
+                        i.fecha,
+                        i.costo_iva,
+                        i.monto,
+                        i.idtipopago,
+                        t.tipopago,
+                        i.direccion_envio,
+                        i.status
+        FROM inscripciones as i
+        INNER JOIN tipopago t
+        ON i.idtipopago = t.idtipopago
+        WHERE i.id_inscripcion  = $idpedido";
+        $requestPedidio = $this->con->select($sql);
+        if(count($requestPedidio)>0){
+            $sql_detalle = "SELECT p.id_plan,
+                            p.nombre as plan,
+                            n.precio,
+                            n.cantidad
+                        FROM novedades n
+                        INNER JOIN planes p
+                        ON n.id_plan = p.id_plan
+                        WHERE n.id_inscripcion = $idpedido";
+                        
+        $requestPlanes = $this->con->select_all($sql_detalle);
+        $request = array('orden' => $requestPedidio,
+                        'detalle'=> $requestPlanes);
+                            
+        }
+        return $request;
     }
 }

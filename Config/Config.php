@@ -16,12 +16,12 @@
   const ENVIRONMENT = 0; //Local:0, produccion: 1;
 
   //Deliminadores decimal y millar
-  const SPD = "."; // Delimitador de decimales
-  const SPM = ","; // Delimitador de miles
+  const SPD = ","; // Delimitador de decimales
+  const SPM = "."; // Delimitador de miles
 
   //Simbolo de la moneda
-  const SMONEY = "$";
-  const CURRENCY = "USD";
+  const SMONEY = "$";      // Símbolo de pesos colombianos
+  const CURRENCY = "COP";  // Moneda para Colombia
 
  //API paypal
  //SAMBOX PAYPAL
@@ -56,5 +56,5 @@
   const METHODENCRIPT = "AES-128-ECB";
 
   //Envio o valor adiccional
-  const COSTOENVIO = 0;
+  const COSTOENVIO = 0.19;
     

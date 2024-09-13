@@ -40,7 +40,7 @@ function headerTiendabo($data = "")
     require_once($view_header);
 }
 
-function footerTiendabo($data = "")
+function footerTiendabo($data="")
 {
     $view_footer = "Views/Template/footer_tiendaBo.php";
     require_once($view_footer);
@@ -67,7 +67,7 @@ function getModal(string $nameModal, $data)
 function getFile(string $url, $data){
     ob_start();
     require_once("Views/{$url}.php");
-    $file = ob_get_clean();
+    $file = ob_get_clean(); 
     return $file;
 }
 //Envio de correos
@@ -78,15 +78,15 @@ function sendEmail($data, $template)
     $emailDestino = $data['email'];
     $empresa = NOMBRE_REMITENTE;
     $remitente = EMAIL_REMITENTE;
-        $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
+    $emailCopia = !empty($data['emailCopia']) ? $data['emailCopia'] : "";
 
     //ENVIO DE CORREO
     $de = "MIME-Version: 1.0 \r\n";
     $de .= "Content-type:text/html; charset=UTF-8\r\n";
     $de .= "From: {$empresa}<{$remitente}>\r\n";
-        $de .= "Bcc: $emailCopia\r\n";
+    $de .= "Bcc: $emailCopia\r\n";
     ob_start();
-        require_once("Views/Template/Email/" . $template . ".php");
+    require_once("Views/Template/Email/" . $template . ".php");
     $mensaje = ob_get_clean();
     $send = mail($emailDestino, $asunto, $mensaje, $de);
     return $send;
@@ -115,9 +115,6 @@ function sendEmail($data, $template)
             if (!empty($data['emailCopia'])) {
                 $mail->addBCC($data['emailCopia']);
             }
-
-
-
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
             $mail->Subject = $data['asunto'];
@@ -138,7 +135,6 @@ function sendMailLocal($data, $template)
     ob_start();
     require_once("Views/Template/Email/" . $template . ".php");
     $mensaje = ob_get_clean();
-
     try {
         //Server settings
         $mail->SMTPDebug = 1;                                   //Enable verbose debug output

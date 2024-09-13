@@ -278,26 +278,29 @@ class Tiendabo extends Controllers
 				$datospaypal = NULL;
 				$idusuario = $_SESSION['idUser'];
 				$monto = 0;
-            $idtipopago = intval($_POST['inttipopago']);
+                $idtipopago = intval($_POST['inttipopago']);
 				$direccionenvio = strClean($_POST['direccion']).', '.strClean($_POST['ciudad']);
 				$status = "Pendiente";
 				$subtotal = 0;
+                $costo_iva = COSTOENVIO;
 
             if (!empty($_SESSION['arrCarrito'])) {
                 foreach($_SESSION['arrCarrito'] as $pla){
                     $subtotal += $pla['cantidad'] * $pla['precio'];
                 }
                 $monto = formatMoney($subtotal + COSTOENVIO);
+                //Proceso cuando se hace pago contraentrega
 
                 if(empty($_POST['datapay'])){
                     $request_pedido = $this->insertPedido($idtransaccionpaypal,
-                    $datospaypal,    
-                    $idusuario,
-                     $monto,
-                     $idtipopago,
-                     $direccionenvio,
-                     $status
-                      );
+                                                            $datospaypal,    
+                                                            $idusuario,
+                                                            $costo_iva,
+                                                            $monto,
+                                                            $idtipopago,
+                                                            $direccionenvio,
+                                                            $status
+                                                            );
 
                         if($request_pedido > 0){
                         //Insertamos detalle
@@ -307,6 +310,14 @@ class Tiendabo extends Controllers
                         $cantidad = $plan['cantidad'];
                         $this->insertDetalle($request_pedido,$idplan,$precio,$cantidad);
                         }
+                        $infoOrden= $this->getPedidio($request_pedido);
+                        $dataEmailOrden = array('asunto'=>"Se ha creado la inscripcion No.".$request_pedido,
+                                        'email'=>$_SESSION['userData']['email_user'],
+                                        'emailCopia'=>EMAIL_SUSCRIPCION,
+                                        'pedido'=>$infoOrden);
+
+                        sendEmail($dataEmailOrden,"email_notificacion_inscripcion");
+
                         $orden = openssl_encrypt($request_pedido, METHODENCRIPT, KEY);
                         $transaccion = openssl_encrypt($idtransaccionpaypal, METHODENCRIPT, KEY);
                         $arrResponse = array("status" => true,
@@ -320,6 +331,7 @@ class Tiendabo extends Controllers
                     }
 
                 }else{
+                    //Proceso cuando se hace el pago por paypal
                     $jsonPaypal = $_POST['datapay'];
                     $objPaypal = json_decode($jsonPaypal);
                     $status = "Aprobado";
@@ -336,6 +348,7 @@ class Tiendabo extends Controllers
                             $request_pedido = $this->insertPedido($idtransaccionpaypal,
                                                                    $datospaypal,    
                                                                    $idusuario,
+                                                                   $costo_iva,
                                                                     $monto,
                                                                     $idtipopago,
                                                                     $direccionenvio,
@@ -350,6 +363,13 @@ class Tiendabo extends Controllers
 								$cantidad = $plan['cantidad'];
 								$this->insertDetalle($request_pedido,$idplan,$precio,$cantidad);
 							}
+                            $infoOrden= $this->getPedidio($request_pedido);
+                            $dataEmailOrden = array('asunto'=>"Se ha creado la inscripcion No.".$request_pedido,
+                                            'email'=>$_SESSION['userData']['email_user'],
+                                            'emailCopia'=>EMAIL_SUSCRIPCION,
+                                            'pedido'=>$infoOrden);
+    
+                            sendEmail($dataEmailOrden,"email_notificacion_inscripcion");
                             $orden = openssl_encrypt($request_pedido, METHODENCRIPT, KEY);
 							$transaccion = openssl_encrypt($idtransaccionpaypal, METHODENCRIPT, KEY);
 							$arrResponse = array("status" => true,

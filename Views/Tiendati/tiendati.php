@@ -3,6 +3,7 @@ headerTiendabo($data);
 getModal('modalCarrito', $data);
 $arrActividades = $data['actividades']; // Asegúrate de que el controlador pase los actividades a la vista.
 ?>
+<br><br><br><br>
 <!-- Actividades -->
 <div class="bg0 m-t-23 p-b-140">
     <div class="container">

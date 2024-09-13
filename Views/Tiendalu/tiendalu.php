@@ -3,6 +3,7 @@ headerTiendabo($data);
 getModal('modalCarrito', $data);
 $arrLugares = $data['lugares']; // Asegúrate de que el controlador pase los lugares a la vista.
 ?>
+<br><br><br><br>
 <!-- Lugares -->
 <div class="bg0 m-t-23 p-b-140">
     <div class="container">
