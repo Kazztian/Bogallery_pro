@@ -271,10 +271,27 @@ input:checked + .slider:before {
 
 /*Tienda Carrito*/
 
-.divmetodpago label{
-	width: 100%;
-	display: flex;
+#divCondiciones {
+  width: 100%;
+  display: flex;
+  align-items: center; /* Alinea verticalmente el checkbox y el texto */
 }
-.divmetodpago label input{
-	margin-right: 15px;
+
+#divCondiciones input {
+  margin-right: 15px; /* Ajusta el espacio entre el checkbox y el texto */
 }
+
+.divmetodpago label {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.divmetodpago label input {
+  margin-right: 15px;
+}
+
+.modal {
+  z-index: 9999; /* Asegura que el modal esté por encima de otros elementos */
+}
+

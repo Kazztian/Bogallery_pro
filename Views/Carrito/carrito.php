@@ -1,7 +1,5 @@
 <?php
 headerTiendabo($data);
-
-
 ?>
 <br><br><br>
 <br>
@@ -22,6 +20,7 @@ headerTiendabo($data);
 <?php
 $subtotal = 0;
 $total = 0;
+$iva = 0; // Declaramos la variable para el IVA
 if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 ?>
 	<!-- Shoping Cart -->
@@ -47,8 +46,7 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 								?>
 									<tr class="table_row <?= $idPlan ?>">
 										<td class="column-1">
-											<div class="how-itemcart1" idpl="<?= $idPlan ?>" op="2" onclick="
-											 fntdelItem(this)">
+											<div class="how-itemcart1" idpl="<?= $idPlan ?>" op="2" onclick="fntdelItem(this)">
 												<img src="<?= $plan['imagen'] ?>" alt="<?= $plan['plan'] ?>">
 											</div>
 										</td>
@@ -56,15 +54,13 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 										<td class="column-3"><?= SMONEY . formatMoney($plan['precio']) ?></td>
 										<td class="column-4">
 											<div class="wrap-num-product flex-w m-l-auto m-r-0">
-												<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"
-													idpl="<?= $idPlan ?>">
+												<div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m" idpl="<?= $idPlan ?>">
 													<i class="fs-16 zmdi zmdi-minus"></i>
 												</div>
 
 												<input class="mtext-104 cl3 txt-center num-product" type="number" name="num-product1" value="<?= $plan['cantidad'] ?>" idpl="<?= $idPlan ?>">
 
-												<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"
-													idpl="<?= $idPlan ?>">
+												<div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m" idpl="<?= $idPlan ?>">
 													<i class="fs-16 zmdi zmdi-plus"></i>
 												</div>
 											</div>
@@ -74,20 +70,6 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 								<?php } ?>
 							</table>
 						</div>
-
-						<!--	<div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
-							<div class="flex-w flex-m m-r-20 m-tb-5">
-								<input class="stext-104 cl2 plh4 size-117 bor13 p-lr-20 m-r-10 m-tb-5" type="text" name="coupon" placeholder="Coupon Code">
-									
-								<div class="flex-c-m stext-101 cl2 size-118 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-5">
-									Apply coupon
-								</div>
-							</div>
-
-							<div class="flex-c-m stext-101 cl2 size-119 bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-								Update Cart
-							</div>
-						</div>-->
 					</div>
 				</div>
 
@@ -110,22 +92,22 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 								</span>
 							</div>
 
-
 							<div class="size-208">
 								<span class="stext-110 cl2">
-									IVA
+									IVA (19%)
 								</span>
 							</div>
 
 							<div class="size-209">
+								<?php
+								$iva = $subtotal * COSTOENVIO; // Aplicamos el 19% de IVA al subtotal
+								?>
 								<span class="mtext-110 cl2">
-									<?= SMONEY . formatMoney(COSTOENVIO) ?>
+									<?= SMONEY . formatMoney($iva) ?>
 								</span>
 							</div>
 
-
 						</div>
-
 
 						<div class="flex-w flex-t p-t-27 p-b-33">
 							<div class="size-208">
@@ -135,8 +117,11 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 							</div>
 
 							<div class="size-209 p-t-1">
+								<?php
+								$total = $subtotal + $iva; // Sumamos el subtotal más el IVA para obtener el total
+								?>
 								<span id="totalCompra" class="mtext-110 cl2">
-									<?= SMONEY . formatMoney($subtotal + COSTOENVIO) ?>
+									<?= SMONEY . formatMoney($total) ?>
 								</span>
 							</div>
 						</div>

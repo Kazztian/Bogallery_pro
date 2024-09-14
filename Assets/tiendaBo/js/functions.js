@@ -290,6 +290,7 @@ if(document.querySelector("#txtDireccionC")){
 		});
 }
 
+
 if(document.querySelector("#txtCiudad")){
 	let ciudad = document.querySelector("#txtCiudad");
     ciudad.addEventListener('keyup', function(){
@@ -297,6 +298,20 @@ if(document.querySelector("#txtCiudad")){
 		    fntViewPago();
 		});
 }
+
+//Funcion para el evento de terminos y condiciones
+if(document.querySelector("#condiciones")){
+	let opt = document.querySelector("#condiciones");
+    opt.addEventListener('click', function(){
+    let opcion = this.checked;
+    if(opcion){
+        document.querySelector('#optMetodoPago').classList.remove("notblock");
+    } else {
+        document.querySelector('#optMetodoPago').classList.add("notblock");
+    }
+});
+} 
+
 
 function fntViewPago(){
     let direccion = document.querySelector("#txtDireccionC").value;

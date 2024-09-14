@@ -3,7 +3,6 @@
 //Libreria e implementacion de envio de correo de forma local
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\SMTP;
 
 require 'Libraries/phpmailer/Exception.php';
 require 'Libraries/phpmailer/PHPMailer.php';
@@ -73,7 +72,7 @@ function getFile(string $url, $data){
 //Envio de correos
 function sendEmail($data, $template)
 {
-    if (ENVIRONMENT == 1) {
+    if(ENVIRONMENT == 1) {
     $asunto = $data['asunto'];
     $emailDestino = $data['email'];
     $empresa = NOMBRE_REMITENTE;
@@ -151,10 +150,7 @@ function sendMailLocal($data, $template)
         $mail->addAddress($data['email']);     //Add a recipient 
         if (!empty($data['emailCopia'])) {
             $mail->addBCC($data['emailCopia']);
-        }
-
-
-
+        }   
         //Content
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = $data['asunto'];

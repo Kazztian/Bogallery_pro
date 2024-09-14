@@ -1,13 +1,25 @@
 <?php
 headerTiendabo($data);
 $subtotal = 0;
-$total = 0;
 foreach ($_SESSION['arrCarrito'] as $plan) {
-    $subtotal += $plan['precio'] * $plan['cantidad'];
+    $precio = floatval($plan['precio']);
+    $cantidad = intval($plan['cantidad']);
+    $importe = $precio * $cantidad;
+    $subtotal += $importe;
 }
-$total = $subtotal + COSTOENVIO;
 
+// Calcular el IVA (19% del subtotal)
+$iva = $subtotal * COSTOENVIO;
+
+// Calcular el total redondeando para evitar problemas con PayPal
+$total = round($subtotal + $iva);
+
+// Formatear subtotal, IVA y total
+$subtotal_formateado = formatMoney($subtotal);
+$iva_formateado = formatMoney($iva);
+$total_formateado = formatMoney($total);
 ?>
+
 <script
     src="https://www.paypal.com/sdk/js?client-id=<?= IDCLIENTE ?>&currency=<?= CURRENCY ?>">
 </script>
@@ -19,8 +31,7 @@ $total = $subtotal + COSTOENVIO;
                     amount: {
                         value: <?= $total; ?>
                     },
-                    description: "Compra de planes en <?= NOMBRE_EMPRESA ?>  por <?= SMONEY . $total ?> ",
-
+                    description: "Compra de planes en <?= NOMBRE_EMPRESA ?> por <?= SMONEY . $total ?> ",
                 }]
             });
         },
@@ -57,10 +68,28 @@ $total = $subtotal + COSTOENVIO;
     }).render('#paypal-btn-container');
 </script>
 
+<div class="modal fade" id="modalTerminos" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
 
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>holaaaaaa terminos y condiciones</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<?php dep($_SESSION['userData']);?>
 <br><br><br>
 <br>
-<hr>
 <div class="container">
     <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
         <a href="<?= base_url() ?>" class="stext-109 cl8 hov-cl1 trans-04">
@@ -183,7 +212,7 @@ $total = $subtotal + COSTOENVIO;
 
                     <div class="size-209">
                         <span id="subTotalCompra" class="mtext-110 cl2">
-                            <?= SMONEY . formatMoney($subtotal) ?>
+                            <?= SMONEY . $subtotal_formateado ?>
                         </span>
                     </div>
 
@@ -196,7 +225,7 @@ $total = $subtotal + COSTOENVIO;
 
                     <div class="size-209">
                         <span class="mtext-110 cl2">
-                            <?= SMONEY . formatMoney(COSTOENVIO) ?>
+                        <?= SMONEY . $iva_formateado ?>
                         </span>
                     </div>
 
@@ -213,58 +242,67 @@ $total = $subtotal + COSTOENVIO;
 
                     <div class="size-209 p-t-1">
                         <span id="totalCompra" class="mtext-110 cl2">
-                            <?= SMONEY . formatMoney($total) ?>
+                        <?= SMONEY . $total_formateado?>
                         </span>
                     </div>
                 </div>
+                <hr>
 
                 <?php if (isset($_SESSION['login'])) {
                 ?>
                     <div id="divMetodoPago" class="notblock">
-                        <h4 class="mtext-109 cl2 p-b-30">
-                            Método de pago
-                        </h4>
-                        <div class="divmetodpago">
-                            <div>
-                                <label for="paypal">
-                                    <input type="radio" id="paypal" class="methodpago" name="payment-method" checked="" value="Paypal">
-                                    <img src="<?= media() ?>/images/img-paypal.jpg" alt="Icono de PayPal" class="ml-space-sm" width="74" height="20">
-                                </label>
-                            </div>
-                            <div>
-                                <label for="contraentrega">
-                                    <input type="radio" id="contraentrega" class="methodpago" name="payment-method" value="CT">
-                                    <span>Otros</span>
-                                </label>
-                            </div>
-                            <div id="divtipopago" class="notblock">
-                                <label for="listtipopago">Tipo de pago</label>
-                                <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
-                                    <select id="listtipopago" class="js-select2" name="listtipopago">
-                                        <?php
-                                        if (count($data['tiposPago']) > 0) {
-                                            foreach ($data['tiposPago'] as $tipopago) {
-                                                if ($tipopago['idtipopago'] != 1) {
-                                        ?>
-                                                    <option value="<?= $tipopago['idtipopago'] ?>"><?= $tipopago['tipopago'] ?></option>
-                                        <?php
-                                                }
-                                            }
-                                        } ?>
-                                    </select>
-                                    <div class="dropDownSelect2"></div>
-                                </div>
-                                <br>
-                                <button type="submit" id="btnComprar" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
-                                    Procesar pedido
-                                </button>
-                            </div>
-                            <div id="divpaypal">
+                        <div id="divCondiciones" class="d-flex align-items-center">
+                            <input type="checkbox" id="condiciones" class="mr-2">
+                            <label for="condiciones" class="mb-0 mr-2">Aceptar</label>
+                            <a href="#" data-toggle="modal" data-target="#modalTerminos">Términos y condiciones</a>
+                        </div>
+                        <div id="optMetodoPago" class="notblock" >
+                            <hr>
+                            <h4 class="mtext-109 cl2 p-b-30">
+                                Método de pago
+                            </h4>
+                            <div class="divmetodpago">
                                 <div>
-                                    <p>Para completar la transacción, te enviaremos a los servidores seguros de PayPal.</p>
+                                    <label for="paypal">
+                                        <input type="radio" id="paypal" class="methodpago" name="payment-method" checked="" value="Paypal">
+                                        <img src="<?= media() ?>/images/img-paypal.jpg" alt="Icono de PayPal" class="ml-space-sm" width="74" height="20">
+                                    </label>
                                 </div>
-                                <br>
-                                <div id="paypal-btn-container"></div>
+                                <div>
+                                    <label for="contraentrega">
+                                        <input type="radio" id="contraentrega" class="methodpago" name="payment-method" value="CT">
+                                        <span>Otros</span>
+                                    </label>
+                                </div>
+                                <div id="divtipopago" class="notblock">
+                                    <label for="listtipopago">Tipo de pago</label>
+                                    <div class="rs1-select2 rs2-select2 bor8 bg0 m-b-12 m-t-9">
+                                        <select id="listtipopago" class="js-select2" name="listtipopago">
+                                            <?php
+                                            if (count($data['tiposPago']) > 0) {
+                                                foreach ($data['tiposPago'] as $tipopago) {
+                                                    if ($tipopago['idtipopago'] != 1) {
+                                            ?>
+                                                        <option value="<?= $tipopago['idtipopago'] ?>"><?= $tipopago['tipopago'] ?></option>
+                                            <?php
+                                                    }
+                                                }
+                                            } ?>
+                                        </select>
+                                        <div class="dropDownSelect2"></div>
+                                    </div>
+                                    <br>
+                                    <button type="submit" id="btnComprar" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer">
+                                        Procesar pedido
+                                    </button>
+                                </div>
+                                <div id="divpaypal">
+                                    <div>
+                                        <p>Para completar la transacción, te enviaremos a los servidores seguros de PayPal.</p>
+                                    </div>
+                                    <br>
+                                    <div id="paypal-btn-container"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -166,16 +166,13 @@ $detalle = $data['pedido']['detalle'];
       </tr>
       <tr>
         <td><strong>Dirección del plan</strong></td>
-        <td><?= $orden['direccion_envio'] ?></td>
+        <td><?= $detalle[0]['direccion'] ?></td>
       </tr>
-      <!-- <tr>
-            <td><strong>Fecha del plan</strong></td>
-            <td>Cra 8 N° 10-65, Bogotá</td>
-          </tr>
-          <tr>
-            <td><strong>Hora</strong></td>
-            <td>Cra 8 N° 10-65, Bogotá</td>
-          </tr> -->
+      <tr>
+        <td><strong>Localidad del plan</strong></td>
+        <td><?= $detalle[0]['localidad'] ?></td>
+      </tr>
+
     </table>
     <table>
       <thead>
@@ -190,15 +187,15 @@ $detalle = $data['pedido']['detalle'];
         <?php
         if (count($detalle) > 0) {
           $subtotal = 0;
-
+        
           foreach ($detalle as $plan) {
             // Convertir el precio a número y calcular el importe
             $precio = floatval($plan['precio']);
             $importe = $precio * intval($plan['cantidad']);
-
+        
             // Sumar el importe al subtotal
             $subtotal += $importe;
-
+        
             // Formatear los valores para mostrarlos
             $precio_formateado = formatMoney($precio);
             $importe_formateado = formatMoney($importe);
@@ -211,13 +208,13 @@ $detalle = $data['pedido']['detalle'];
             </tr>
         <?php
           }
-
-          // Calcular el IVA (19% del subtotal, o ajusta el porcentaje según sea necesario)
+        
+          // Calcular el IVA (19% del subtotal)
           $iva = $subtotal * COSTOENVIO;
-
-          // Calcular el total sumando el IVA al subtotal
-          $total = $subtotal + $iva;
-
+        
+          // Calcular el total redondeando para evitar problemas con PayPal
+          $total = round($subtotal + $iva);
+        
           // Formatear subtotal, IVA y total para mostrarlos correctamente
           $subtotal_formateado = formatMoney($subtotal);
           $iva_formateado = formatMoney($iva);

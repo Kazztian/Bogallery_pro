@@ -21,7 +21,7 @@
 
   //Simbolo de la moneda
   const SMONEY = "$";      // Símbolo de pesos colombianos
-  const CURRENCY = "COP";  // Moneda para Colombia
+  const CURRENCY = "USD";  // Moneda para Colombia
 
  //API paypal
  //SAMBOX PAYPAL
@@ -33,7 +33,7 @@
   const NOMBRE_REMITENTE = "BoGallery";
   const EMAIL_REMITENTE = "no-reply@estefa.com";
   const NOMBRE_EMPRESA = "BoGallery";
-  const WEB_EMPRESA = "www.BoGallery.com";
+  const WEB_EMPRESA = "www.BoGalleryexplore.com";
 
   //Aca se configura para extraer las categorias que se van a visualizar slider
   const CAT_SLIDER = "1,2,3";
@@ -48,8 +48,8 @@
   const DIRECCION = "Cra 8 N° 10-65,Bogota";
   const TELEMPRESA = "+(057)3112724639";
   const WHATASPP = "+0573112724639";
-  const EMAIL_PLANES = "Bogallerygaes.com";
-  const EMAIL_SUSCRIPCION = "Bogallerygaes.com";
+  const EMAIL_PLANES = "bogallerygaes@gmail.com";
+  const EMAIL_SUSCRIPCION = "bogallerygaes@gmail.com";
 
   // Constante para encriptar 
   const KEY ='bogobogo';

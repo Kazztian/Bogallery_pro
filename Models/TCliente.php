@@ -77,33 +77,38 @@ deja registrar los datos del usuario  */
         return $return;
     }
 
-    public function insertPedido(string $idtransaccionpaypal = NULL, string $datospaypal = NULL, int $idusuario, float $costo_iva, string $monto,  int $idtipopago, string $direccionenvio, string $status){
+    public function insertPedido(string $idtransaccionpaypal = NULL, string $datospaypal = NULL, int $idusuario, float $costo_iva, string $monto,  int $idtipopago, string $direccionenvio, string $status)
+    {
         $this->con = new Mysql();
         $query_insert = "INSERT INTO inscripciones(idtransaccionpaypal, datospaypal, id_usuario, costo_iva, monto, idtipopago,direccion_envio, status)
                           VALUE(?,?,?,?,?,?,?,?)";
-        
-        $arrData = array($idtransaccionpaypal,
-                          $datospaypal,
-                          $idusuario,
-                          $costo_iva,
-                          $monto,
-                          $idtipopago,
-                          $direccionenvio,
-                          $status);
+
+        $arrData = array(
+            $idtransaccionpaypal,
+            $datospaypal,
+            $idusuario,
+            $costo_iva,
+            $monto,
+            $idtipopago,
+            $direccionenvio,
+            $status
+        );
         $request_insert = $this->con->insert($query_insert, $arrData);
         $return = $request_insert;
         return $return;
-
     }
 
-    public function insertDetalle(int $idpedido, int $idplan, float $precio, int $cantidad){
+    public function insertDetalle(int $idpedido, int $idplan, float $precio, int $cantidad)
+    {
         $this->con = new Mysql();
         $query_insert = "INSERT INTO novedades(id_inscripcion,id_plan, precio, cantidad)
                          VALUE(?,?,?,?)";
-        $arrData = array($idpedido, 
-                         $idplan,
-                         $precio,
-                         $cantidad);
+        $arrData = array(
+            $idpedido,
+            $idplan,
+            $precio,
+            $cantidad
+        );
         $request_insert = $this->con->insert($query_insert, $arrData);
         $return = $request_insert;
         return $return;
@@ -121,42 +126,44 @@ deja registrar los datos del usuario  */
         $sql = "SELECT * FROM datalles_temp WHERE
         idtransaccion = '{$this->intIdTransaccion}' AND
         id_usuario = $this->intIdUsuario";
-                        $request = $this->con->select_all($sql);
-        
-        if(empty($request)){
-            foreach ($planes as $plan){
+        $request = $this->con->select_all($sql);
+
+        if (empty($request)) {
+            foreach ($planes as $plan) {
                 $query_insert = "INSERT INTO datalles_temp(precio, cantidad,idtransaccion, id_usuario, id_plan)
                                  VALUES(?,?,?,?,?)";
-                $arrData = array( 
+                $arrData = array(
                     $plan['precio'],
                     $plan['cantidad'],
                     $this->intIdTransaccion,
                     $this->intIdUsuario,
-                    $plan['id_plan']);
+                    $plan['id_plan']
+                );
                 $request_insert = $this->con->insert($query_insert, $arrData);
             }
-        }else{
+        } else {
             $sqlDel = "DELETE FROM datalles_temp WHERE
              idtransaccion = '{$this->intIdTransaccion}' AND
               id_usuario = $this->intIdUsuario";
-              $request = $this->con->delete($sqlDel);
+            $request = $this->con->delete($sqlDel);
 
-              foreach ($planes as $plan){
+            foreach ($planes as $plan) {
                 $query_insert = "INSERT INTO datalles_temp(precio, cantidad,idtransaccion, id_usuario, id_plan)
                                  VALUES(?,?,?,?,?)";
-                $arrData = array( 
+                $arrData = array(
                     $plan['precio'],
                     $plan['cantidad'],
                     $this->intIdTransaccion,
                     $this->intIdUsuario,
-                    $plan['id_plan']);
+                    $plan['id_plan']
+                );
                 $request_insert = $this->con->insert($query_insert, $arrData);
             }
         }
-
     }
 
-    public function getPedidio(int $idpedido){
+    public function getPedidio(int $idpedido)
+    {
 
         $this->con = new Mysql();
         $request = array();
@@ -176,20 +183,26 @@ deja registrar los datos del usuario  */
         ON i.idtipopago = t.idtipopago
         WHERE i.id_inscripcion  = $idpedido";
         $requestPedidio = $this->con->select($sql);
-        if(count($requestPedidio)>0){
+        if (count($requestPedidio) > 0) {
             $sql_detalle = "SELECT p.id_plan,
-                            p.nombre as plan,
-                            n.precio,
-                            n.cantidad
-                        FROM novedades n
-                        INNER JOIN planes p
-                        ON n.id_plan = p.id_plan
-                        WHERE n.id_inscripcion = $idpedido";
-                        
-        $requestPlanes = $this->con->select_all($sql_detalle);
-        $request = array('orden' => $requestPedidio,
-                        'detalle'=> $requestPlanes);
-                            
+            p.nombre AS plan,
+            n.precio,
+            n.cantidad,
+            l.localidad,
+            l.direccion
+            FROM novedades n
+            INNER JOIN planes p ON n.id_plan = p.id_plan
+            INNER JOIN lugares l ON p.id_lugar = l.id_lugar
+            WHERE n.id_inscripcion = $idpedido";
+
+            // Ejecutar la consulta
+            $requestPlanes = $this->con->select_all($sql_detalle);
+
+            // Preparar la respuesta
+            $request = array(
+                'orden' => $requestPedidio,
+                'detalle' => $requestPlanes
+            );
         }
         return $request;
     }
