@@ -3,12 +3,14 @@ headerTiendabo($data);
 $arrPlan = $data['plan']; //Extraer la info del plan (Son variables, que extraen de los array)
 $arrPlanes = $data['planes']; //Extraer la info de los planes
 $arrImages = $arrPlan['images']; //Extrae todas la imagenes de ese plan
-$rutacategoria = $arrPlan['id_categoria'].'/'. $arrPlan['ruta_categoria'];
-$rutalugar = $arrPlan['id_lugar'].'/'.$arrPlan['ruta_lugar'];
-
 $rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
+$rutalugar = $arrPlan['id_lugar'] . '/' . $arrPlan['ruta_lugar'];
+$rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
+function formatDateAMPM($dateString)
+{
+    return date('d/m/Y h:i a', strtotime($dateString));
+}
 ?>
-
 <br><br><br>
 <br>
 <!-- Parte superior -->
@@ -23,8 +25,8 @@ $rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
             <?= $arrPlan['lugar'] ?>
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
-        
-        <a href="<?= base_url() . '/tiendabo/categoria/' .$rutacategoria; ?>" class="stext-109 cl8 hov-cl1 trans-04">
+
+        <a href="<?= base_url() . '/tiendabo/categoria/' . $rutacategoria; ?>" class="stext-109 cl8 hov-cl1 trans-04">
             <?= $arrPlan['categoria'] ?>
             <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
         </a>
@@ -67,22 +69,34 @@ $rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
 
             <div class="col-md-6 col-lg-5 p-b-30">
                 <div class="p-r-50 p-t-5 p-lr-0-lg">
-                    <h4 class="mtext-105 cl2 js-name-detail p-b-14">
+                    <!-- Nombre del Plan (más grande) -->
+                    <h1 class="mtext-105 cl2 js-name-detail p-b-14">
                         <?= $arrPlan['nombre'] ?>
-                    </h4>
+                    </h1>
 
-                    <span class="mtext-106 cl2">
-                        <?= SMONEY . formatMoney($arrPlan['precio']); ?>
-                    </span>
-                    <!-- Descripcion lateral -->
-                    <?= $arrPlan['descripcion']; ?>
-                    <!-- <p class="stext-102 cl3 p-t-23">
-                    </p> -->
-                    <!--  -->
-                    <!--Agregar al carrito  -->
+                    <!-- Precio del Plan -->
+                    <h1 class="mtext-105 cl2 p-b-14">
+                        Precio: <br><?= SMONEY . formatMoney($arrPlan['precio']); ?>
+                    </h1>
+
+                    <!-- Información del Plan -->
+                    <div class="plan-info p-t-20">
+                        <h3 class="mtext-108 cl2 p-b-14">
+                            Jornada: <?= $arrPlan['jornadap'] ?>
+                        </h3>
+                        <h3 class="mtext-108 cl2 p-b-14">
+                            Fecha Inicio: <br><?= formatDateAMPM($arrPlan['fecha_inicio']) ?>
+                        </h3>
+                        <h3 class="mtext-108 cl2 p-b-14">
+                            Fecha Fin: <br><?= formatDateAMPM($arrPlan['fecha_fin']) ?>
+                        </h3>
+                    </div>
+
+                    <!-- Agregar al carrito -->
                     <br>
                     <div class="flex-w flex-r-m p-b-10">
                         <div class="size-204 flex-w flex-m respon6-next">
+                            <!-- Selector de Cantidad -->
                             <div class="wrap-num-product flex-w m-r-20 m-tb-10">
                                 <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m">
                                     <i class="fs-16 zmdi zmdi-minus"></i>
@@ -94,13 +108,15 @@ $rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
                                     <i class="fs-16 zmdi zmdi-plus"></i>
                                 </div>
                             </div>
-                            <!-- Agregar al carrito -->
+
+                            <!-- Botón de Agregar al Carrito -->
                             <button id="<?= openssl_encrypt($arrPlan['id_plan'], METHODENCRIPT, KEY); ?>" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
                                 Agrega al carrito
                             </button>
                         </div>
                     </div>
                 </div>
+
 
                 <!--  -->
                 <div class="flex-w flex-m p-l-100 p-t-40 respon7">
@@ -121,6 +137,28 @@ $rutacategoria = $arrPlan['id_categoria'] . '/' . $arrPlan['ruta_categoria'];
                     <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Google Plus">
                         <i class="fa fa-google-plus"></i>
                     </a>
+                </div>
+            </div>
+        </div>
+        <div class="bor10 m-t-50 p-t-43 p-b-40">
+            <!-- Tab01 -->
+            <div class="tab01">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li class="nav-item p-b-10">
+                        <a class="nav-link active" data-toggle="tab" href="#description" role="tab">Descripcion</a>
+                    </li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content p-t-43">
+                    <!-- Descripcion- -->
+                    <div class="tab-pane fade show active" id="description" role="tabpanel">
+                        <div class="how-pos2 p-lr-15-md">
+                            <p class="stext-102 cl6">
+                                <?= $arrPlan['descripcion']; ?>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

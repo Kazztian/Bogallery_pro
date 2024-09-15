@@ -1,6 +1,10 @@
 <?php
 $orden = $data['pedido']['orden'];
 $detalle = $data['pedido']['detalle'];
+function formatDateAMPM($dateString)
+{
+    return date('d/m/Y h:i a', strtotime($dateString));
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -172,6 +176,18 @@ $detalle = $data['pedido']['detalle'];
         <td><strong>Localidad del plan</strong></td>
         <td><?= $detalle[0]['localidad'] ?></td>
       </tr>
+      <tr>
+        <td><strong>Jornada</strong></td>
+        <td><?= $detalle[0]['jornadap'] ?></td>
+      </tr>
+      <tr>
+        <td><strong>Fecha de Inicio</strong></td>
+        <td><?= formatDateAMPM($detalle[0]['fecha_inicio']) ?></td>
+    </tr>
+    <tr>
+        <td><strong>Fecha Fin</strong></td>
+        <td><?= formatDateAMPM($detalle[0]['fecha_fin']) ?></td>
+    </tr>
 
     </table>
     <table>

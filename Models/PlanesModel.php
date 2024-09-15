@@ -10,6 +10,9 @@ class PlanesModel extends mysql
     private $intIdCategoria;
     private $intIdLugar;
     private $intStatus;
+    private $strJornada;
+    private $strFechaInicio;
+    private $strFechaFin;
     private $strRuta;
     private $strImagen;
 
@@ -29,6 +32,9 @@ class PlanesModel extends mysql
                         p.precio,
                         p.stock,
                         p.status,
+                        p.jornadap,
+                        p.fecha_inicio,
+                        p.fecha_fin,
                         p.id_lugar,
                         l.nombre AS lugar
                  FROM planes p 
@@ -40,7 +46,7 @@ class PlanesModel extends mysql
     }
 
     //Insertar los planes(Crear)
-    public function insertPlanes(string $nombre, string $descripcion, int $codigo, int $idcategoria, $idlugar, string $precio, int $stock, string $ruta, int $status)
+    public function insertPlanes(string $nombre, string $descripcion, int $codigo, int $idcategoria, $idlugar, string $precio, int $stock, string $ruta, int $status, string $jornada, string $fechaInicio, string $fechaFin)
     {
         $this->strNombre = $nombre;
         $this->strDescripcion = $descripcion;
@@ -51,6 +57,9 @@ class PlanesModel extends mysql
         $this->intStock = $stock;
         $this->strRuta = $ruta;
         $this->intStatus = $status;
+        $this->strJornada = $jornada;
+        $this->strFechaInicio = $fechaInicio;
+        $this->strFechaFin = $fechaFin;
         $return = 0;
         $sql = "SELECT * FROM planes WHERE codigo = '{$this->intCodigo}'";
         $request = $this->select_all($sql);
@@ -62,9 +71,12 @@ class PlanesModel extends mysql
                                                     stock,  
                                                     ruta,                  
                                                     status,
+                                                     jornadap, 
+                                                     fecha_inicio,
+                                                      fecha_fin,
                                                     id_categoria,
                                                     id_lugar) 
-                              VALUES(?,?,?,?,?,?,?,?,?)"; //Se deja la indicacion de los campos
+                              VALUES(?,?,?,?,?,?,?,?,?,?,?,?)"; //Se deja la indicacion de los campos
             $arrData = array(
                 $this->strNombre,
                 $this->strDescripcion,
@@ -73,6 +85,9 @@ class PlanesModel extends mysql
                 $this->intStock,
                 $this->strRuta,
                 $this->intStatus,
+                $this->strJornada,
+                $this->strFechaInicio,
+                $this->strFechaFin,
                 $this->intIdCategoria,
                 $this->intIdLugar
             );
@@ -83,7 +98,7 @@ class PlanesModel extends mysql
         }
         return $return;
     }
-    
+
     //Valida lo del codigo y las alertas
     public function checkCodeExists(string $codigo, int $excludeId = 0)
     {
@@ -94,7 +109,7 @@ class PlanesModel extends mysql
         $request = $this->select_all($sql);
         return !empty($request);
     }
-    public function updatePlanes(int $idplan, string $nombre, string $descripcion, int $codigo, int $idcategoria, int $idlugar, string $precio, int $stock, string $ruta, int $status)
+    public function updatePlanes(int $idplan, string $nombre, string $descripcion, int $codigo, int $idcategoria, int $idlugar, string $precio, int $stock, string $ruta, int $status, string $jornada, string $fechaInicio, string $fechaFin)
     {
         $this->intIdPlan = $idplan;
         $this->strNombre = $nombre;
@@ -106,6 +121,9 @@ class PlanesModel extends mysql
         $this->intStock = $stock;
         $this->strRuta = $ruta;
         $this->intStatus = $status;
+        $this->strJornada = $jornada;
+        $this->strFechaInicio = $fechaInicio;
+        $this->strFechaFin = $fechaFin;
         $return = 0;
 
         // Verifica si el código ya existe en otro plan(No se ejecuta co)
@@ -123,7 +141,10 @@ class PlanesModel extends mysql
                         precio = ?,
                         stock = ?,
                         ruta = ?,
-                        status = ?
+                        status = ?,
+                         jornadap = ?,
+                    fecha_inicio = ?,
+                    fecha_fin = ?
                     WHERE id_plan = $this->intIdPlan";
             $arrData = array(
                 $this->intIdCategoria,
@@ -134,7 +155,12 @@ class PlanesModel extends mysql
                 $this->strPrecio,
                 $this->intStock,
                 $this->strRuta,
-                $this->intStatus
+                $this->intStatus,
+                $this->strJornada,
+                $this->strFechaInicio,
+                $this->strFechaFin
+
+
             );
 
             $request = $this->update($sql, $arrData);
@@ -161,6 +187,9 @@ class PlanesModel extends mysql
                    p.precio,
                    p.stock,
                    p.status,
+                   p.jornadap,
+                   p.fecha_inicio,
+                   p.fecha_fin,
                    p.id_lugar,
                    l.nombre AS lugar
                 FROM planes p

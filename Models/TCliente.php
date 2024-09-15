@@ -186,6 +186,9 @@ deja registrar los datos del usuario  */
         if (count($requestPedidio) > 0) {
             $sql_detalle = "SELECT p.id_plan,
             p.nombre AS plan,
+            p.jornadap,
+            p.fecha_inicio,
+            p.fecha_fin,
             n.precio,
             n.cantidad,
             l.localidad,

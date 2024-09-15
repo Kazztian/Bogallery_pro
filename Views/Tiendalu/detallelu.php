@@ -109,7 +109,7 @@ $arrImages = $arrLugar['images'];
     </div>
 
     <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
-        <h3 class="ltext-106 cl5 txt-center">> Explora nuevos lugares <</h3>
+        <h3 class="ltext-106 cl5 txt-center">> Explora nuevos lugares << /h3>
     </div>
 </section>
 
