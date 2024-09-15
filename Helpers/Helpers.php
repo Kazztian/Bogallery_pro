@@ -329,3 +329,81 @@ function formatMoney($cantidad)
     $cantidad = number_format($cantidad, 2, SPD, SPM);
     return $cantidad;
 }
+//Funcion para retornar el token
+function getTokenPaypal() {
+    // Inicializar cURL
+    $payLogin = curl_init(URLPAYPAL."/v1/oauth2/token");
+    // Configuración de cURL
+    curl_setopt($payLogin, CURLOPT_SSL_VERIFYPEER, FALSE); 
+    curl_setopt($payLogin, CURLOPT_RETURNTRANSFER, TRUE);   
+    curl_setopt($payLogin, CURLOPT_USERPWD, IDCLIENTE . ":" . SECRET);  // Autenticación con Client ID y Secret
+    curl_setopt($payLogin, CURLOPT_POSTFIELDS, "grant_type=client_credentials");  // Tipo de credencial
+    // Ejecutar cURL y capturar el resultado
+    $result = curl_exec($payLogin);
+    $err = curl_error($payLogin);
+    curl_close($payLogin);
+    if($err){
+        $request = "CURL Error #:".$err;
+    }else{
+
+        $objData = json_decode($result);
+        $request=$objData->access_token;
+    }
+    return $request;
+}
+// Funcio para peticiones tipo Get
+function CurlConnectionGet(string $ruta, string $contentType =null, string $token){
+    $content_type = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
+    if($token != null){
+        $arrHeader = array('Content-Type:'.$content_type,
+                        'Authorization: Bearer '.$token);
+    }else{
+        $arrHeader = array('Content-Type:'.$content_type);
+                    
+    }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$ruta);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if($err){
+            $request = "CURL Error #:".$err;
+        }else{
+    
+            $request = json_decode($result);    
+        }
+        return $request;
+}
+// Funcio para peticiones tipo Post
+function CurlConnectionPost(string $ruta, string $contentType =null, string $token){
+    $content_type = $contentType != null ? $contentType : "application/x-www-form-urlencoded";
+    if($token != null){
+        $arrHeader = array('Content-Type:'.$content_type,
+                        'Authorization: Bearer '.$token);
+    }else{
+        $arrHeader = array('Content-Type:'.$content_type);
+                    
+    }
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL,$ruta);
+        curl_setopt($ch, CURLOPT_POST,TRUE);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $arrHeader);
+        $result = curl_exec($ch);
+        $err = curl_error($ch);
+        curl_close($ch);
+        if($err){
+            $request = "CURL Error #:".$err;
+        }else{
+    
+            $request = json_decode($result);    
+        }
+        return $request;
+}
+
+
+?>

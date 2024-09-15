@@ -29,10 +29,6 @@ class Carrito extends Controllers
        /* if (isset($_SESSION['login'])) {
             $this->setDetalleTemp();
         }*/
-        $infoOrden = $this->getPedidio(20);
-        dep($infoOrden);
-       
-
         $data['page_tag'] = NOMBRE_EMPRESA . ' - Procesar Pago';
         $data['page_title'] = 'Procesar Pago';
         $data['page_name'] = "procesarpago";

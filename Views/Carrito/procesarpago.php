@@ -87,7 +87,6 @@ $total_formateado = formatMoney($total);
         </div>
     </div>
 </div>
-<?php dep($_SESSION['userData']);?>
 <br><br><br>
 <br>
 <div class="container">

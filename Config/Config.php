@@ -25,9 +25,14 @@
 
  //API paypal
  //SAMBOX PAYPAL
+ //Envia solicitud para realizar pruebas locales
+  const URLPAYPAL = "https://api.sandbox.paypal.com";
   const IDCLIENTE ="AfPh5BBTzI2gEjDYDDxo4EM4dgRcA4mm1c8r_HQTfzBQEUHvcsEHjVtrBaLBaxQNKfTAqGEpt64tKMIV";
+  const SECRET ="EGoUAuyRnz6hE78gg-UDyzA2g5G2TqfTE56-PdjskoJ0yZPGlYz0U9qMgXbrcH5ff-ig-PpGr8Tfd8VV";
   //vERCION DE PRODUCCION CAMBIAR EL ID 
   //const IDCLIENTE ="AfPh5BBTzI2gEjDYDDxo4EM4dgRcA4mm1c8r_HQTfzBQEUHvcsEHjVtrBaLBaxQNKfTAqGEpt64tKMIV";
+  //const URLPAYPAL = "https://api.paypal.com";
+  //const SECRET ="EGoUAuyRnz6hE78gg-UDyzA2g5G2TqfTE56-PdjskoJ0yZPGlYz0U9qMgXbrcH5ff-ig-PpGr8Tfd8VV";
 
   //Datos envio correo
   const NOMBRE_REMITENTE = "BoGallery";
