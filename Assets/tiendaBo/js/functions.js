@@ -53,7 +53,7 @@ $('.js-addcart-detail').each(function(){
         let cant = document.querySelector('#cant-product').value;
 
         if(isNaN(cant) || cant < 1){
-            swal("", "La cantidad debe ser mayor o igual que 1", "error");
+            Swal.fire("", "La cantidad debe ser mayor o igual que 1", "error");
             return;
         }
         let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
@@ -78,7 +78,7 @@ $('.js-addcart-detail').each(function(){
               });
               Swal.fire(nameProduct, "Se ha agregado al carrito!", "success");
               }else{
-                swal("", objData.msg , "error");
+                Swal.fire("", objData.msg , "error");
               }
             }
             return false;
@@ -239,7 +239,7 @@ function fntdelItem(element){
                         }
                     }
                     }else{
-                      swal("", objData.msg , "error");
+                        Swal.fire("", objData.msg , "error");
                     }
 	        } 
 	        return false;
@@ -270,7 +270,7 @@ function fntUpdateCant(pla,cant){
                 document.querySelector("#subTotalCompra").innerHTML = objData.subTotal;
                 document.querySelector("#totalCompra").innerHTML = objData.total;
             }else{
-                swal("", objData.msg , "error");
+                Swal.fire("", objData.msg , "error");
 
             }
             }

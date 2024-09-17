@@ -221,6 +221,8 @@ function fntDelInfo(idUsuario) {
         cancelButtonText: "No, cancelar",
         closeOnConfirm: false,
         closeOnCancel: true,
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#ff8c00"
     }).then((result) => {
         if (result.isConfirmed) {
             let request = window.XMLHttpRequest

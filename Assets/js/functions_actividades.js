@@ -272,7 +272,9 @@ function fntDelItem(element) {
                           text: "La imagen ha sido eliminada correctamente.",
                           icon: "success",
                           confirmButtonText: "OK",
-                          confirmButtonColor: "#28a745"
+                          confirmButtonColor: "#28a745",
+                          confirmButtonColor: "#28a745",
+                          cancelButtonColor: "#ff8c00"
                       });
                   } else {
                       Swal.fire("", objData.msg, "error");
@@ -395,6 +397,8 @@ function fntDelInfo(id_actividad){
       showCancelButton: true,
       confirmButtonText: "Sí, eliminar!",
       cancelButtonText: "No, cancelar!",
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#ff8c00"
   }).then((result) => {
       if (result.isConfirmed) {
           let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');

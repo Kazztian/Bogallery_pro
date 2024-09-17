@@ -35,8 +35,8 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="txtEdad">Edad <span class="required">*</span></label>
-                                <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);">
-                            </div>
+                                <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" required="" onkeypress="return controlTag(event);" onblur="validateAge();">
+                           </div>
                         </div>
                     </div>
 
