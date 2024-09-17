@@ -7,7 +7,9 @@ $arrBanner = $data['banner'];
 $arrPlanes = $data['planes'];
 //dep($arrPlanes);
 ?>
-
+<script>
+    document.querySelector('header').classList.add('header-v4');
+</script>
 <!-- Slider -->
 <section class="section-slide">
 	<div class="wrap-slick1">

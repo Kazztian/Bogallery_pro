@@ -19,10 +19,10 @@
             </div>
             <?php 
             // Importante para depurar los datos
-                $requestApi= CurlConnectionGet(URLPAYPAL."/v2/checkout/orders/9DB712837V528204V","application/json",getTokenPaypal());
-                dep($requestApi);
-                $requestPost =CurlConnectionPost(URLPAYPAL."/v2/payments/captures/54704019MB476104G/refund","application/json",getTokenPaypal());
-                dep($requestPost);
+                // $requestApi= CurlConnectionGet(URLPAYPAL."/v2/checkout/orders/9DB712837V528204V","application/json",getTokenPaypal());
+                // dep($requestApi);
+                // $requestPost =CurlConnectionPost(URLPAYPAL."/v2/payments/captures/54704019MB476104G/refund","application/json",getTokenPaypal());
+                // dep($requestPost);
             
             ?>
         </div>

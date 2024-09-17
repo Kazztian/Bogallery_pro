@@ -71,24 +71,24 @@ function formatDateAMPM($dateString)
                 <div class="p-r-50 p-t-5 p-lr-0-lg">
                     <!-- Nombre del Plan (más grande) -->
                     <h1 class="mtext-105 cl2 js-name-detail p-b-14">
-                        <?= $arrPlan['nombre'] ?>
+                        <strong><?= $arrPlan['nombre'] ?></strong>
                     </h1>
 
                     <!-- Precio del Plan -->
                     <h1 class="mtext-105 cl2 p-b-14">
-                        Precio: <br><?= SMONEY . formatMoney($arrPlan['precio']); ?>
+                       <strong>Precio: </strong> <br><?= SMONEY . formatMoney($arrPlan['precio']); ?>
                     </h1>
 
                     <!-- Información del Plan -->
                     <div class="plan-info p-t-20">
                         <h3 class="mtext-108 cl2 p-b-14">
-                            Jornada: <?= $arrPlan['jornadap'] ?>
+                            <strong>Jornada:</strong> <?= $arrPlan['jornadap'] ?>
                         </h3>
                         <h3 class="mtext-108 cl2 p-b-14">
-                            Fecha Inicio: <br><?= formatDateAMPM($arrPlan['fecha_inicio']) ?>
+                           <strong>Fecha Inicio:</strong><br><?= formatDateAMPM($arrPlan['fecha_inicio']) ?>
                         </h3>
                         <h3 class="mtext-108 cl2 p-b-14">
-                            Fecha Fin: <br><?= formatDateAMPM($arrPlan['fecha_fin']) ?>
+                            <strong>Fecha Fin:</strong> <br><?= formatDateAMPM($arrPlan['fecha_fin']) ?>
                         </h3>
                     </div>
 

@@ -58,18 +58,27 @@ $arrImages = $arrLugar['images'];
 
             <div class="col-md-6 col-lg-5 p-b-30">
                 <div class="p-r-50 p-t-5 p-lr-0-lg">
-                    <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                        <?= $arrLugar['nombre']; ?>
-                    </h4>
+                    <!-- Nombre del Lugar -->
+                    <h1 class="mtext-105 cl2 js-name-detail p-b-14">
+                        <strong><?= $arrLugar['nombre']; ?></strong>
+                    </h1>
                     <br>
-                    <h5 class="mtext-105 cl2 js-name-detail p-b-14">
-                        localidad:<?= $arrLugar['localidad']; ?>
-                    </h5>
-                    <h5 class="mtext-105 cl2 js-name-detail p-b-14">
-                        Direccion:<?= $arrLugar['direccion']; ?>
-                    </h5>
+
+                    <!-- Localidad -->
+                    <h3 class="mtext-108 cl2 p-b-14">
+                        <strong>Localidad:</strong> <br>
+                        <?= $arrLugar['localidad']; ?>
+                    </h3>
+                    <br>
+
+                    <!-- Dirección -->
+                    <h3 class="mtext-108 cl2 p-b-14">
+                        <strong>Dirección:</strong><br>
+                         <?= $arrLugar['direccion']; ?>
+                    </h3>
 
                     <!--  -->
+                    <br><br><br><br>
                     <div class="flex-w flex-m p-l-100 p-t-40 respon7">
 
                         <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
@@ -109,7 +118,7 @@ $arrImages = $arrLugar['images'];
     </div>
 
     <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
-        <h3 class="ltext-106 cl5 txt-center">> Explora nuevos lugares << /h3>
+        <h3 class="ltext-106 cl5 txt-center">> Explora nuevos lugares <</h3>
     </div>
 </section>
 

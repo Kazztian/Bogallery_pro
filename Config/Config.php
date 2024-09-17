@@ -43,7 +43,7 @@
   //Aca se configura para extraer las categorias que se van a visualizar slider
   const CAT_SLIDER = "1,2,3";
   //Aca se configura para extraer las categorias que se van a visualisar en el Banner
-  const CAT_BANNER = "4,5,6,7,8,9";
+  const CAT_BANNER = "4,5,6,7,8,9,10";
 
   //Redes Sociales
   const FACEBOOK = "https://www.facebook.com/share/K5dG67fxCTEWuVs1/?mibextid=qi2Omg";

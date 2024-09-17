@@ -59,18 +59,20 @@ $rutalugar = $arrActividad ['id_lugar'].'/'.$arrActividad['ruta_lugar'];
 
             <div class="col-md-6 col-lg-5 p-b-30">
                 <div class="p-r-50 p-t-5 p-lr-0-lg">
-                    <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                        <?= $arrActividad['nombre']; ?>
-                    </h4>
+                    <h1 class="mtext-105 cl2 js-name-detail p-b-14">
+                       <strong><?= $arrActividad['nombre']; ?></strong> 
+                    </h1>
                     <br>
-                    <h5 class="mtext-105 cl2 js-name-detail p-b-14">
-                        Jornada:<?= $arrActividad['jornada']; ?>
-                    </h5>
-                    <span class="mtext-106 cl2">
-                        <?= SMONEY . formatMoney($arrActividad['valor']); ?>
-                    </span>
-
+                    <h1 class="mtext-105 cl2 p-b-14">
+                    <strong>Precio: </strong> <br> <?= SMONEY . formatMoney($arrActividad['valor']); ?>
+                    </h1>
+                    <br>
+                    <h3 class="mtext-108 cl2 p-b-14">
+                        <strong>Jornada:</strong><br>
+                         <?= $arrActividad['jornada']; ?>
+                    </h3>
                     <!--  -->
+                    <br><br><br><br><br>
                     <div class="flex-w flex-m p-l-100 p-t-40 respon7">
 
                         <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100" data-tooltip="Facebook">
