@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
             aProcessing: true,
             aServerSide: true,
             language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
+                url: "//cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json",
             },
             ajax: {
                 url: base_url + "/Clientes/getClientes",
@@ -31,6 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 { data: "telefono" },
                 { data: "options" },
             ],
+            
             dom: 'lBfrtip',  // Indica a DataTables que muestre los botones en la tabla
             buttons: [
                 {

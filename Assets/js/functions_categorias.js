@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
         script.src = "https://cdn.jsdelivr.net/npm/sweetalert2@9";
         document.head.appendChild(script);
     }
-
     tableCategorias = $('#tableCategorias').dataTable({
         "aProcessing": true,
         "aServerSide": true,
@@ -26,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
             {"data": "status"},
             {"data": "options"}
         ],
+        "columnDefs": [
+            { 'className': "text-center", "targets": [3] }, // Centrar la columna status (índice 3)
+            // { 'className': "text-center", "targets": [4] }, // También puedes centrar las opciones si es necesario
+            // { 'className': "text-center", "targets": [2] }  // Centrar descripción (índice 2)
+        ],   
         'dom': 'lBfrtip',
         'buttons': [
             {
@@ -55,7 +59,6 @@ document.addEventListener('DOMContentLoaded', function() {
         "iDisplayLength": 10,
         "order": [[0, "desc"]]
     });
-
     if (document.querySelector("#foto")) {
         let foto = document.querySelector("#foto");
         foto.onchange = function(e) {

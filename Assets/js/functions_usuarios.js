@@ -38,6 +38,11 @@ function inicializarTabla() {
             { data: "status" },
             { data: "options" },
         ],
+        columnDefs: [
+            //  { 'className': "textcenter", "targets": [ 3 ] },
+             // { 'className': "textcenter", "targets": [ 4 ] },
+              { 'className': "textcenter", "targets": [ 6 ] }
+          ],   
         dom: 'lBfrtip',  // Indica a DataTables que muestre los botones en la tabla
         buttons: [
            

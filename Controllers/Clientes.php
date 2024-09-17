@@ -148,7 +148,7 @@ class Clientes extends Controllers
                 $btnDelete = "";
 
                 if ($_SESSION['permisosMod']['r']) {
-                    $btnView = ' <button class="btn btn-outline-info btn-sm btnViewUsuario" onClick="ftnbViewInfo(' . $arrData[$i]['id_usuario'] . ')" title="Ver Cliente"><i class="bi bi-eye-fill"></i></button>';
+                    $btnView = ' <button class="btn btn-info btn-sm btnViewUsuario" onClick="ftnbViewInfo(' . $arrData[$i]['id_usuario'] . ')" title="Ver Cliente"><i class="far fa-eye"></i></button>';
                 }
 
                 if ($_SESSION['permisosMod']['u']) {

@@ -122,7 +122,7 @@ class Categorias extends Controllers
                     $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo(' . $arrData[$i]['id_categoria'] . ')" title="Ver categoría"><i class="far fa-eye"></i></button>';
                 }
                 if ($_SESSION['permisosMod']['u']) {
-                    $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="fntEditInfo(this,' . $arrData[$i]['id_categoria'] . ')" title="Editar categoría"><i class="fas fa-pencil-alt"></i></button>';
+                    $btnEdit = '<button class="btn btn-warning btn-sm" onClick="fntEditInfo(this,' . $arrData[$i]['id_categoria'] . ')" title="Editar categoría"><i class="bi bi-pencil-square"></i></button>';
                 }
                 if ($_SESSION['permisosMod']['d']) {
                     $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo(' . $arrData[$i]['id_categoria'] . ')" title="Eliminar categoría"><i class="far fa-trash-alt"></i></button>';

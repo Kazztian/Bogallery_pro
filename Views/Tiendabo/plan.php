@@ -108,6 +108,7 @@ function formatDateAMPM($dateString)
                                     <i class="fs-16 zmdi zmdi-plus"></i>
                                 </div>
                             </div>
+                            <br>
 
                             <!-- Botón de Agregar al Carrito -->
                             <button id="<?= openssl_encrypt($arrPlan['id_plan'], METHODENCRIPT, KEY); ?>" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">

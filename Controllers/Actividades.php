@@ -47,7 +47,7 @@ class Actividades extends Controllers
                     $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo(' . $arrData[$i]['id_actividad'] . ')" title="Ver Actividad"><i class="far fa-eye"></i></button>';
                 }
                 if ($_SESSION['permisosMod']['u']) {
-                    $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="fntEditInfo(this,' . $arrData[$i]['id_actividad'] . ')" title="Editar Actividad"><i class="fas fa-pencil-alt"></i></button>';
+                    $btnEdit = '<button class="btn btn-warning btn-sm" onClick="fntEditInfo(this,' . $arrData[$i]['id_actividad'] . ')" title="Editar Actividad"><i class="bi bi-pencil-square"></i></button>';
                 }
                 if ($_SESSION['permisosMod']['d']) {
                     $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo(' . $arrData[$i]['id_actividad'] . ')" title="Eliminar Actividad"><i class="far fa-trash-alt"></i></button>';

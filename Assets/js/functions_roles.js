@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
             aProcessing: true,
             aServerSide: true,
             language: {
-                url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json", //Configuracion del lenguaje
+                url: "https://cdn.datatables.net/plug-ins/1.10.20/i18n/Spanish.json", // Configuración del lenguaje
             },
             ajax: {
                 url: "" + base_url + "/Roles/getRoles",
@@ -29,6 +29,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 { data: "descripcion" },
                 { data: "status" },
                 { data: "options" },
+            ],
+            columnDefs: [
+                { 'className': "text-center", "targets": [3] },  // Clase correcta para centrar el texto en la columna status
             ],
             responsive: true,
             bDestroy: true,

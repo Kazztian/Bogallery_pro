@@ -47,7 +47,7 @@ class Planes extends Controllers
                     $btnView = '<button class="btn btn-info btn-sm" onClick="fntViewInfo(' . $arrData[$i]['id_plan'] . ')" title="Ver Plan"><i class="far fa-eye"></i></button>';
                 }
                 if ($_SESSION['permisosMod']['u']) {
-                    $btnEdit = '<button class="btn btn-primary  btn-sm" onClick="fntEditInfo(this,' . $arrData[$i]['id_plan'] . ')" title="Editar Plan"><i class="fas fa-pencil-alt"></i></button>';
+                    $btnEdit = '<button class="btn btn-warning btn-sm" onClick="fntEditInfo(this,' . $arrData[$i]['id_plan'] . ')" title="Editar Plan"><i class="bi bi-pencil-square"></i></button>';
                 }
                 if ($_SESSION['permisosMod']['d']) {
                     $btnDelete = '<button class="btn btn-danger btn-sm" onClick="fntDelInfo(' . $arrData[$i]['id_plan'] . ')" title="Eliminar Plan"><i class="far fa-trash-alt"></i></button>';
@@ -91,7 +91,7 @@ class Planes extends Controllers
                         // Verificar si el código ya existe
                         $existingCode = $this->model->checkCodeExists($strCodigo);
                         if ($existingCode) {
-                            $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un producto con el Código Ingresado.');
+                            $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un plan con el Código Ingresado.');
                         } else {
                             // Inserción
                             $request_planes = $this->model->insertPlanes(
@@ -122,7 +122,7 @@ class Planes extends Controllers
                         // Verificar si el código ya existe en otro plan
                         $existingCode = $this->model->checkCodeExists($strCodigo, $idPlan);
                         if ($existingCode) {
-                            $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un producto con el Código Ingresado.');
+                            $arrResponse = array('status' => false, 'msg' => '¡Atención! ya existe un plan con el Código Ingresado.');
                         } else {
                             // Actualización
                             $request_planes = $this->model->updatePlanes(
@@ -237,9 +237,9 @@ class Planes extends Controllers
                 $intIdplan = intval($_POST['idPlan']);
                 $requestDelete = $this->model->deletePlan($intIdplan);
                 if ($requestDelete) {
-                    $arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el producto');
+                    $arrResponse = array('status' => true, 'msg' => 'Se ha eliminado el plan');
                 } else {
-                    $arrResponse = array('status' => false, 'msg' => 'Error al eliminar el producto.');
+                    $arrResponse = array('status' => false, 'msg' => 'Error al eliminar el plan');
                 }
                 echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
             }

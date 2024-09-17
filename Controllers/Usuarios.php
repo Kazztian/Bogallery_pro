@@ -145,7 +145,7 @@ empty= Verifica si esta vacio algun campo*/
                 }
 
                 if ($_SESSION['permisosMod']['r']) {
-                    $btnView = ' <button class="btn btn-outline-info btn-sm btnViewUsuario" onClick="ftnbViewUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Ver Usuario"><i class="bi bi-eye-fill"></i></button>';
+                    $btnView = ' <button class="btn btn-info btn-sm btnViewUsuario" onClick="ftnbViewUsuario(' . $arrData[$i]['id_usuario'] . ')" title="Ver Usuario"><i class="far fa-eye"></i></button>';
                 }
 
                 if ($_SESSION['permisosMod']['u']) {
