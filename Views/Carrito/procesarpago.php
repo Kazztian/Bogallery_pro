@@ -69,24 +69,41 @@ $total_formateado = formatMoney($total);
 </script>
 
 <div class="modal fade" id="modalTerminos" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <div class="modal-dialog modal-lg modal-terminos-dialog">
+        <div class="modal-content modal-terminos-content">
+            <div class="modal-header modal-terminos-header">
+                <button type="button" class="close modal-terminos-close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-            <h2>Términos y Condiciones para Pagos de Planes Turísticos</h2> <p>Al realizar el pago, el cliente acepta los siguientes términos:</p> <h3>Responsabilidad del Cliente:</h3> <p>El cliente es responsable de proporcionar información correcta y completa durante la reserva. Además, debe cumplir con las normativas locales y seguir las indicaciones de los guías y organizadores durante el desarrollo del plan turístico.</p> <h3>Condiciones de Pago:</h3> <p>El pago debe completarse a través de los medios disponibles en la plataforma. La reserva será confirmada solo tras la verificación del pago.</p> <h3>Cancelaciones y Reembolsos:</h3> <ul> <li><strong>Cancelaciones con X días de anticipación:</strong> reembolso completo.</li> <li><strong>Entre X y Y días:</strong> reembolso parcial (XX%).</li> <li><strong>Menos de Y días:</strong> no se otorga reembolso.</li> </ul> <h3>Modificaciones del Plan:</h3> <p>La empresa puede hacer cambios menores en el itinerario o los servicios por circunstancias imprevistas, notificando al cliente de cualquier modificación significativa.</p> <h3>Limitación de Responsabilidad:</h3> <p>La empresa no se hace responsable por la pérdida de objetos personales, daños o incidentes durante el plan, salvo que resulten de negligencia comprobada por parte de su personal.</p> <h3>Protección de Datos:</h3> <p>La información personal del cliente será protegida y tratada conforme a nuestra política de privacidad.</p> <p>Al completar el pago, el cliente confirma haber leído y aceptado estos términos en su totalidad.</p>
+            <div class="modal-body modal-terminos-body">
+                <h2 class="modal-terminos-title">Términos y Condiciones para Pagos de Planes Turísticos</h2>
+                <p>Al realizar el pago, el cliente acepta los siguientes términos:</p>
+                <h3 class="modal-terminos-subtitle">Responsabilidad del Cliente:</h3>
+                <p>El cliente es responsable de proporcionar información correcta y completa durante la reserva. Además, debe cumplir con las normativas locales y seguir las indicaciones de los guías y organizadores durante el desarrollo del plan turístico.</p>
+                <h3 class="modal-terminos-subtitle">Condiciones de Pago:</h3>
+                <p>El pago debe completarse a través de los medios disponibles en la plataforma. La reserva será confirmada solo tras la verificación del pago.</p>
+                <h3 class="modal-terminos-subtitle">Cancelaciones y Reembolsos:</h3>
+                <ul>
+                    <li><strong>Cancelaciones con X días de anticipación:</strong> reembolso completo.</li>
+                    <li><strong>Entre X y Y días:</strong> reembolso parcial (XX%).</li>
+                    <li><strong>Menos de Y días:</strong> no se otorga reembolso.</li>
+                </ul>
+                <h3 class="modal-terminos-subtitle">Modificaciones del Plan:</h3>
+                <p>La empresa puede hacer cambios menores en el itinerario o los servicios por circunstancias imprevistas, notificando al cliente de cualquier modificación significativa.</p>
+                <h3 class="modal-terminos-subtitle">Limitación de Responsabilidad:</h3>
+                <p>La empresa no se hace responsable por la pérdida de objetos personales, daños o incidentes durante el plan, salvo que resulten de negligencia comprobada por parte de su personal.</p>
+                <h3 class="modal-terminos-subtitle">Protección de Datos:</h3>
+                <p>La información personal del cliente será protegida y tratada conforme a nuestra política de privacidad.</p>
+                <p>Al completar el pago, el cliente confirma haber leído y aceptado estos términos en su totalidad.</p>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-
+            <div class="modal-footer modal-terminos-footer">
+                <button type="button" class="btn btn-secondary modal-terminos-close-btn" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
 </div>
+
 <br><br><br>
 <br>
 <div class="container">

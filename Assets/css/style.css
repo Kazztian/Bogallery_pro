@@ -290,17 +290,19 @@ input:checked + .slider:before {
 .divmetodpago label input {
   margin-right: 15px;
 }
-.modal{
+
+/* Modal de terminos y condiciones */
+#modalTerminos {
   z-index: 9999;
 }
 
-.modal-content {
+#modalTerminos .modal-content {
     background-color: #f9f9f9;
     border-radius: 10px;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
 }
 
-.modal-header {
+#modalTerminos .modal-header {
     border-bottom: none;
     padding: 15px 20px;
     background-color: #e0985e;
@@ -309,77 +311,154 @@ input:checked + .slider:before {
     border-top-right-radius: 10px;
 }
 
-.modal-header .close {
+#modalTerminos .modal-header .close {
     color: #fff;
     font-size: 1.5rem;
     opacity: 1;
 }
 
-.modal-body {
+#modalTerminos .modal-body {
     padding: 20px;
-    max-height: 70vh; /* Altura máxima para hacer el contenido desplazable */
-    overflow-y: auto; /* Habilitar desplazamiento en caso de contenido largo */
+    max-height: 70vh;
+    overflow-y: auto;
     font-size: 1rem;
     line-height: 1.6;
     color: #333;
 }
 
-.modal-body h2 {
+#modalTerminos .modal-body h2 {
     color: #9c6c0b;
     font-size: 1.8rem;
     margin-bottom: 15px;
 }
 
-.modal-body h3 {
+#modalTerminos .modal-body h3 {
     color: #1187a1;
     font-size: 1.4rem;
     margin-top: 20px;
     margin-bottom: 10px;
 }
 
-.modal-body p {
+#modalTerminos .modal-body p {
     margin-bottom: 15px;
     color: #555;
 }
 
-.modal-body ul {
+#modalTerminos .modal-body ul {
     margin-left: 20px;
 }
 
-.modal-body ul li {
+#modalTerminos .modal-body ul li {
     margin-bottom: 10px;
     color: #444;
 }
 
-.modal-footer {
+#modalTerminos .modal-footer {
     border-top: none;
     padding: 15px;
     text-align: right;
 }
 
-/* Hacer que el modal se superponga correctamente */
-.modal-lg {
+#modalTerminos .modal-lg {
     max-width: 900px;
 }
 
-.modal.fade .modal-dialog {
+#modalTerminos.modal.fade .modal-dialog {
     transform: translateY(-50px);
     transition: transform 0.3s ease-out;
 }
 
-.modal.show .modal-dialog {
+#modalTerminos.modal.show .modal-dialog {
     transform: translateY(0);
 }
 
-/* Botón de cerrar */
-.modal-footer .btn-secondary {
+#modalTerminos .modal-footer .btn-secondary {
     background-color: #6c757d;
     border: none;
 }
 
-.modal-footer .btn-secondary:hover {
+#modalTerminos .modal-footer .btn-secondary:hover {
     background-color: #5a6268;
 }
+
+
+/* Modal de Preguntas frecuentes */
+#modalAyuda {
+  z-index: 9999;
+}
+
+#modalAyuda .modal-content {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+#modalAyuda .modal-header {
+    border-bottom: none;
+    padding: 15px 20px;
+    background-color: #e0985e;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+#modalAyuda .modal-header .close {
+    color: #fff;
+    font-size: 1.5rem;
+    opacity: 1;
+}
+
+#modalAyuda .modal-body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+}
+
+#modalAyuda .modal-body h3 {
+    color: #d19b2f;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+}
+
+#modalAyuda .modal-body .card {
+    margin-bottom: 10px;
+}
+
+#modalAyuda .modal-body .card-header {
+    background-color: #e2e2e2;
+}
+
+#modalAyuda .modal-footer {
+    border-top: none;
+    padding: 15px;
+    text-align: right;
+}
+
+#modalAyuda .modal-lg {
+    max-width: 900px;
+}
+
+#modalAyuda.modal.fade .modal-dialog {
+    transform: translateY(-50px);
+    transition: transform 0.3s ease-out;
+}
+
+#modalAyuda.modal.show .modal-dialog {
+    transform: translateY(0);
+}
+
+#modalAyuda .modal-footer .btn-secondary {
+    background-color: #6c757d;
+    border: none;
+}
+
+#modalAyuda .modal-footer .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
 
 
 
