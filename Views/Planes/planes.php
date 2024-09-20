@@ -27,7 +27,7 @@ getModal('modalPlanes', $data);
             <table class="table table-hover table-bordered" id="tablePlanes">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>No</th>
                   <th>Codigo</th>
                   <th>Nombre</th>
                   <th>Stock</th>

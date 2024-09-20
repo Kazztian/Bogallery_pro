@@ -27,7 +27,7 @@ getModal('modalClientes', $data);
                         <table class="table table-hover table-bordered table-sm" id="tableClientes">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Nombres</th>
                                     <th>Apellido</th>
                                     <th>Email</th>
