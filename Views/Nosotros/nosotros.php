@@ -92,6 +92,21 @@ $banner = media() . "/tiendabo/images/bg-01.png"
 				</div>
 			</div>
 		</div>
+		<br>
+		<hr>
+		<br>
+
+		<!-- Video Section: Para el Administrador y Uso General Lado a Lado -->
+		<div class="row">
+			<div class="col-md-6 text-center">
+				<h3 class="mtext-111 cl2 p-b-16">Video Tutorial - Administrador</h3>
+				<iframe width="100%" height="315" src="https://www.youtube.com/embed/fQkLOAsEPyM?si=wrS64uAR2QZd3qqL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+			<div class="col-md-6 text-center">
+				<h3 class="mtext-111 cl2 p-b-16">Video Tutorial - Uso de la Página</h3>
+				<iframe width="100%" height="315" src="https://www.youtube.com/embed/u6JNerGqd0Y?si=8qkV3uKA2rR5M-jJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+			</div>
+		</div>
 	</div>
 </section>
 <?php

@@ -9,6 +9,10 @@
   </div>
   <!--  -->
   <ul class="app-menu">
+  <a class="app-menu__item" href="<?= base_url(); ?>" target="_blank">
+  <i class="app-menu__icon fas fa-globe"></i>
+        <span class="app-menu__label">Ver BoGallery</span>
+      </a>
     <?php if (!empty($_SESSION['permisos'][1]['r'])) { ?>
       <li>
         <a class="app-menu__item" href="<?= base_url(); ?>/dashboard">

@@ -5,6 +5,7 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 		$canCarrito += $planct['cantidad'];
 	}
 }
+//dep($_SESSION['userData']);
 ?>
 
 
@@ -50,7 +51,92 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 </head>
 
 <body class="animsition">
-	<div id="divLoading">
+<div class="modal fade" id="modalAyuda" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 class="mtext-111 cl2 p-b-16">Preguntas Frecuentes</h3>
+                <div class="accordion" id="faqAccordion">
+                    
+                    <!-- Pregunta 1 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading1">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faq1" aria-expanded="true" aria-controls="faq1">
+                                    ¿Las fechas de los planes ya están establecidas por la empresa?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faq1" class="collapse" aria-labelledby="faqHeading1" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Sí, las fechas de los planes turísticos ya están establecidas por la empresa, y los usuarios pueden inscribirse dentro de los plazos indicados para cada plan.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 2 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading2">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faq2" aria-expanded="false" aria-controls="faq2">
+                                    ¿Las actividades que se muestran son pagas?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faq2" class="collapse" aria-labelledby="faqHeading2" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                No, las actividades que se muestran en nuestra plataforma no son pagas, simplemente ofrecemos información sobre ellas para que los usuarios las conozcan y puedan planificar sus visitas.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 3 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading3">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faq3" aria-expanded="false" aria-controls="faq3">
+                                    ¿Es necesario crear una cuenta para hacer un pago?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faq3" class="collapse" aria-labelledby="faqHeading3" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Sí, es necesario crear una cuenta en nuestro sistema para poder realizar pagos y gestionar la inscripción a planes turísticos.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pregunta 4 -->
+                    <div class="card">
+                        <div class="card-header" id="faqHeading4">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#faq4" aria-expanded="false" aria-controls="faq4">
+                                    ¿Se pueden inscribir a dos planes el mismo día?
+                                </button>
+                            </h5>
+                        </div>
+                        <div id="faq4" class="collapse" aria-labelledby="faqHeading4" data-parent="#faqAccordion">
+                            <div class="card-body">
+                                Sí, es posible inscribirse en dos planes el mismo día, siempre que el cliente tenga en cuenta los horarios y que ambos planes no se superpongan. Es importante respetar las fechas y horas establecidas para cada plan para garantizar una experiencia óptima.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+	 <div id="divLoading">
 		<div>
 			<img src="<?= media(); ?>/images/loading.svg" alt="Loading">
 		</div>
@@ -63,20 +149,37 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 			<div class="top-bar">
 				<div class="content-topbar flex-sb-m h-full container">
 					<div class="left-top-bar">
-						Bienvenido usuario: Esthefania Naravez
+						<?php if (isset($_SESSION['login'])) { ?>
+							Bienvenido a BoGallery: <?= $_SESSION['userData']['nombres'] . ' ' . $_SESSION['userData']['apellidos'] ?>
+						<?php } ?>
 					</div>
 
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
+						<a href="#" class="flex-c-m trans-04 p-lr-25" data-toggle="modal" data-target="#modalAyuda">
 							Ayuda y preguntas frecuentes <!-- Crear una pagina sobre preguntas precuentes -->
+							<?php
+							if(isset($_SESSION['login'])){
+
+							
+							
+							?>
 						</a>
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
+						<a href="<?=base_url()?>/dashboard" class="flex-c-m trans-04 p-lr-25">
 							Mi cuenta
 						</a>
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Salir O iniciar sesion
+						<?php
+							}  if(isset($_SESSION['login'])){
+								
+								?>
+						<a href="<?= base_url()?>/logout" class="flex-c-m trans-04 p-lr-25">
+							Salir
 						</a>
+						<?php }else{?>
+							<a href="<?= base_url()?>/login" class="flex-c-m trans-04 p-lr-25">
+						   Iniciar sesion
+						</a>
+						<?php }?>
 					</div>
 				</div>
 			</div>
@@ -162,29 +265,39 @@ if (isset($_SESSION['arrCarrito']) and count($_SESSION['arrCarrito']) > 0) {
 				</span>
 			</div>
 		</div>
-
-
 		<!-- Menu Mobile -->
 		<div class="menu-mobile">
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						Bienvenido usuario: Esthefania Naravez
+					<?php if (isset($_SESSION['login'])) { ?>
+							Bienvenido a BoGallery: <?= $_SESSION['userData']['nombres'] . ' ' . $_SESSION['userData']['apellidos'] ?>
+						<?php } ?>
 					</div>
 				</li>
-
 				<li>
 					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
+						<a href="#" class="flex-c-m p-lr-10 trans-04"  data-toggle="modal" data-target="#modalAyuda">
 							Ayuda y preguntas frecuentes
+							<?php
+							if(isset($_SESSION['login'])){
+							?>
 						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
+						<a href="<?=base_url()?>/dashboard" class="flex-c-m p-lr-10 trans-04">
 							Mi cuenta
 						</a>
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							Salir O iniciar sesion
+						<?php
+							}  if(isset($_SESSION['login'])){
+								
+								?>
+						<a href="<?= base_url()?>/logout" class="flex-c-m p-lr-10 trans-04">
+							Salir 
 						</a>
+						<?php }else{?>
+							<a href="<?= base_url()?>/login" class="flex-c-m trans-04 p-lr-25">
+						   Iniciar sesion
+						</a>
+						<?php }?>
 					</div>
 				</li>
 			</ul>

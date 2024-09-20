@@ -10,40 +10,50 @@
 				<ul>
 					<li class="p-b-10">
 						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-							Estándar
+						Underground
 						</a>
 					</li>
 
 					<li class="p-b-10">
 						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-							Premium
+						Curiosidades
 						</a>
 					</li>
 
 					<li class="p-b-10">
 						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-							Lujo
+						Deportes y Recreación
 						</a>
 					</li>
 
 					<li class="p-b-10">
 						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-							Aventura
+						Aventura y Acción
 						</a>
 					</li>
 					<li class="p-b-10">
 						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-							Cultural
+						Gastronomía y mercados
 						</a>
 					</li>
 					<li class="p-b-10">
 						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-							Gastronómico
+						Socializar y Amigos
 						</a>
 					</li>
 					<li class="p-b-10">
 						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
-							Familia
+						Historia y Patrimonio
+						</a>
+					</li>
+					<li class="p-b-10">
+						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+						Cultura y Arte
+						</a>
+					</li>
+					<li class="p-b-10">
+						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+						Vida Nocturna
 						</a>
 					</li>
 				</ul>
