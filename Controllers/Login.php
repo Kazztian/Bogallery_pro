@@ -1,7 +1,7 @@
 <?php
 
 class Login extends Controllers
-{
+{ 
     public function __construct()
     {
         session_start();
@@ -38,6 +38,9 @@ class Login extends Controllers
                     if ($arrData['status'] == 1) {
                         $_SESSION['idUser'] = $arrData['id_usuario'];
                         $_SESSION['login'] = true;
+                        $_SESSION['timeout'] = true;
+                        $_SESSION['inicio'] = time();
+
                        
                         // Almacena los datos (mejor experiencia para el usuario)
                         $arrData = $this->model->sessionLogin($_SESSION['idUser']);
