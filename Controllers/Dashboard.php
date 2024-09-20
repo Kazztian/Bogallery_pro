@@ -6,7 +6,7 @@ class Dashboard extends Controllers
     {
         //sessionStart();
         parent::__construct();
-       // session_Start();
+         session_Start();
         //session_regenerate_id(true);
         if (empty($_SESSION['login'])) {
             header('Location: ' . base_url() . '/login');
