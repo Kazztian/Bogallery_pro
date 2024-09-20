@@ -27,7 +27,7 @@ headerAdmin($data);
             <table class="table table-hover table-bordered" id="tableCategorias">
               <thead>
                 <tr>
-                  <th>ID</th>
+                  <th>No</th>
                   <th>Nombre</th>
                   <th>Descripcion</th>
                   <th>Status</th>

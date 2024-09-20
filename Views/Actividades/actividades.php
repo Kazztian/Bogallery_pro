@@ -29,7 +29,7 @@ if ($_SESSION['permisosMod']['r']) {
                         <table class="table table-hover table-bordered" id="tableActividades">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>No</th>
                                     <th>Nombre</th>
                                     <th>Creacion</th>
                                     <th>Valor</th>

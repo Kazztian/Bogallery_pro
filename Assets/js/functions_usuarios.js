@@ -225,7 +225,8 @@ request.onreadystatechange = function() {
                 title: "",
                 text: objData.msg,
                 icon: "success",
-                confirmButtonText: "Aceptar"
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#28a745",
             }).then((result) => {
                 if (result.isConfirmed) {
                     location.reload();
@@ -282,7 +283,8 @@ request.onreadystatechange = function() {
                 title: "",
                 text: objData.msg,
                 icon: "success",
-                confirmButtonText: "Aceptar"
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#28a745",
             }).then((result) => {
                 if (result.isConfirmed) {
                     location.reload();
@@ -417,6 +419,8 @@ function fntDelUsuario(idUsuario) {
         showCancelButton: true,
         confirmButtonText: "Si eliminar",
         cancelButtonText: "No, cancelar",
+        confirmButtonColor: "#28a745",
+         cancelButtonColor: "#ff8c00",
         closeOnConfirm: false,
         closeOnCancel: true,
     }).then((result) => {

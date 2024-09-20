@@ -243,6 +243,8 @@ function fntDelInfo(id_categoria) {
         showCancelButton: true,
         confirmButtonText: "Sí, eliminar!",
         cancelButtonText: "No, cancelar!",
+        confirmButtonColor: "#28a745",
+        cancelButtonColor: "#ff8c00",
         reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {

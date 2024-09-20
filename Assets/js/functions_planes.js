@@ -297,6 +297,8 @@ function fntDelItem(element) {
     cancelButtonColor: "#d33",
     confirmButtonText: "Sí, eliminar",
     cancelButtonText: "Cancelar",
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#ff8c00"
   }).then((result) => {
     if (result.isConfirmed) {
       let request = window.XMLHttpRequest
@@ -494,7 +496,9 @@ function fntDelInfo(idPlan) {
     showCancelButton: true,
     confirmButtonText: "Sí, eliminar!",
     cancelButtonText: "No, cancelar!",
-    reverseButtons: true,
+      confirmButtonColor: "#28a745",
+      cancelButtonColor: "#ff8c00",
+      reverseButtons: true
   }).then((result) => {
     if (result.isConfirmed) {
       let request = window.XMLHttpRequest

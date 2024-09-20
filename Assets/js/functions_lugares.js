@@ -428,6 +428,8 @@ if(document.querySelector(".btnAddImage")){
             showCancelButton: true,
             confirmButtonText: "Sí, eliminar!",
             cancelButtonText: "No, cancelar!",
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#ff8c00",
         }).then((result) => {
             if (result.isConfirmed) {
                 let request = (window.XMLHttpRequest) ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
