@@ -4,7 +4,7 @@
     <div class="app-title">
         <div>
             <h1><i class="bi bi-speedometer"></i><?= $data['page_title'] ?></h1>
-            <p>Start a beautiful journey here</p>
+            <p>Comienza en BoGallery</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="bi bi-house-door fs-6"></i></li>
