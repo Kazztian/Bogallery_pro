@@ -8,6 +8,7 @@ class Tiendalu extends Controllers
     public function __construct()
     {
         parent::__construct();
+        session_start();
     }
     public function tiendalu()
     {
