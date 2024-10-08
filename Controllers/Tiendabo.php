@@ -8,11 +8,13 @@ class Tiendabo extends Controllers
 {
     use TCategoria, TPlan, TCliente; //Usar los trait
     public $login;
+    public $db; // Declaramos el objeto para la base de datos
     public function __construct()
     {
         parent::__construct();
         session_start();
         $this->login = new LoginModel;
+        $this->db = new Mysql();
     }
     // esto extre todo los planes cuando se diriga a planes
     public function tiendabo()
@@ -68,48 +70,60 @@ class Tiendabo extends Controllers
     public function addCarrito()
     {
         if ($_POST) {
-            //  unset($_SESSION['arrCarrito']); exit;
             $arrCarrito = array();
             $cantCarrito = 0;
             $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
             $cantidad = $_POST['cant'];
+            
             if (is_numeric($idplan) and is_numeric($cantidad)) {
                 $arrInfoPlan = $this->getPlanIDT($idplan);
                 if (!empty($arrInfoPlan)) {
-                    $arrPlan = array(
-                        'id_plan' => $idplan,
-                        'plan' => $arrInfoPlan['nombre'],
-                        'cantidad' => $cantidad,
-                        'precio' => $arrInfoPlan['precio'],
-                        'imagen' => $arrInfoPlan['images'][0]['url_image']
-                    );
-                    if (isset($_SESSION['arrCarrito'])) {
-                        $on = true;
-                        $arrCarrito = $_SESSION['arrCarrito'];
-                        for ($pl = 0; $pl < count($arrCarrito); $pl++) {
-                            if ($arrCarrito[$pl]['id_plan'] == $idplan) {
-                                $arrCarrito[$pl]['cantidad'] += $cantidad;
-                                $on = false;
+                    // Verificar disponibilidad de stock
+                    if ($arrInfoPlan['stock'] >= $cantidad) { // Asegúrate de tener el campo 'stock' en tu base de datos
+                        $arrPlan = array(
+                            'id_plan' => $idplan,
+                            'plan' => $arrInfoPlan['nombre'],
+                            'cantidad' => $cantidad,
+                            'precio' => $arrInfoPlan['precio'],
+                            'imagen' => $arrInfoPlan['images'][0]['url_image']
+                        );
+                        if (isset($_SESSION['arrCarrito'])) {
+                            $on = true;
+                            $arrCarrito = $_SESSION['arrCarrito'];
+                            for ($pl = 0; $pl < count($arrCarrito); $pl++) {
+                                if ($arrCarrito[$pl]['id_plan'] == $idplan) {
+                                    if ($arrCarrito[$pl]['cantidad'] + $cantidad <= $arrInfoPlan['stock']) {
+                                        $arrCarrito[$pl]['cantidad'] += $cantidad;
+                                    } else {
+                                        // Mensaje de error si se excede el stock
+                                        $arrResponse = array("status" => false, "msg" => 'No hay suficiente stock para agregar esta cantidad.');
+                                        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+                                        die();
+                                    }
+                                    $on = false;
+                                }
                             }
-                        }
-                        if ($on) {
+                            if ($on) {
+                                array_push($arrCarrito, $arrPlan);
+                            }
+                            $_SESSION['arrCarrito'] = $arrCarrito;
+                        } else {
                             array_push($arrCarrito, $arrPlan);
+                            $_SESSION['arrCarrito'] = $arrCarrito;
                         }
-                        $_SESSION['arrCarrito'] = $arrCarrito;
+                        foreach ($_SESSION['arrCarrito'] as $pla) {
+                            $cantCarrito += $pla['cantidad'];
+                        }
+                        $htmlCarrito = getFile('Template/Modals/modalCarrito', $_SESSION['arrCarrito']);
+                        $arrResponse = array(
+                            "status" => true,
+                            "msg" => '¡Se agregó al carrito!',
+                            "cantCarrito" => $cantCarrito,
+                            "htmlCarrito" => $htmlCarrito
+                        );
                     } else {
-                        array_push($arrCarrito, $arrPlan);
-                        $_SESSION['arrCarrito'] = $arrCarrito;
+                        $arrResponse = array("status" => false, "msg" => 'Lo sentimos, no hay suficientes cupos disponibles para este plan. Por favor, seleccione una cantidad menor.');
                     }
-                    foreach ($_SESSION['arrCarrito'] as $pla) {
-                        $cantCarrito += $pla['cantidad'];
-                    }
-                    $htmlCarrito = getFile('Template/Modals/modalCarrito', $_SESSION['arrCarrito']);
-                    $arrResponse = array(
-                        "status" => true,
-                        "msg" => '¡Se agrego al carrito!',
-                        "cantCarrito" => $cantCarrito,
-                        "htmlCarrito" => $htmlCarrito
-                    );
                 } else {
                     $arrResponse = array("status" => false, "msg" => 'Plan no encontrado.');
                 }
@@ -165,23 +179,33 @@ class Tiendabo extends Controllers
 
 
     public function updCarrito()
-    {
-        if ($_POST) {
-            $arrCarrito = array();
-            $totalPlan = 0;
-            $subtotal = 0;
-            $total = 0;
-            $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
-            $cantidad = intval($_POST['cantidad']);
+{
+    if ($_POST) {
+        $arrCarrito = array();
+        $totalPlan = 0;
+        $subtotal = 0;
+        $total = 0;
+        $idplan = openssl_decrypt($_POST['id'], METHODENCRIPT, KEY);
+        $cantidad = intval($_POST['cantidad']);
 
-            if (is_numeric($idplan) && $cantidad > 0) {
-                $arrCarrito = $_SESSION['arrCarrito'];
+        if (is_numeric($idplan) && $cantidad > 0) {
+            $arrCarrito = $_SESSION['arrCarrito'];
+            $arrInfoPlan = $this->getPlanIDT($idplan);
 
+            // Verificar si el plan existe y si hay stock suficiente
+            if (!empty($arrInfoPlan) && $arrInfoPlan['stock'] >= $cantidad) {
                 // Actualización del plan en el carrito
                 for ($p = 0; $p < count($arrCarrito); $p++) {
                     if ($arrCarrito[$p]['id_plan'] == $idplan) {
-                        $arrCarrito[$p]['cantidad'] = $cantidad;
-                        $totalPlan = $arrCarrito[$p]['precio'] * $cantidad; // Corregido el cálculo
+                        // Verificar si la cantidad nueva no supera el stock disponible
+                        if ($cantidad <= $arrInfoPlan['stock']) {
+                            $arrCarrito[$p]['cantidad'] = $cantidad;
+                            $totalPlan = $arrCarrito[$p]['precio'] * $cantidad; // Cálculo del total por plan
+                        } else {
+                            $arrResponse = array("status" => false, "msg" => 'No hay suficiente cupo de inscripciones para este plan.');
+                            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+                            die();
+                        }
                         break;
                     }
                 }
@@ -193,22 +217,26 @@ class Tiendabo extends Controllers
                     $subtotal += $pla['cantidad'] * $pla['precio'];
                 }
 
-                // Formateo de los valores de precios (evitar errores con SMONEY y formatMoney)
+                // Formateo de los valores de precios
                 $arrResponse = array(
                     "status" => true,
                     "msg" => '¡Plan Actualizado!',
-                    "totalPlan" => SMONEY . formatMoney($totalPlan), // Asegúrate que SMONEY y formatMoney estén bien
+                    "totalPlan" => SMONEY . formatMoney($totalPlan),
                     "subTotal" => SMONEY . formatMoney($subtotal),
                     "total" => SMONEY . formatMoney($subtotal + COSTOENVIO)
                 );
             } else {
-                $arrResponse = array("status" => false, "msg" => 'Datos incorrectos');
+                $arrResponse = array("status" => false, "msg" => 'Lo sentimos, no hay suficientes cupos disponible para actualizar el carrito. Intente con una cantidad menor.');
             }
-
-            echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+        } else {
+            $arrResponse = array("status" => false, "msg" => 'Datos incorrectos.');
         }
-        die();
+
+        echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
     }
+    die();
+}
+
 
     public function registro()
     {
@@ -286,6 +314,7 @@ class Tiendabo extends Controllers
 
             if (!empty($_SESSION['arrCarrito'])) {
                 foreach($_SESSION['arrCarrito'] as $pla){
+                    $this->updateStockPlan($pla['id_plan'], $pla['cantidad']);
                     $subtotal += $pla['cantidad'] * $pla['precio'];
                 }
                 $monto = formatMoney($subtotal + COSTOENVIO);
@@ -429,5 +458,13 @@ class Tiendabo extends Controllers
         }
         //destruir variable de seccion
         unset($_SESSION['dataorden']);
+    }
+
+    // Función para actualizar el stock
+    private function updateStockPlan($idPlan, $cantidad)
+    {
+        $query = "UPDATE planes SET stock = stock - ? WHERE id_plan = ?";
+        $arrData = array($cantidad, $idPlan);
+        return $this->db->update($query, $arrData);
     }
 }
