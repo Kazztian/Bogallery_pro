@@ -85,7 +85,28 @@
 					</a>
 					
 				</div> 
+				<br>
+				<h4 class="stext-301 cl0 p-b-30">Derechos de Autor</h4>
+    
+    <!-- Descripción del autor -->
+    <p class="stext-107 cl7 size-201">
+        Autor de las fotografías tomadas
+    </p>
+
+    <!-- Información de contacto por email -->
+    <p class="stext-107 cl7 size-201">
+        Email: <a class="linkFooter" href="mailto:<?=EMAIL_FO?>"><?=EMAIL_FO?></a>
+    </p>
+
+    <!-- Redes sociales -->
+    <div class="social-links p-t-27">
+        <a href="<?=IGFOTOS?>" target="_blank" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+            <i class="fa fa-instagram"></i>
+        </a>
+    </div>
 			</div>
+
+			
 			<!-- Subscripcion -->
 			<div class="col-sm-6 col-lg-4 p-b-50">
 				<h4 class="stext-301 cl0 p-b-30">

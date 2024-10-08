@@ -3,7 +3,7 @@
   //define("BASE_URL", "http://localhost:8080/Bogallery_pro");
   //define("BASE_URL", "http://localhost/bogallery_pro");
 
-  const BASE_URL = "http://localhost:8080/Bogallery_pro";
+  const BASE_URL = "http://localhost/bogallery_pro";
   //Zona horaria
   date_default_timezone_set('America/Bogota');
 
@@ -48,6 +48,10 @@
   //Redes Sociales
   const FACEBOOK = "https://www.facebook.com/share/K5dG67fxCTEWuVs1/?mibextid=qi2Omg";
   const INSTAGRAM = "https://www.instagram.com/bogalleryexplore?igsh=MTgxOTh5OXZxN2p3Mg==";
+
+  //Redes Sociales Fotografo 
+  const IGFOTOS = "https://www.instagram.com/luisc_304?igsh=MWF3cHU1aWwzamRzYQ==";
+  const EMAIL_FO = "LuisC_304@outlook.com";
 
   //Datos empresa
   const DIRECCION = "Cra 8 N° 10-65,Bogota";
