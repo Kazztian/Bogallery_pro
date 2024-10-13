@@ -29,10 +29,9 @@ trait TCliente
         string $direccion,
         string $primeri,
         string $segundoi,
-        int $tipoid,
-
+        int $tipoid
     ) {
-        //Se asignan los valores declarados en la parte superior 
+        // Se asignan los valores declarados en la parte superior 
         $this->con = new Mysql();
         $this->strNombre = $nombre;
         $this->strApellido = $apellido;
@@ -45,19 +44,18 @@ trait TCliente
         $this->strSegundoI = $segundoi;
         $this->intTipoId = $tipoid;
         $return = 0;
-        //Validacion para el email y saber si ya existe ese email
+    
+        // Validación para el email y saber si ya existe ese email
         $sql = "SELECT * FROM usuarios WHERE email_user = '{$this->strEmail}'";
-
         $request = $this->con->select_all($sql);
-        /*Lo que hace $request es buscar y si no encuentra singun usuario con ese email 
-deja registrar los datos del usuario  */
+    
+        // Si no hay registros con ese email, procede a la inserción
         if (empty($request)) {
             $query_insert = "INSERT INTO usuarios(
-             nombres, apellidos, edad, telefono, email_user, password, direccion, primer_idioma, segundo_idioma, id_rol)  
-              VALUES(?,?,?,?,?,?,?,?,?,?)";
-
+                nombres, apellidos, edad, telefono, email_user, password, direccion, primer_idioma, segundo_idioma, id_rol)  
+                VALUES(?,?,?,?,?,?,?,?,?,?)";
+    
             $arrData = array(
-
                 $this->strNombre,
                 $this->strApellido,
                 $this->intEdad,
@@ -69,11 +67,14 @@ deja registrar los datos del usuario  */
                 $this->strSegundoI,
                 $this->intTipoId
             );
+    
+            // Realiza la inserción y guarda el ID insertado en $request_insert
             $request_insert = $this->con->insert($query_insert, $arrData);
-            $request = $request_insert;
+            $return = $request_insert; // Devuelve el ID si la inserción es correcta
         } else {
-            $return = "exist";
+            $return = 0; // Indicar que el correo ya existe
         }
+    
         return $return;
     }
 

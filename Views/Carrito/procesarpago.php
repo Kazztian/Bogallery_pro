@@ -186,7 +186,7 @@ $total_formateado = formatMoney($total);
                                     <div class="row">
                                         <div class="col col-md-6 form-group">
                                             <label for="txtDireccion">direccion</label>
-                                            <input type="text" class="form-control valid valid validText" id="txtDireccion" name="txtDireccion" required="">
+                                            <input type="text" class="form-control validAlphaSpecial" id="txtDireccion" name="txtDireccion" required="">
                                         </div>
                                         <div class="col col-md-6 form-group">
                                             <label for="txtSegundoI">segundo idioma</label>
@@ -241,7 +241,7 @@ $total_formateado = formatMoney($total);
 
                     <div class="size-209">
                         <span class="mtext-110 cl2">
-                        <?= SMONEY . $iva_formateado ?>
+                            <?= SMONEY . $iva_formateado ?>
                         </span>
                     </div>
 
@@ -258,7 +258,7 @@ $total_formateado = formatMoney($total);
 
                     <div class="size-209 p-t-1">
                         <span id="totalCompra" class="mtext-110 cl2">
-                        <?= SMONEY . $total_formateado?>
+                            <?= SMONEY . $total_formateado ?>
                         </span>
                     </div>
                 </div>
@@ -272,7 +272,7 @@ $total_formateado = formatMoney($total);
                             <label for="condiciones" class="mb-0 mr-2">Aceptar</label>
                             <a href="#" data-toggle="modal" data-target="#modalTerminos">Términos y condiciones</a>
                         </div>
-                        <div id="optMetodoPago" class="notblock" >
+                        <div id="optMetodoPago" class="notblock">
                             <hr>
                             <h4 class="mtext-109 cl2 p-b-30">
                                 Método de pago

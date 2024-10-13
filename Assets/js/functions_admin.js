@@ -96,10 +96,30 @@ function validateAge() {
         ageInput.classList.remove('is-invalid');
     }
 }
+function fntValidAlphaNumericSpecial() {
+    // Selecciona todos los inputs con la clase "validAlphaSpecial"
+    let validInputs = document.querySelectorAll(".validAlphaSpecial");
+
+    validInputs.forEach(function (input) {
+        input.addEventListener('keyup', function () {
+            let inputValue = this.value;
+
+            // Validar si el valor cumple con letras, números, espacios y caracteres especiales
+            const pattern = /^[a-zA-Z0-9\s.,;:!@#$%^&*()_+\-={}[\]|\\<>?/`~'"]*$/;
+
+            if (!pattern.test(inputValue)) {
+                this.classList.add('is-invalid');
+            } else {
+                this.classList.remove('is-invalid');
+            }
+        });
+    });
+}
 
 
 window.addEventListener('load', function() {
 	fntValidText();
 	fntValidEmail(); 
 	fntValidNumber();
+    fntValidAlphaNumericSpecial();
 }, false);

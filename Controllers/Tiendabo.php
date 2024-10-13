@@ -258,7 +258,7 @@ class Tiendabo extends Controllers
                 $strPrimerI = ucwords(strClean($_POST['txtPrimerI']));
                 $intTipoId = 2;
     
-                $request_user = "exist";
+                $request_user = "";
                 $strPassword = passGenerator();
                 $strPasswordEncript = hash("SHA256", $strPassword);
                 $request_user = $this->insertCliente(
@@ -274,7 +274,7 @@ class Tiendabo extends Controllers
                     $intTipoId
                 );
     
-                if ($request_user != "exist") {
+                if ($request_user > 0) {
                     $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente.');
                     $nombreUsuario = $strNombre . ' ' . $strApellido;
                     $dataUsuario = array(

@@ -46,13 +46,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtPrimerI">Primer Idioma <span class="required">*</span></label>
-                                <input type="text" class="form-control valid validText" id="txtPrimerI" name="txtPrimerI" value="<?= $_SESSION['userData']['apellidos']; ?>" required="">
+                                <input type="text" class="form-control valid validText" id="txtPrimerI" name="txtPrimerI" value="<?= $_SESSION['userData']['primer_idioma']; ?>" required="">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtSegundoI">Segundo Idioma <span class="required">*</span></label>
-                                <input type="text" class="form-control valid validText" id="txtSegundoI" name="txtSegundoI" value="<?= $_SESSION['userData']['apellidos']; ?>" required="">
+                                <input type="text" class="form-control valid validText" id="txtSegundoI" name="txtSegundoI" value="<?= $_SESSION['userData']['segundo_idioma']; ?>" required="">
                             </div>
                         </div>
                     </div>
@@ -60,13 +60,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtEdad">Edad <span class="required">*</span></label>
-                                <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" value="<?= $_SESSION['userData']['apellidos']; ?>" required="" onkeypress="return controlTag(event);">
+                                <input type="text" class="form-control valid validNumber" id="txtEdad" name="txtEdad" value="<?= $_SESSION['userData']['edad']; ?>" required="" onkeypress="return controlTag(event);">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="txtDireccion">Direccion <span class="required">*</span></label>
-                                <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" value="<?= $_SESSION['userData']['apellidos']; ?>" required="">
+                                <input type="text" class="form-control" id="txtDireccion" name="txtDireccion" value="<?= $_SESSION['userData']['direccion']; ?>" required="">
                             </div>
                         </div>
                     </div>
