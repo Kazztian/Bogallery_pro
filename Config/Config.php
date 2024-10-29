@@ -2,6 +2,7 @@
 
   //define("BASE_URL", "http://localhost:8080/Bogallery_pro");
   //define("BASE_URL", "http://localhost/bogallery_pro");
+  //define("BASE_URL", "https://fc1a-181-59-3-36.ngrok-free.app/Bogallery_pro");
 
   const BASE_URL = "http://localhost/bogallery_pro";
   //Zona horaria

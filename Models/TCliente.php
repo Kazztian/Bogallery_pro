@@ -44,17 +44,17 @@ trait TCliente
         $this->strSegundoI = $segundoi;
         $this->intTipoId = $tipoid;
         $return = 0;
-    
+
         // Validación para el email y saber si ya existe ese email
         $sql = "SELECT * FROM usuarios WHERE email_user = '{$this->strEmail}'";
         $request = $this->con->select_all($sql);
-    
+
         // Si no hay registros con ese email, procede a la inserción
         if (empty($request)) {
             $query_insert = "INSERT INTO usuarios(
                 nombres, apellidos, edad, telefono, email_user, password, direccion, primer_idioma, segundo_idioma, id_rol)  
                 VALUES(?,?,?,?,?,?,?,?,?,?)";
-    
+
             $arrData = array(
                 $this->strNombre,
                 $this->strApellido,
@@ -67,15 +67,13 @@ trait TCliente
                 $this->strSegundoI,
                 $this->intTipoId
             );
-    
+
             // Realiza la inserción y guarda el ID insertado en $request_insert
             $request_insert = $this->con->insert($query_insert, $arrData);
-            $return = $request_insert; // Devuelve el ID si la inserción es correcta
+            return $request_insert; // Devuelve el ID si la inserción es correcta
         } else {
-            $return = 0; // Indicar que el correo ya existe
+            return -1; // Indicar que el correo ya existe
         }
-    
-        return $return;
     }
 
     public function insertPedido(string $idtransaccionpaypal = NULL, string $datospaypal = NULL, int $idusuario, float $costo_iva, string $monto,  int $idtipopago, string $direccionenvio, string $status)

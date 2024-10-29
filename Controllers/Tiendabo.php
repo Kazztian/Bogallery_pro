@@ -287,15 +287,17 @@ class Tiendabo extends Controllers
                     $_SESSION['login'] = true;
                     $this->login->sessionLogin($request_user);
                     sendEmail($dataUsuario, 'email_bienvenida');
-                } elseif ($request_user === "exist") {
+                } elseif ($request_user === -1) {
                     $arrResponse = array('status' => false, 'msg' => '¡ATENCIÓN! El email ya existe.');
                 } else {
-                    $arrResponse = array('status' => true, 'msg' => 'Datos actualizados correctamente.');
+                    $arrResponse = array('status' => false, 'msg' => 'Ocurrió un error al guardar los datos.');
                 }
+            
     
                 echo json_encode($arrResponse, JSON_UNESCAPED_UNICODE);
+                die();
             }
-            die();
+            
         }
     }
     
